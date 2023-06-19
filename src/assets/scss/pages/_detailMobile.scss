@@ -1,0 +1,240 @@
+.detail-page-mobile {
+  .container {
+    h3 {
+      @include responsive("xs") {
+        font-size: $text-2xl;
+      }
+      @include responsive("mdd") {
+        font-size: $text-2xl;
+      }
+    }
+    .title {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .info {
+        ul {
+          display: flex;
+          flex-direction: column;
+          list-style: none;
+          padding-left: 0;
+          li {
+            padding-right: 15px;
+            @include responsive("xs") {
+              font-size: $text-base;
+            }
+          }
+          .underline {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
+      }
+      .share {
+        ul {
+          display: flex;
+          list-style: none;
+          padding-left: 0;
+          li {
+            padding-right: 15px;
+            @include responsive("xs") {
+              font-size: $text-base;
+            }
+          }
+          .underline {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .image {
+      .pic {
+        @include responsive("mdd") {
+          padding-bottom: 30px;
+          display: grid !important;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          .item-0 {
+            grid-column: 1 / span 2;
+            grid-row: 1 / span 2;
+          }
+        }
+        img {
+          object-fit: cover;
+          animation: FadeInTop 1s;
+        }
+      }
+    }
+    .description {
+      .content {
+        .title-left {
+          h3 {
+            @include responsive("xs") {
+              font-size: $text-xl;
+            }
+            @include responsive("mdd") {
+              font-size: $text-xl;
+            }
+          }
+          p {
+            @include responsive("xs") {
+              font-size: $text-base;
+            }
+          }
+        }
+        .service {
+          .row {
+            .item {
+              h4 {
+                @include responsive("xs") {
+                  font-size: $text-xl;
+                }
+              }
+              p {
+                @include responsive("xs") {
+                  font-size: $text-base;
+                }
+              }
+            }
+          }
+        }
+        .authority {
+          p {
+            @include responsive("xs") {
+              font-size: $text-base;
+            }
+          }
+          a {
+            @extend p;
+          }
+        }
+        .facility {
+          h4 {
+            @include responsive("xs") {
+              font-size: $text-xl;
+            }
+            @include responsive("mdd") {
+              font-size: $text-2xl;
+            }
+          }
+          .show-more {
+            label {
+                font-size: $text-base;
+            }
+            .btn {
+              padding: 10px 15px;
+              border: 1px solid;
+              font-weight: $text-bold;
+              @include responsive("xs") {
+                font-size: $text-xl;
+              }
+            }
+          }
+        }
+      }
+      .payment {
+        padding: 30px 0;
+        form {
+          position: -webkit-sticky;
+          position: sticky;
+          top: 0;
+          width: 400px;
+          .check {
+            border: 1px solid rgb(221, 221, 221);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+            .row {
+              .calendar {
+                display: inline-block;
+                position: relative;
+                border-radius: 10px;
+                .check {
+                  display: flex;
+                  .check-in {
+                    p {
+                      margin-bottom: 0;
+                      padding-bottom: 5px;
+                      font-weight: $text-semiBold;
+                    }
+                    input {
+                      width: 100%;
+                      padding: 10px;
+                      border-radius: 5px;
+                      border: 1px solid #b0b0b0;
+                      outline: none;
+                      cursor: pointer;
+                      &:hover {
+                        border: 1px solid;
+                      }
+                    }
+                  }
+                  .check-out {
+                    @extend .check-in;
+                  }
+                }
+                .calendarElement {
+                  border-radius: 5px;
+                  position: absolute;
+                  left: 0;
+                  top: 110px;
+                  border: 1px solid #ccc;
+                  z-index: 999;
+                  @include responsive("xs") {
+                    transform: translateX(0%);
+                  }
+                  @include responsive("mdd") {
+                    transform: translateX(6%);
+                  }
+                  .rdrDefinedRangesWrapper {
+                    display: none;
+                  }
+                }
+              }
+              .add-guest {
+                input {
+                  width: 100%;
+                  padding: 10px;
+                  border-radius: 5px;
+                  border: 1px solid #b0b0b0;
+                  outline: none;
+                  cursor: pointer;
+                  &:hover {
+                    border: 1px solid;
+                  }
+                }
+              }
+              .button {
+                .btn {
+                  padding: 15px 0;
+                  border: none;
+                  width: 100%;
+                  background: radial-gradient(
+                    circle at center,
+                    #ff385c 0%,
+                    #e61e4d 27.5%,
+                    #e31c5f 40%,
+                    #d70466 57.5%,
+                    #bd1e59 75%,
+                    #bd1e59 100%
+                  );
+                  color: $text-c1-light;
+                  font-weight: $text-bold;
+                  &:hover {
+                    background: $bg-header-light;
+                    box-shadow: 0px 2px 20px 10px $bg-header-main;
+                    color: $text-c1-main;
+                    transition: 1s;
+                  }
+                }
+              }
+              .total {
+                font-weight: $text-bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

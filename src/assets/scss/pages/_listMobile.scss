@@ -1,0 +1,121 @@
+.list-page-mobile {
+  background-image: linear-gradient(174.2deg, #fff4e4 7.1%, #f0f6ee 67.4%);
+  .container {
+    .row {
+      .tittle {
+        p {
+        }
+        h3 {
+          font-size: $text-2xl;
+        }
+      }
+      @for $i from 0 to 4 {
+        .item-#{$i + 1} {
+          animation: FadeInTop (1s * $i + 1);
+        }
+      }
+      .list-choose {
+        margin-bottom: 30px;
+        .thumbnail {
+          min-height: 190px;
+          img {
+            object-fit: cover;
+            @include responsive("xs") {
+              height: 100%;
+            }
+          }
+        }
+        .detail {
+          .info {
+            @include responsive("xs") {
+              font-size: $text-xs;
+              text-align: justify;
+            }
+            @include responsive("mdd") {
+              font-size: $text-base;
+            }
+            h5 {
+              @include responsive("xs") {
+                font-size: $text-base;
+                text-align: justify;
+              }
+              @include responsive("mdd") {
+                font-size: $text-xl;
+              }
+            }
+            p {
+              @include responsive("xs") {
+                font-size: $text-xs;
+              }
+              @include responsive("mdd") {
+                font-size: $text-base;
+              }
+            }
+          }
+          .view-more {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            .button {
+              a {
+                font-size: $text-xs;
+                border: 1px solid $bg-header-main;
+                color: $text-c1-main;
+                background: $bg-header-light;
+                text-align: center;
+                position: relative;
+                transition: all 0.7s;
+                &::after {
+                  position: absolute;
+                  content: "";
+                  top: 0;
+                  left: 0;
+                  width: 0;
+                  height: 100%;
+                  background: #ff003b;
+                  transition: all 0.7s;
+                }
+                &:hover {
+                  color: $text-c1-light;
+                  &::after {
+                    width: 100%;
+                  }
+                }
+                span {
+                  position: relative;
+                  z-index: 2;
+                  @include responsive("xs") {
+                    font-size: $text-xs;
+                  }
+                  @include responsive("mdd") {
+                    font-size: $text-base;
+                  }
+                }
+              }
+            }
+            .price {
+              a {
+                background: $bg-header-main;
+                color: $text-c1-light;
+                font-size: $text-xl;
+                @include responsive("xs") {
+                  font-size: $text-xs;
+                }
+                @include responsive("mdd") {
+                  font-size: $text-base;
+                }
+                &:hover {
+                  opacity: 0.8;
+                  transition: all 0.5s;
+                }
+              }
+            }
+          }
+        }
+      }
+      .map {
+        animation: FadeInTop 2s;
+      }
+    }
+  }
+}
