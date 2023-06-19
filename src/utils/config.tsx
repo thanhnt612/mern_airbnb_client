@@ -73,7 +73,7 @@ export const settings = {
     }
 }
 export const http = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://placebooking.vercel.app/',
     timeout: 30000
 });
 //Configure Request

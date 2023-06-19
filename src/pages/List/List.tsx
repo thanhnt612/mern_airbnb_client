@@ -9,7 +9,7 @@ export default function List() {
     const dispatch: DispatchType = useDispatch();
     const { arrLocation } = useSelector((state: RootState) => state.bookingReducer)
     const params: any = useParams();
-    const path = `http://localhost:3000/list/${params.dest}`;
+    const path = `https://placebooking.vercel.app/${params.dest}`;
     const url = new URL(path);
     const newPart = url.href.split('/')[4];
 

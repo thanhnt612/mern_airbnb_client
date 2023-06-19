@@ -31,7 +31,7 @@ import ListRent from './pages/ListRent/ListRent';
 import Update from './pages/UpdateRoom/Update';
 
 export const history: any = createBrowserHistory();
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "https://placebooking.vercel.app/";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -5,7 +5,7 @@ import { DispatchType, RootState } from '../../redux/configStore';
 import { updateProfileApi } from '../../redux/reducers/userReducer';
 import { useFormik, FormikProps } from 'formik';
 import * as yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getBookingApi, getBookingProfileApi } from '../../redux/reducers/bookingReducer';
 
