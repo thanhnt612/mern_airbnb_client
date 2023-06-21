@@ -3,8 +3,7 @@ import { history } from "../index";
 export const USER_LOGIN = 'userLogin';
 
 export const http = axios.create({
-    // baseURL: 'https://placebooking.vercel.app',
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://placebooking.vercel.app',
 });
 //Cookie
 export const settings = {
