@@ -110,7 +110,7 @@ export default function Detail() {
             });
         } else {
             const action = postBookingApi(
-                arrBookingId?._id, userLogin.id, name, phone, dateIn, dateOut, guest, totalPrice)
+                arrBookingId?._id, userLogin._id, name, phone, dateIn, dateOut, guest, totalPrice)
             dispatch(action);
         }
     }

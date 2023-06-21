@@ -93,7 +93,6 @@ export const loginApi = (userLogin: UserLogin) => {
 export const updateProfileApi = (id: number, update: EditProfile) => {
     return async (dispatch: DispatchType) => {
         const result = await http.put('/user/update/' + id, update);
-        console.log(result);
         if (result.data.status === 200) {
             toast.success('Your information updated !!!', {
                 position: "top-center",

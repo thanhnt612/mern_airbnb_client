@@ -158,10 +158,10 @@ export default function Profile() {
                                     </div>
                                 </div>
                             </div>
-                            <NavLink className='text-decoration-none border-0 p-2 me-2 bg-primary text-white rounded' to="/new">
+                            <NavLink className='text-decoration-none border-0 p-2 me-2 bg-danger text-white rounded' to="/new">
                                 <i className="bi bi-plus-lg"></i> Add New Place
                             </NavLink>
-                            <NavLink className='text-decoration-none border-0 p-2 bg-primary text-white rounded' to="/list-rent">
+                            <NavLink className='text-decoration-none border-0 p-2 bg-danger text-white rounded' to="/list-rent">
                                 <i className="bi bi-house-add"></i> Your apartment for rent
                             </NavLink>
                         </div>

@@ -33,7 +33,7 @@ export default function PhotoUpload({ addPhoto, onChange }: any) {
                     </div>
                 })}
                 <label className='col-6 col-md-3 col-lg-2 p-5 border rounded bg-white d-flex align-items-center justify-content-center' style={{ cursor: "pointer" }}>
-                    <i className="bi bi-cloud-arrow-up"></i> Upload
+                    <i className="fs-4 bi bi-cloud-arrow-up"></i>&nbsp;Upload
                     <input type="file" className='d-none' multiple
                         onChange={uploadPhoto} />
                 </label>

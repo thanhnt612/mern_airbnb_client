@@ -125,7 +125,6 @@ export const postBookingApi = (
             placeId, guestId, name, phone, checkIn,
             checkOut, numberOfGuest, price
         });
-        console.log(result);
         if (result.data.status === 200) {
             toast.success('Booking room successfully !!!', {
                 position: "top-center",
