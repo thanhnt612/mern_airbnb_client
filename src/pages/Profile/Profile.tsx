@@ -32,7 +32,7 @@ export default function Profile() {
 
     useEffect(() => {
         dispatch(getBookingApi())
-        dispatch(getBookingProfileApi(userLogin.id))
+        dispatch(getBookingProfileApi(userLogin._id))
     }, []);
     const frm: FormikProps<EditProfile> = useFormik<EditProfile>({
         initialValues: {
@@ -175,7 +175,7 @@ export default function Profile() {
                                         return <div className="list-choose d-flex py-3 bg-light border border-2 border-success 
                                         border-opacity-25 rounded mb-4" key={index}>
                                             <div className="thumbnail col-4 p-4">
-                                                <img src={'http://localhost:8080/uploads/' + prod.photos[0]}
+                                                <img src={prod.photos[0]}
                                                     className='w-100 rounded' alt="" />
                                             </div>
                                             <div className="detail col-8 p-2">

@@ -4,18 +4,17 @@ import { NavLink, useParams } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
 import { getBookingLocationApi } from '../../redux/reducers/bookingReducer';
 
-
 export default function List() {
     const dispatch: DispatchType = useDispatch();
     const { arrLocation } = useSelector((state: RootState) => state.bookingReducer)
     const params: any = useParams();
     const path = `https://placebooking.vercel.app/${params.dest}`;
     const url = new URL(path);
-    const newPart = url.href.split('/')[4];
-
+    const newPart = url.pathname.split('/')[1];
     useEffect(() => {
-        const action = getBookingLocationApi(newPart);
-        dispatch(action);
+        if (newPart) {
+            dispatch(getBookingLocationApi(newPart));
+        }
     }, [newPart]);
     return (
         <div className='list-page'>
@@ -35,7 +34,7 @@ export default function List() {
                             return <div className={`list-choose item-${index} d-flex bg-light border border-2 
                             border-success border-opacity-25 rounded wow`} key={index}>
                                 <div className="thumbnail col-4 me-3">
-                                    <img src={'http://localhost:8080/uploads/' + location.photos[0]}
+                                    <img src={location.photos[0]}
                                         className='w-100 h-100 rounded' alt="" />
                                 </div>
                                 <div className="detail col-8 p-2">

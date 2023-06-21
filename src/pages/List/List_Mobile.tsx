@@ -10,13 +10,12 @@ export default function List() {
   const params: any = useParams();
   const path = `https://placebooking.vercel.app/${params.dest}`;
   const url = new URL(path);
-  const newPart = url.href.split('/')[4];
-
+  const newPart = url.pathname.split('/')[1];
   useEffect(() => {
-    const action = getBookingLocationApi(newPart);
-    dispatch(action);
+    if (newPart) {
+      dispatch(getBookingLocationApi(newPart));
+    }
   }, [newPart]);
-
   return (
     <div className='list-page-mobile'>
       <div className="container">
@@ -34,7 +33,7 @@ export default function List() {
               return <div className={`list-choose item-${index} d-flex bg-light border border-2 
                             border-success border-opacity-25 rounded wow`} key={index}>
                 <div className="thumbnail d-flex align-items-center p-2 col-5">
-                  <img src={'http://localhost:8080/uploads/' + location.photos[0]}
+                  <img src={location.photos[0]}
                     className='w-100 rounded' alt="" />
                 </div>
                 <div className="detail d-flex flex-column justify-content-center p-3 col-7">

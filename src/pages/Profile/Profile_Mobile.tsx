@@ -129,7 +129,7 @@ export default function Profile() {
                     return <div className="list-choose d-flex flex-wrap p-3 bg-light border border-2 border-success 
                                         border-opacity-25 rounded mb-4" key={index}>
                       <div className="thumbnail col-12 col-md-4 p-2">
-                        <img src={'http://localhost:8080/uploads/' + prod.photos[0]}
+                        <img src={prod.photos[0]}
                           className='w-100 h-100 rounded' alt="" />
                       </div>
                       <div className="detail col-12 col-md-8 p-2">

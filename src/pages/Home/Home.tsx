@@ -218,7 +218,7 @@ export default function Home() {
                           >
                             {room.photos.map((pic: any) => {
                               return (
-                                <img src={'http://localhost:8080/uploads/' + pic}
+                                <img src={pic}
                                   className='w-100' alt="" key={index} />
                               )
                             })}

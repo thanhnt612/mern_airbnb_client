@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Perk from './PerkNew';
 import PhotoUpload from './PhotoUploadNew';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { http } from '../../utils/config';
 
 export default function New() {
     const [title, setTitle] = useState('')
@@ -20,7 +20,7 @@ export default function New() {
     const { userLogin } = useSelector((state: RootState) => state.userReducer);
     const addNewPlace = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        const result = await axios.post('/place', {
+        const result = await http.post('/place', {
             owner: userLogin._id, title, address, addPhoto, description, perk, checkIn, checkOut, maxGuest, price
         })
         if (result.data.status === 200) {

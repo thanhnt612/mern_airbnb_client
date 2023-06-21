@@ -193,7 +193,7 @@ export default function Home() {
                     border-success border-opacity-25 
                     wow">
                         <div className="thumbnail col-12">
-                          <img src={'http://localhost:8080/uploads/' + room.photos[0]}
+                          <img src={room.photos[0]}
                             className='w-100 rounded-top' alt="" />
                         </div>
                         <div className="detail rounded-bottom col-12 p-2" style={{ width: "300px" }}>

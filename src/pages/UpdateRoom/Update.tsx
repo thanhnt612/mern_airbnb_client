@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Perk from './PerkUpdate';
 import PhotoUpload from './PhotoUploadUpdate';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {  RootState } from '../../redux/configStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
+import { http } from '../../utils/config';
 
 export default function Update() {
     const params = useParams();
@@ -25,7 +25,7 @@ export default function Update() {
         if (!id) {
             return;
         }
-        axios.get('/place/' + params.id).then(response => {
+        http.get('/place/' + params.id).then(response => {
             const { data } = response;
             setTitle(data.content.title);
             setAddress(data.content.address);
@@ -46,7 +46,7 @@ export default function Update() {
             addPhoto, description, perk, checkIn,
             checkOut, maxGuest, price
         }
-        const result = await axios.put('/place/' + id, {
+        const result = await http.put('/place/' + id, {
             ...place
         })
         if (result.data.status === 200) {

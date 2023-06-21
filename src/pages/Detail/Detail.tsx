@@ -93,7 +93,7 @@ export default function Detail() {
       });
     } else {
       const action = postBookingApi(
-        arrBookingId?._id, userLogin.id, name, phone, dateIn, dateOut, guest, totalPrice)
+        arrBookingId?._id, userLogin._id, name, phone, dateIn, dateOut, guest, totalPrice)
       dispatch(action);
     }
   }
@@ -135,7 +135,7 @@ export default function Detail() {
         <div className="image">
           {arrBookingId?.photos.map((pic: any, index: number) => {
             return <div className={`p-1 item-${index}`} key={index}>
-              <img src={'http://localhost:8080/uploads/' + pic} className='w-100 h-100' alt="" />
+              <img src={pic} className='w-100 h-100' alt="" />
             </div>
           })}
         </div>

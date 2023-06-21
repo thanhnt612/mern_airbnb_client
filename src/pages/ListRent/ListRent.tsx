@@ -43,7 +43,7 @@ export default function ListRent() {
                         return <div className="main p-3 d-flex flex-row flex-wrap rounded border border-2 border-success 
                         border-opacity-25" key={index}>
                             <div className="col-12 col-md-3 ">
-                                <img src={'http://localhost:8080/uploads/' + item.photos[0]} alt="" className='object-fit-cover rounded w-100 h-100' />
+                                <img src={item.photos[0]} alt="" className='object-fit-cover rounded w-100 h-100' />
                             </div>
                             <div className="col-12 col-md-9 detail p-3 position-relative">
                                 <h5 className='fw-bold'>

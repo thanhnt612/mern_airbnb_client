@@ -8,7 +8,11 @@ import { loginApi } from '../../redux/reducers/userReducer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export type UserLogin = { email: string, password: string }
+export type UserLogin = {
+  email: string,
+  password: string
+}
+
 export default function Login() {
   const dispatch: DispatchType = useDispatch();
   const frm: FormikProps<UserLogin> = useFormik<UserLogin>({
@@ -35,7 +39,7 @@ export default function Login() {
                   <img src='../img/logo.png' className='d-block' width="102px" height='32px' alt="" />
                 </NavLink>
                 <h2 className="form-title">Log In</h2>
-                <form className="register-form" onSubmit={frm.handleSubmit}>
+                <form className="login-form" onSubmit={frm.handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="account"><i className="fa-solid fa-circle-user"></i></label>
                     <input name="email" placeholder="Email" onBlur={frm.handleBlur} onChange={frm.handleChange} />
@@ -68,9 +72,6 @@ export default function Login() {
                       draggable
                       pauseOnHover
                       theme="colored" />
-                    <p>
-                      <NavLink to='/user/register'>Forgot password?</NavLink>
-                    </p>
                     <span>Don't have an Account?</span><br />
                     <NavLink to='/user/register'>
                       Please register here <i className="bi bi-arrow-left-square-fill"></i>

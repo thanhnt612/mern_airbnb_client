@@ -154,7 +154,7 @@ export default function Detail() {
                         {arrBookingId?.photos.map((pic: any, index: number) => {
                             return (
                                 <div className={`p-1 item-${index}`} key={index}>
-                                    <img src={'http://localhost:8080/uploads/' + pic} className='w-100 h-100' alt="" />
+                                    <img src={pic} className='w-100 h-100' alt="" />
                                 </div>
                             )
                         })}
@@ -165,7 +165,7 @@ export default function Detail() {
                             responsive={responsive_detail}>
                             {arrBookingId ? arrBookingId.photos.map((pic: any, index: number) => {
                                 return (
-                                    <img src={'http://localhost:8080/uploads/' + pic}
+                                    <img src={pic}
                                         className='w-100 h-100 rounded' alt="" key={index} />
                                 )
                             }) : <div />}

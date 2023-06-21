@@ -22,16 +22,15 @@ import Profile_Mobile from './pages/Profile/Profile_Mobile';
 import List_Mobile from './pages/List/List_Mobile';
 import ResponsiveItem from './Components/ResponsiveItem/ResponsiveItem';
 import UserTemplate from './templates/UserTemplate';
-import axios from 'axios';
-
-
 import { createBrowserHistory } from "history";
 import New from './pages/New/New';
 import ListRent from './pages/ListRent/ListRent';
 import Update from './pages/UpdateRoom/Update';
 
 export const history: any = createBrowserHistory();
-axios.defaults.baseURL = "https://placebooking.vercel.app/";
+// axios.defaults.baseURL = "https://placebooking.vercel.app";
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
