@@ -77,20 +77,18 @@ export const settings = {
 }
 //Configure Request
 http.interceptors.request.use((config) => {
-        config.headers = {
-            ...config.headers,
-        };
-        return config;
-    }, err => {
-        console.log(err);
-        return Promise.reject(err);
-    })
+    config.headers = {
+        ...config.headers,
+    };
+    return config;
+}, err => {
+    return Promise.reject(err);
+})
 
 //Configure Response
 http.interceptors.response.use((response) => {
     return response;
 }, (error) => {
-    console.log(error);
     if (error.response?.status === 400 || error.response?.status === 401 || error.response?.status === 404) {
         history.push('/');
     }

@@ -12,22 +12,37 @@ export type UserRegister = {
   email: string,
   password: string,
   name: string,
+  confirmPassword: string
 }
 export default function Register() {
   const dispatch: DispatchType = useDispatch();
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+  // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit
+
   const frm: FormikProps<UserRegister> = useFormik<UserRegister>({
     initialValues: {
       email: '',
       password: '',
+      confirmPassword: '',
       name: '',
     },
     validationSchema: yup.object().shape({
       email: yup
         .string()
-        .email("Invalid Email Address !!!")
-        .required("Please enter your email !!!"),
-      password: yup.string().required("Please enter your password !!!"),
-      name: yup.string().required("Please enter your name !!!"),
+        .email("Please enter valid email !!!")
+        .required("Required"),
+      password: yup
+        .string()
+        .min(5)
+        .matches(passwordRegex, { message: "Please create a stronger password" })
+        .required("Required"),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords must match")
+        .required("Required"),
+      name: yup
+        .string()
+        .required("Please enter your name !!!"),
     }),
     onSubmit: (values: UserRegister) => {
       dispatch(registerApi(values))
@@ -35,66 +50,103 @@ export default function Register() {
   });
   return (
     <div className='register-page '>
-      <div className="container">
-        <div className="row rounded">
-          <div className="signup-content">
-            <div className="signup-form">
+      <div className="row rounded">
+        <div className="signup-content">
+          <div className="signup-form">
+            <div className='d-flex flex-column align-items-center'>
               <NavLink to="/">
                 <img src='../img/logo.png' className='d-block' width="102px" height='32px' alt="" />
               </NavLink>
-              <h2 className="form-title">Sign up</h2>
-              <form className="register-form" onSubmit={frm.handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="email"><i className="fa-regular fa-envelope"></i></label>
-                  <input type="email" name="email" id="email" placeholder="Your Email"
-                    onChange={frm.handleChange} onBlur={frm.handleBlur}
-                  />
-                </div>
-                {frm.errors.email ? (
-                  <p className="text text-danger">{frm.errors.email}</p>
-                ) : (
-                  ""
-                )}
-                <div className="form-group">
-                  <label htmlFor="pass"><i className="fa-solid fa-lock"></i></label>
-                  <input type="password" name="password" id="password" placeholder="Password"
-                    onChange={frm.handleChange} onBlur={frm.handleBlur} />
-                </div>
-                {frm.errors.password ? (
-                  <p className="text text-danger">{frm.errors.password}</p>
-                ) : (
-                  ""
-                )}
-                <div className="form-group">
-                  <label htmlFor="name"><i className="fa-regular fa-user"></i></label>
-                  <input type="text" name="name" id="name" placeholder="Your Name"
-                    onChange={frm.handleChange} onBlur={frm.handleBlur} />
-                </div>
-                {frm.errors.name ? (
-                  <p className="text text-danger">{frm.errors.name}</p>
-                ) : (
-                  ""
-                )}
-                <div className="button">
-                  <button type="submit" className="btn-register">Sign Up</button> <br />
-                  <ToastContainer
-                    position="top-center"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored" />
-                  <span>Do you already have an account?</span> <br />
-                  <NavLink to='/user/login'>
-                    Please login here<i className="bi bi-arrow-left-square-fill"></i>
-                  </NavLink>
-                </div>
-              </form>
             </div>
+            <h2 className="form-title text-center">Sign up</h2>
+            <form className="register-form" onSubmit={frm.handleSubmit} autoComplete='off'>
+              <div className="form-group d-flex flex-column">
+                <p className='fw-bold mb-1'>Email</p>
+                <input className=
+                  {
+                    frm.errors.email && frm.touched.email
+                      ? 'border border-danger p-2 rounded'
+                      : 'border border-dark p-2 rounded'
+                  }
+                  type="email"
+                  id="email"
+                  placeholder="Your Email"
+                  value={frm.values.email}
+                  onChange={frm.handleChange}
+                  onBlur={frm.handleBlur}
+                />
+                {frm.errors.email && frm.touched.email &&
+                  <p className="text text-danger">{frm.errors.email}</p>}
+              </div>
+              <div className="form-group d-flex flex-column">
+                <p className='fw-bold mb-1'>Password</p>
+                <input className=
+                  {
+                    frm.errors.password && frm.touched.password
+                      ? 'border border-danger p-2 rounded'
+                      : 'border border-dark p-2 rounded'
+                  }
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  value={frm.values.password}
+                  onChange={frm.handleChange}
+                  onBlur={frm.handleBlur} />
+                {frm.errors.password && frm.touched.password &&
+                  <p className="text text-danger">{frm.errors.password}</p>}
+              </div>
+              <div className="form-group d-flex flex-column">
+                <p className='fw-bold mb-1'>Confirm Password</p>
+                <input className=
+                  {
+                    frm.errors.confirmPassword && frm.touched.confirmPassword
+                      ? 'border border-danger p-2 rounded'
+                      : 'border border-dark p-2 rounded'
+                  }
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm Password"
+                  onChange={frm.handleChange}
+                  onBlur={frm.handleBlur} />
+                {frm.errors.confirmPassword && frm.touched.confirmPassword &&
+                  <p className="text text-danger">{frm.errors.confirmPassword}</p>}
+              </div>
+              <div className="form-group d-flex flex-column">
+                <p className='fw-bold mb-1'>Name</p>
+                <input className=
+                  {
+                    frm.errors.name && frm.touched.name
+                      ? 'border border-danger p-2 rounded'
+                      : 'border border-dark p-2 rounded'
+                  }
+                  type="text"
+                  id="name"
+                  placeholder="Your Name"
+                  value={frm.values.name}
+                  onChange={frm.handleChange}
+                  onBlur={frm.handleBlur} />
+                {frm.errors.name && frm.touched.name &&
+                  <p className="text text-danger">{frm.errors.name}</p>}
+              </div>
+              <div className="button d-flex flex-column align-items-center">
+                <button type="submit" className="btn-register">Sign Up</button> <br />
+                <ToastContainer
+                  position="top-center"
+                  autoClose={2000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="colored" />
+                <span>Do you already have an account?</span> <br />
+                <NavLink to='/user/login'>
+                  Please login here<i className="bi bi-arrow-left-square-fill"></i>
+                </NavLink>
+              </div>
+            </form>
           </div>
         </div>
       </div>

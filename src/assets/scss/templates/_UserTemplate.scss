@@ -1,14 +1,9 @@
 .user-template {
   width: 100%;
-  min-height: 1200px;
+  min-height: 1024px;
   font-size: $text-base;
   background: url(../../img/signup/bg-signup.jpg) center center / cover
     no-repeat;
   object-fit: cover;
-  padding: 100px 0;
-  .container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+  padding: 100px 30px;
 }

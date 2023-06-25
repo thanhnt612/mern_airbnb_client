@@ -60,6 +60,7 @@ export const registerApi = (register: UserRegister) => {
 export const loginApi = (userLogin: UserLogin) => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/login', userLogin);
+        console.log(result);
         if (result.data.status === 200) {
             toast.success('Login Successfully !!!', {
                 position: "top-center",
@@ -75,6 +76,18 @@ export const loginApi = (userLogin: UserLogin) => {
             const action: PayloadAction<UserLoginResult> = setUserLoginAction(result.data.content);
             dispatch(action);
             settings.setStorageJson(USER_LOGIN, result.data.content);
+        }
+        if (result.data.status === 401) {
+            toast.error("Email is not existed", {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
         if (result.data.status === 402) {
             toast.error("Email or password is wrong", {

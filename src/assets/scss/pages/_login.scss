@@ -1,12 +1,17 @@
 .login-page {
   .row {
     min-height: 500px;
-    padding: 50px;
     background-color: $bg-header-light;
     box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-around;
     align-items: center;
+    @include responsive("xs") {
+      padding: 20px;
+    }
+    @include responsive("md") {
+      padding: 100px;
+    }
     .signin-content {
       .signin-form {
         .form-title {
@@ -16,26 +21,12 @@
           .form-group {
             margin-bottom: 25px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #999;
             input {
               width: 100%;
               display: block;
               border: none;
               outline: none;
-              padding: 6px 30px;
-            }
-          }
-          .check-item {
-            white-space: nowrap;
-            .agree-term {
-              margin-right: 5px;
-            }
-            .label-agree-term {
-              a {
-                color: $text-c1-dark;
-              }
+              padding: 6px 20px;
             }
           }
           .button {
