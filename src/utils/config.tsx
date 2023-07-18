@@ -3,7 +3,7 @@ import { history } from "../index";
 export const USER_LOGIN = 'userLogin';
 
 export const http = axios.create({
-    baseURL: 'https://placebooking.vercel.app',
+    baseURL: 'https://placebooking.vercel.app'
 });
 //Cookie
 export const settings = {
@@ -77,9 +77,9 @@ export const settings = {
 }
 //Configure Request
 http.interceptors.request.use((config) => {
-    config.headers = {
-        ...config.headers,
-    };
+    // config.headers = {
+    //     ...config.headers,
+    // };
     return config;
 }, err => {
     return Promise.reject(err);

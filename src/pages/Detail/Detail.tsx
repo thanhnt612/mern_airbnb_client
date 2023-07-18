@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom'
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -13,23 +13,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { history } from '../../index';
 
+
 export default function Detail() {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
   const { arrBookingId } = useSelector((state: RootState) => state.bookingReducer);
+
   const dispatch: DispatchType = useDispatch();
 
   const params: any = useParams();
-  useEffect(() => {
-    const action = getBookingDetailApi(params.id);
-    dispatch(action);
-  }, [params.id])
-  const checkIn: any = arrBookingId?.checkIn;
-  const checkOut: any = arrBookingId?.checkOut;
-  const price: any = arrBookingId?.price;
+
+  const [clickedImg, setClickedImg] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-
-  //Set date range picker
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -37,25 +34,78 @@ export default function Detail() {
       key: 'selection'
     }
   ])
-  // open close
-  const [open, setOpen] = useState(false)
-  // get the target element to toggle 
-  const refOne = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    dispatch(getBookingDetailApi(params.id));
+  }, [params.id])
   useEffect(() => {
     // event listeners
     document.addEventListener("keydown", hideOnEscape, true)
   }, [])
 
-  // hide dropdown on ESC press
+
+  //Set image when click show full screen------------------------------//
+  const handleClick = (item: any, index: any) => {
+    setCurrentIndex(index);
+    setClickedImg(item);
+  };
+  const handelRotationRight = () => {
+    const totalLength = arrBookingId?.photos.length;
+    if (currentIndex + 1 >= totalLength) {
+      setCurrentIndex(0);
+      const newUrl = arrBookingId?.photos[0];
+      setClickedImg(newUrl);
+      return;
+    }
+    const newIndex = currentIndex + 1;
+    const newUrl = arrBookingId?.photos.filter((item: any) => {
+      return arrBookingId?.photos.indexOf(item) === newIndex;
+    });
+    const newItem = newUrl[0];
+    setClickedImg(newItem);
+    setCurrentIndex(newIndex);
+  };
+  const handelRotationLeft = () => {
+    const totalLength = arrBookingId?.photos.length;
+    if (currentIndex === 0) {
+      setCurrentIndex(totalLength - 1);
+      const newUrl = arrBookingId?.photos[totalLength - 1];
+      setClickedImg(newUrl);
+      return;
+    }
+    const newIndex = currentIndex - 1;
+    const newUrl = arrBookingId?.photos.filter((item: any) => {
+      return arrBookingId?.photos.indexOf(item) === newIndex;
+    });
+    console.log(newUrl)
+    const newItem = newUrl[0];
+    setClickedImg(newItem);
+    setCurrentIndex(newIndex);
+  };
+  const handleClickModal = (e: any) => {
+    if (e.target.classList.contains("dismiss")) {
+      setClickedImg(null);
+    }
+  };
+
+  // hide dropdown on ESC press---------------------------------//
   const hideOnEscape = (event: any) => {
     if (event.key === "Escape") {
       setOpen(false)
     }
   }
+  // get the target element to toggle 
+  const refOne = useRef<HTMLInputElement>(null)
+  // Process data to dispatch
+  const checkIn: any = arrBookingId?.checkIn;
+  const checkOut: any = arrBookingId?.checkOut;
+  const price: any = arrBookingId?.price;
+
   const handleChangeDate = (rangesByKey: RangeKeyDict) => {
     const changeDate: any = rangesByKey
     setRange([changeDate.selection]);
   }
+
   const dateDiff = (date1: any, date2: any) => {
     const dt1 = new Date(date1);
     const dt2 = new Date(date2);
@@ -133,12 +183,27 @@ export default function Detail() {
           </div>
         </div>
         <div className="image">
-          {arrBookingId?.photos.map((pic: any, index: number) => {
-            return <div className={`p-1 item-${index}`} key={index}>
-              <img src={pic} className='w-100 h-100' alt="" />
-            </div>
-          })}
+          {arrBookingId ? arrBookingId.photos.map((pic: any, index: number) => {
+            return (
+              <img src={pic} className={`w-100 h-100 p-1 item-${index}`} alt="" key={index}
+                onClick={() => handleClick(pic, index)} style={{ cursor: 'pointer' }} />
+            )
+          }) : <div />}
         </div>
+        {clickedImg && (
+          <div className="overlay dismiss" onClick={handleClickModal}>
+            <img src={clickedImg} alt="bigger pic" />
+            <span className='close'>
+              <i className="dismiss bi bi-x-square-fill" onClick={handleClickModal}></i>
+            </span>
+            <div onClick={handelRotationLeft} className="overlay-arrows_left">
+              <i className="bi bi-arrow-left-circle-fill" style={{ cursor: 'pointer' }}></i>
+            </div>
+            <div onClick={handelRotationRight} className="overlay-arrows_right">
+              <i className="bi bi-arrow-right-circle-fill" style={{ cursor: 'pointer' }}></i>
+            </div>
+          </div>
+        )}
         <div className="description">
           <div className="row">
             <div className="content col-md-7 col-lg-7 col-xl-8">

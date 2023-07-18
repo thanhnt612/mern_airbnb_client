@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getOwnerRoomApi } from '../../redux/reducers/bookingReducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -8,8 +8,14 @@ export default function ListRent() {
     const dispatch: DispatchType = useDispatch();
     const { userLogin } = useSelector((state: RootState) => state.userReducer);
     const { arrOwnerRoom } = useSelector((state: RootState) => state.bookingReducer);
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         dispatch(getOwnerRoomApi(userLogin._id))
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
     }, [])
     const renderListRoom = () => {
         if (Object.keys(userLogin).length === 0) {
@@ -55,7 +61,7 @@ export default function ListRent() {
                                 <p className='text-truncate'>
                                     {item.description}
                                 </p>
-                                <NavLink className="position-absolute pt-2 top-0 end-0" to={`/update-room/${item._id}`}>
+                                <NavLink className="position-absolute pt-2 top-0 end-0" to={`/place/update-room/${item._id}`}>
                                     <i className="fs-2 bi bi-pencil-square"></i>
                                 </NavLink>
                                 <NavLink to={`/detail/${item._id}`} className="btn btn-outline-danger">
@@ -71,13 +77,26 @@ export default function ListRent() {
         }
     }
     return (
-        <div className='container bg-white rounded'>
+        <div className='container bg-white p-4 rounded'>
+            <NavLink to="/" className='text-decoration-none'>
+                <span className='p-2 rounded-pill text-white bg-danger'>
+                    <i className="bi bi-sign-turn-left-fill"></i> Home
+                </span>
+            </NavLink>
             <div className='title text-center p-4'>
                 <span className='p-2 rounded-pill text-white bg-danger'>
                     <i className="bi bi-house-add"></i> Your apartment for rent
                 </span>
             </div>
-            {renderListRoom()}
+            {loading ? (
+                <div className="loader-container">
+                    <div className="spinner"></div>
+                </div>
+            ) : (
+                <>
+                    {renderListRoom()}
+                </>
+            )}
         </div>
     )
 }

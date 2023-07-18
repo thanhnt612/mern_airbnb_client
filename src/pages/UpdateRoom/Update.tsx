@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Perk from './PerkUpdate';
 import PhotoUpload from './PhotoUploadUpdate';
 import { useSelector } from 'react-redux';
-import {  RootState } from '../../redux/configStore';
+import { RootState } from '../../redux/configStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { http } from '../../utils/config';
 
 export default function Update() {
@@ -76,7 +76,12 @@ export default function Update() {
         }
     }
     return (
-        <div className='container bg-white rounded'>
+        <div className='container bg-white p-4 rounded'>
+            <NavLink to="/" className='text-decoration-none'>
+                <span className='p-2 rounded-pill text-white bg-danger'>
+                    <i className="bi bi-sign-turn-left-fill"></i> Home
+                </span>
+            </NavLink>
             <div className='title text-center p-4'>
                 <span className='p-2 rounded-pill text-white bg-danger'>
                     <i className="bi bi-house"></i> Edit Your Place
@@ -107,7 +112,7 @@ export default function Update() {
                     <Perk selected={perk} onChange={setPerk} />
                     <div className='py-5 d-flex flex-row flex-wrap'>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check In (ex: 14 = 14:00...)</p>
+                            <p className='fw-bold'>Check In (ex: 14h00 = enter 14)</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set time...'
@@ -115,7 +120,7 @@ export default function Update() {
                                 onChange={e => setCheckIn(e.target.value)} />
                         </div>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check Out (ex: 12 = 12:00...)</p>
+                            <p className='fw-bold'>Check Out (ex: 12h00 = enter 12)</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set time...'

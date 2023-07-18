@@ -26,6 +26,7 @@ import { createBrowserHistory } from "history";
 import New from './pages/New/New';
 import ListRent from './pages/ListRent/ListRent';
 import Update from './pages/UpdateRoom/Update';
+import PlaceTemplate from './templates/PlaceTemplate';
 
 export const history: any = createBrowserHistory();
 // axios.defaults.baseURL = "https://placebooking.vercel.app";
@@ -58,17 +59,6 @@ root.render(
           }>
             <Route path=':dest' element={<List />}></Route>
           </Route>
-          <Route path='new' element={<ResponsiveItem component={New} />}>
-          </Route>
-          <Route path='list-rent' element={<ListRent />}></Route>
-          <Route path='update-room' element={
-            <ResponsiveItem
-              component={Update}
-            />
-          }>
-            <Route path=':id' element={<Update />}></Route>
-          </Route>
-
           <Route path='profile' element={
             <ResponsiveItem
               component={Profile}
@@ -76,6 +66,18 @@ root.render(
             />
           }></Route>
           <Route path='*' element={<Navigate to="" />}></Route>
+        </Route>
+        <Route path='place' element={<PlaceTemplate />}>
+          <Route path='list-rent' element={<ListRent />}></Route>
+          <Route path='new' element={<ResponsiveItem component={New} />}>
+          </Route>
+          <Route path='update-room' element={
+            <ResponsiveItem
+              component={Update}
+            />
+          }>
+            <Route path=':id' element={<Update />}></Route>
+          </Route>
         </Route>
         <Route path='user' element={<UserTemplate />}>
           <Route path="login" element={<Login />}></Route>

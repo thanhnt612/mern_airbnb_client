@@ -24,12 +24,12 @@ export default function HeaderHome() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className="dropdown-item" to="/new">
+                        <NavLink className="dropdown-item" to="/place/new">
                             New Place
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className="dropdown-item" to="/list-rent">
+                        <NavLink className="dropdown-item" to="/place/list-rent">
                             Your apartment
                         </NavLink>
                     </li>
@@ -56,12 +56,15 @@ export default function HeaderHome() {
         if (userLogin?.name) {
             return (
                 <>
-                    <span>Hi!! {userLogin.name}</span>
+                    <span>
+                        <i className="user fa-solid fa-user"></i> {userLogin.name} <i className="bi bi-caret-down-fill"></i>
+                    </span>
                 </>
             )
         }
         return (
             <>
+                <i className="bar fa-solid fa-bars"></i>
                 <i className="user fa-solid fa-user"></i>
             </>
         );
@@ -102,7 +105,6 @@ export default function HeaderHome() {
                         <li className="nav-item dropdown">
                             <NavLink className="nav-link dropdown-toggle" to="" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bar fa-solid fa-bars"></i>
                                 {renderUser()}
                             </NavLink>
                             <ul className="dropdown-menu list-info">

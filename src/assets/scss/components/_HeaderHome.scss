@@ -70,16 +70,15 @@
         margin: 0 10px;
         padding: 8px;
         display: flex;
-        border: 1px solid $bg-grey;
-        border-radius: 50px;
+        border: 2px solid $bg-grey;
+        border-radius: 10px;
+        &:hover {
+          background-color: $bg-header-main;
+          color: white;
+        }
         .nav-item {
           list-style: none;
           position: relative;
-          .dropdown-toggle {
-            &::after {
-              display: none;
-            }
-          }
           a {
             .bar {
               padding-right: 10px;

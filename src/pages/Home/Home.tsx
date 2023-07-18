@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -10,12 +10,18 @@ import { history } from '../../index';
 export default function Home() {
   const dispatch: DispatchType = useDispatch();
   const content = useRef(null);
+  const [loading, setLoading] = useState(false)
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const listProvince = arrBooking.filter((ele, ind) => ind === arrBooking.findIndex(elem => elem.address === ele.address))
-
+  
   useEffect(() => {
     dispatch(getBookingApi())
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, [])
+
   const onList = async (event: any) => {
     await dispatch(getBookingLocationApi(event));
     history.push(`/list/${event}`);
@@ -198,129 +204,98 @@ export default function Home() {
             <div className="tittle text-center text-white">
               <h3 className='fw-bold'>Rooms</h3>
             </div>
-            <div className="room-detail">
-              <div className="booking-room row">
-                <Carousel
-                  showDots={true}
-                  responsive={responsive}
-                  arrows={false}
-                >
-                  {arrBooking.map((room, index) => {
-                    return <div className='p-3' key={index}>
-                      <div className="room-body d-flex flex-column mb-4 
+            {loading ? (
+              <div className="loader-container">
+                <div className="spinner"></div>
+              </div>
+            ) : (
+              <div className="room-detail">
+                <div className="booking-room row">
+                  <Carousel
+                    showDots={true}
+                    responsive={responsive}
+                    arrows={false}
+                  >
+                    {arrBooking.map((room, index) => {
+                      return <div className='p-3' key={index}>
+                        <div className="room-body d-flex flex-column mb-4 
                     bg-light border border-2 
                     border-success border-opacity-25 
                     wow">
-                        <div className="thumbnail rounded-top col-12">
-                          <Carousel
-                            showDots={true}
-                            responsive={responsive_pic}
-                          >
-                            {room.photos.map((pic: any) => {
-                              return (
-                                <img src={pic}
-                                  className='w-100' alt="" key={index} />
-                              )
-                            })}
-                          </Carousel>
-                        </div>
-                        <div className="detail rounded-bottom col-12 py-3 p-2">
-                          <div className="info">
-                            <h5>{room.address}</h5>
-                            <p className='text-truncate mb-1'>{room.title}</p>
-                            <p><span className='fw-bold'>${room.price}</span> - night</p>
+                          <div className="thumbnail rounded-top col-12">
+                            <Carousel
+                              showDots={true}
+                              responsive={responsive_pic}
+                            >
+                              {room.photos.map((pic: any) => {
+                                return (
+                                  <img src={pic}
+                                    className='w-100' alt="" key={index} />
+                                )
+                              })}
+                            </Carousel>
                           </div>
-                          <div className="view-more">
-                            <div className="button">
-                              <NavLink to={`/detail/${room._id}`} className="btn">
-                                <span>
-                                  View Room Details
-                                </span>
-                              </NavLink>
+                          <div className="detail rounded-bottom col-12 py-3 p-2">
+                            <div className="info">
+                              <h5>{room.address}</h5>
+                              <p className='text-truncate mb-1'>{room.title}</p>
+                              <p><span className='fw-bold'>${room.price}</span> - night</p>
                             </div>
+                            <div className="view-more">
+                              <div className="button">
+                                <NavLink to={`/detail/${room._id}`} className="btn">
+                                  <span>
+                                    View Room Details
+                                  </span>
+                                </NavLink>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    })}
+                  </Carousel>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="list container mb-5">
+            <div className="tittle text-center">
+              <h3>Discover the beautiful places around the Vietnam</h3>
+            </div>
+            <div className="menu pt-3">
+              {loading ? (
+                <div className="loader-container">
+                  <div className="spinner"></div>
+                </div>
+              ) : (
+                <div className="list-choose row">
+                  {listProvince.map((location, index) => {
+                    console.log(location)
+                    return <div className="list-city col-xl-3 col-lg-4 col-md-6 pb-3" key={index}>
+                      <div className={`list-room item-${index} d-flex p-3 bg-light border border-2 
+                      border-success border-opacity-25 rounded wow`}>
+                        <div className="thumbnail rounded col-6 p-1">
+                        <button className='border-0' onClick={() => onList(location.address)}>
+                              <img src={location.photos[0]}
+                                className='w-100 rounded' alt="" />
+                            </button>
+                        </div>
+                        <div className="detail p-2 col-6 d-flex flex-column justify-content-center">
+                          <h5 className='text-truncate' onClick={() => onList(location.address)}>
+                            {location.address}
+                          </h5>
+                          <div className="locate">
+                            <button className="btn" onClick={() => onList(location.address)}>
+                              List Room
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
                   })}
-                </Carousel>
-              </div>
-            </div>
-          </div>
-          <div className="list container mb-5">
-            <div className="tittle text-center">
-              <h3>Discover the beautiful cities around the Vietnam</h3>
-            </div>
-            <div className="menu pt-3">
-              <div className="list-choose row">
-                {listProvince.map((location, index) => {
-                  return <div className="list-city col-xl-3 col-lg-4 col-md-6 pb-3" key={index}>
-                    <div className={`list-room item-${index} d-flex p-3 bg-light border border-2 
-                      border-success border-opacity-25 rounded wow`}>
-                      <div className="thumbnail rounded col-6 p-1">
-                        {location.address.includes("Ho Chi Minh") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/tphcm.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                        {location.address.includes("Ha Noi") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/hanoi.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                        {location.address.includes("Can Tho") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/cantho.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                        {location.address.includes("Khanh Hoa") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/nhatrang.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                        {location.address.includes("Kien Giang") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/phuquoc.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                        {location.address.includes("Da Nang") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/danang.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                        {location.address.includes("Lam Dong") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/dalat.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                        {location.address.includes("Binh Thuan") ? (
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src="../../img/slider/phanthiet.jpg"
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        ) : ""}
-                      </div>
-                      <div className="detail p-2 col-6 d-flex flex-column justify-content-center">
-                        <h5 className='text-truncate' onClick={() => onList(location.address)}>
-                          {location.address}
-                        </h5>
-                        <div className="locate">
-                          <button className="btn" onClick={() => onList(location.address)}>
-                            List Room
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                })}
-              </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="convenient container">

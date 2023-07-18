@@ -24,17 +24,17 @@ export default function HeaderHome() {
         <>
           <li>
             <NavLink className="dropdown-item" to="/profile">
-              Profile: {userLogin.name}
+              <i className="bi bi-person-check"></i> Profile: {userLogin.name}
             </NavLink>
           </li>
           <li>
-            <NavLink className="dropdown-item" to="/new">
-              New Place
+            <NavLink className="dropdown-item" to="/place/new">
+              <i className="bi bi-plus-circle-fill"></i> New Place
             </NavLink>
           </li>
           <li>
-            <NavLink className="dropdown-item" to="/list-rent">
-              Your apartment
+            <NavLink className="dropdown-item" to="/place/list-rent">
+              <i className="bi bi-house-check-fill"></i> Your apartment
             </NavLink>
           </li>
           <li>
@@ -43,7 +43,7 @@ export default function HeaderHome() {
                 localStorage.removeItem(USER_LOGIN);
                 window.location.href = "/user/login";
               }} to={''}>
-              Log Out
+              <i className="bi bi-box-arrow-left"></i> Log Out
             </NavLink>
           </li>
         </>
@@ -51,8 +51,16 @@ export default function HeaderHome() {
     }
     return (
       <>
-        <li><NavLink className="dropdown-item" to="/user/register">Sign Up</NavLink></li>
-        <li><NavLink className="dropdown-item" to="/user/login">Log In</NavLink></li>
+        <li>
+          <NavLink className="dropdown-item" to="/user/register">
+          <i className="bi bi-person-fill-add"></i> Sign Up
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className="dropdown-item" to="/user/login">
+          <i className="bi bi-person-fill-up"></i> Log In
+          </NavLink>
+        </li>
       </>
     );
   };
@@ -60,12 +68,15 @@ export default function HeaderHome() {
     if (userLogin?.name) {
       return (
         <>
-          <span>Hi!! {userLogin.name}</span>
+          <span>
+            <i className="user fa-solid fa-user"></i> {userLogin.name} <i className="bi bi-caret-down-fill"></i>
+          </span>
         </>
       )
     }
     return (
       <>
+        <i className="bar fa-solid fa-bars"></i>
         <i className="user fa-solid fa-user"></i>
       </>
     );
@@ -115,16 +126,15 @@ export default function HeaderHome() {
           </div>
           <div className="right-info">
             <li className="nav-item dropdown">
-              <NavLink className="nav-link dropdown-toggle" to="" role="button"
+              <NavLink className="nav-link" to="" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <i className="bar fa-solid fa-bars"></i>
                 {renderUser()}
               </NavLink>
               <ul className="dropdown-menu list-info">
                 {renderLogin()}
                 <li><hr /></li>
                 <li><NavLink className="dropdown-item" to="">Airbnb your home</NavLink></li>
-                <li><NavLink className="dropdown-item" to="">Help</NavLink></li>
+                <li><NavLink className="dropdown-item" to=""><i className="bi bi-info-circle-fill"></i> Help</NavLink></li>
               </ul>
             </li>
             <div>

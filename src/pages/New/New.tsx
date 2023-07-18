@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import Perk from './PerkNew';
 import PhotoUpload from './PhotoUploadNew';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,8 @@ import { RootState } from '../../redux/configStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { http } from '../../utils/config';
+import { NavLink } from 'react-router-dom';
+
 
 export default function New() {
     const [title, setTitle] = useState('')
@@ -17,6 +19,8 @@ export default function New() {
     const [checkOut, setCheckOut] = useState('')
     const [maxGuest, setMaxGuest] = useState('')
     const [price, setPrice] = useState('')
+
+
     const { userLogin } = useSelector((state: RootState) => state.userReducer);
     const addNewPlace = async (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -74,25 +78,30 @@ export default function New() {
         }
     }
     return (
-        <div className='new-place container bg-white rounded'>
+        <div className='new-place container bg-white p-4 rounded'>
+            <NavLink to="/" className='text-decoration-none'>
+                <span className='p-2 rounded-pill text-white bg-danger'>
+                    <i className="bi bi-sign-turn-left-fill"></i> Home
+                </span>
+            </NavLink>
             <div className='title text-center p-4'>
                 <span className='p-2 rounded-pill text-white bg-danger'>
                     <i className="bi bi-house"></i> New Place
                 </span>
             </div>
             <ToastContainer />
-            <div className="py-5">
+            <div className="py-5" >
                 <form onSubmit={addNewPlace}>
                     <p className='fw-bold mb-2'>Title</p>
                     <input className='form-control mb-3'
                         type='text'
-                        placeholder='Title'
+                        placeholder='Your title...'
                         value={title}
                         onChange={e => setTitle(e.target.value)} />
                     <p className='fw-bold mb-2'>Address</p>
                     <input className='form-control mb-3'
                         type='text'
-                        placeholder='Address'
+                        placeholder='District, Province, Country...'
                         value={address}
                         onChange={e => setAddress(e.target.value)} />
                     <PhotoUpload addPhoto={addPhoto} onChange={setAddPhoto} />
@@ -105,7 +114,7 @@ export default function New() {
                     <Perk selected={perk} onChange={setPerk} />
                     <div className='py-5 d-flex flex-row flex-wrap'>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check In (ex: 14 = 14h00...)</p>
+                            <p className='fw-bold'>Check In (ex: 14h00 = enter 14)</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set time ...'
@@ -113,7 +122,7 @@ export default function New() {
                                 onChange={e => setCheckIn(e.target.value)} />
                         </div>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check Out (ex: 12 = 12h00...)</p>
+                            <p className='fw-bold'>Check Out (ex: 12h00 = enter 12)</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set time ...'
