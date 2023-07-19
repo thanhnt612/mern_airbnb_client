@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent, useEffect } from 'react'
 import Perk from './PerkNew';
 import PhotoUpload from './PhotoUploadNew';
 import { useSelector } from 'react-redux';
@@ -19,9 +19,98 @@ export default function New() {
     const [checkOut, setCheckOut] = useState('')
     const [maxGuest, setMaxGuest] = useState('')
     const [price, setPrice] = useState('')
-
-
+    const [loading, setLoading] = useState(false)
     const { userLogin } = useSelector((state: RootState) => state.userReducer);
+
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
+    }, [])
+    const renderNewForm = () => {
+        if (Object.keys(userLogin).length === 0) {
+            return (
+                <div className='text-center py-3'>
+                    <h4>
+                        Please login or sign up to make a new room.
+                    </h4>
+                    <div className='py-2'>
+                        <NavLink className="text-decoration-none p-2 bg-danger text-white rounded me-2" to="/user/login">Log In</NavLink>
+                        <NavLink className="text-decoration-none p-2 bg-danger text-white rounded" to="/user/register">Sign Up</NavLink>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="py-5" >
+                    <form onSubmit={addNewPlace}>
+                        <p className='fw-bold mb-2'>Title</p>
+                        <input className='form-control mb-3'
+                            type='text'
+                            placeholder='Your title...'
+                            value={title}
+                            onChange={e => setTitle(e.target.value)} />
+                        <p className='fw-bold mb-2'>Address</p>
+                        <input className='form-control mb-3'
+                            type='text'
+                            placeholder='District, Province, Country...'
+                            value={address}
+                            onChange={e => setAddress(e.target.value)} />
+                        <PhotoUpload addPhoto={addPhoto} onChange={setAddPhoto} />
+                        <p className='fw-bold mb-2'>Description</p>
+                        <textarea className='form-control mb-3'
+                            rows={5}
+                            placeholder='Description...'
+                            value={description}
+                            onChange={e => setDescription(e.target.value)} />
+                        <Perk selected={perk} onChange={setPerk} />
+                        <div className='py-5 d-flex flex-row flex-wrap'>
+                            <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
+                                <p className='fw-bold'>Check In (ex: 14h00 = enter 14)</p>
+                                <input className='w-75 form-control'
+                                    type="text"
+                                    placeholder='Set time ...'
+                                    value={checkIn}
+                                    onChange={e => setCheckIn(e.target.value)} />
+                            </div>
+                            <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
+                                <p className='fw-bold'>Check Out (ex: 12h00 = enter 12)</p>
+                                <input className='w-75 form-control'
+                                    type="text"
+                                    placeholder='Set time ...'
+                                    value={checkOut}
+                                    onChange={e => setCheckOut(e.target.value)} />
+                            </div>
+                            <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
+                                <p className='fw-bold'>Max Guest: </p>
+                                <input className='w-75 form-control'
+                                    type="number"
+                                    placeholder='Set guest ...'
+                                    value={maxGuest}
+                                    onChange={e => setMaxGuest(e.target.value)} />
+                            </div>
+                            <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
+                                <p className='fw-bold'>Price($) / night:</p>
+                                <input className='w-75 form-control'
+                                    type="price"
+                                    placeholder='Set price ...'
+                                    value={price}
+                                    onChange={e => setPrice(e.target.value)} />
+                            </div>
+                        </div>
+                        <button className='btn w-100 btn-danger'>
+                            Make A New Place
+                        </button>
+                    </form>
+                </div>
+            )
+        }
+    }
+
+
+
+
     const addNewPlace = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         const result = await http.post('/place', {
@@ -89,68 +178,16 @@ export default function New() {
                     <i className="bi bi-house"></i> New Place
                 </span>
             </div>
+            {loading ? (
+                <div className="loader-container">
+                    <div className="spinner"></div>
+                </div>
+            ) : (
+                <>
+                    {renderNewForm()}
+                </>
+            )}
             <ToastContainer />
-            <div className="py-5" >
-                <form onSubmit={addNewPlace}>
-                    <p className='fw-bold mb-2'>Title</p>
-                    <input className='form-control mb-3'
-                        type='text'
-                        placeholder='Your title...'
-                        value={title}
-                        onChange={e => setTitle(e.target.value)} />
-                    <p className='fw-bold mb-2'>Address</p>
-                    <input className='form-control mb-3'
-                        type='text'
-                        placeholder='District, Province, Country...'
-                        value={address}
-                        onChange={e => setAddress(e.target.value)} />
-                    <PhotoUpload addPhoto={addPhoto} onChange={setAddPhoto} />
-                    <p className='fw-bold mb-2'>Description</p>
-                    <textarea className='form-control mb-3'
-                        rows={5}
-                        placeholder='Description...'
-                        value={description}
-                        onChange={e => setDescription(e.target.value)} />
-                    <Perk selected={perk} onChange={setPerk} />
-                    <div className='py-5 d-flex flex-row flex-wrap'>
-                        <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check In (ex: 14h00 = enter 14)</p>
-                            <input className='w-75 form-control'
-                                type="text"
-                                placeholder='Set time ...'
-                                value={checkIn}
-                                onChange={e => setCheckIn(e.target.value)} />
-                        </div>
-                        <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check Out (ex: 12h00 = enter 12)</p>
-                            <input className='w-75 form-control'
-                                type="text"
-                                placeholder='Set time ...'
-                                value={checkOut}
-                                onChange={e => setCheckOut(e.target.value)} />
-                        </div>
-                        <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Max Guest: </p>
-                            <input className='w-75 form-control'
-                                type="number"
-                                placeholder='Set guest ...'
-                                value={maxGuest}
-                                onChange={e => setMaxGuest(e.target.value)} />
-                        </div>
-                        <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Price($) / night:</p>
-                            <input className='w-75 form-control'
-                                type="price"
-                                placeholder='Set price ...'
-                                value={price}
-                                onChange={e => setPrice(e.target.value)} />
-                        </div>
-                    </div>
-                    <button className='btn w-100 btn-danger'>
-                        Make A New Place
-                    </button>
-                </form>
-            </div>
         </div>
     )
 }
