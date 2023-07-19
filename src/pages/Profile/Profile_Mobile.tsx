@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -21,6 +21,7 @@ export default function Profile() {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const { arrHistory } = useSelector((state: RootState) => state.bookingReducer);
+  const [loading, setLoading] = useState(false)
 
   if (Object.keys(userLogin).length === 0) {
     window.location.href = "/user/login";
@@ -29,6 +30,10 @@ export default function Profile() {
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBookingProfileApi(userLogin._id))
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, []);
   const frm: FormikProps<EditProfile> = useFormik<EditProfile>({
     initialValues: {
@@ -122,47 +127,55 @@ export default function Profile() {
             <div className='list-title'>
               <h4>Your booking</h4>
             </div>
-            {arrHistory.map((item: any, index: number) => {
-              return <div key={index}>
-                {arrBooking.map((prod: any, index: number) => {
-                  if (item.placeId === prod._id) {
-                    return <div className="list-choose d-flex flex-wrap p-3 bg-light border border-2 border-success 
+            {loading ? (
+              <div className="loader-container">
+                <div className="spinner"></div>
+              </div>
+            ) : (
+              <>
+                {arrHistory.map((item: any, index: number) => {
+                  return <div key={index}>
+                    {arrBooking.map((prod: any, index: number) => {
+                      if (item.placeId === prod._id) {
+                        return <div className="list-choose d-flex flex-wrap p-3 bg-light border border-2 border-success 
                                         border-opacity-25 rounded mb-4" key={index}>
-                      <div className="thumbnail col-12 col-md-4 p-2">
-                        <img src={prod.photos[0]}
-                          className='w-100 h-100 rounded' alt="" />
-                      </div>
-                      <div className="detail col-12 col-md-8 p-2">
-                        <div className="info">
-                          <h5>{prod.address}</h5>
-                          <p className='fw-bold'>{prod.title}</p>
-                          <p>
-                            Guest: <span className='fw-bold'>{item.numberOfGuest}</span>
-                          </p>
-                        </div>
-                        <div className="time">
-                          <p>Check In: <span className='fw-bold'> {(new Date(item.checkIn)).toLocaleDateString()}</span></p>
-                          <p>Check Out: <span className='fw-bold'> {(new Date(item.checkOut)).toLocaleDateString()}</span></p>
-                        </div>
-                        <div>
-                          <p>Total: <span className='fw-bold'>${item.price}</span></p>
-                        </div>
-                        <div className="view-more">
-                          <div className="button">
-                            <NavLink to={`/detail/${prod._id}`} className="btn">
-                              <span>
-                                View Room Details
-                              </span>
-                            </NavLink>
+                          <div className="thumbnail col-12 col-md-4 p-2">
+                            <img src={prod.photos[0]}
+                              className='w-100 h-100 rounded' alt="" />
+                          </div>
+                          <div className="detail col-12 col-md-8 p-2">
+                            <div className="info">
+                              <h5>{prod.address}</h5>
+                              <p className='fw-bold'>{prod.title}</p>
+                              <p>
+                                Guest: <span className='fw-bold'>{item.numberOfGuest}</span>
+                              </p>
+                            </div>
+                            <div className="time">
+                              <p>Check In: <span className='fw-bold'> {(new Date(item.checkIn)).toLocaleDateString()}</span></p>
+                              <p>Check Out: <span className='fw-bold'> {(new Date(item.checkOut)).toLocaleDateString()}</span></p>
+                            </div>
+                            <div>
+                              <p>Total: <span className='fw-bold'>${item.price}</span></p>
+                            </div>
+                            <div className="view-more">
+                              <div className="button">
+                                <NavLink to={`/detail/${prod._id}`} className="btn">
+                                  <span>
+                                    View Room Details
+                                  </span>
+                                </NavLink>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  }
-                })
-                }
-              </div>
-            })}
+                      }
+                    })
+                    }
+                  </div>
+                })}
+              </>
+            )}
           </div>
         </div>
       </div>

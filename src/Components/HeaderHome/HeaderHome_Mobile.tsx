@@ -97,7 +97,7 @@ export default function HeaderHome() {
             <div className="header-page">
                 <div className="header-home">
                     <NavLink to="/">
-                        <img src='./img/logo.png' alt="" />
+                        <img src='./img/logonew2.jpg' className='rounded m-1 border border-danger' width='120px' alt="" />
                     </NavLink>
                 </div>
                 <div className="header-info">

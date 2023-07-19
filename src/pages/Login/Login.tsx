@@ -42,7 +42,7 @@ export default function Login() {
             <div className="signin-form">
               <div className='d-flex flex-column align-items-center'>
                 <NavLink to="/">
-                  <img src='../img/logo.png' className='d-block' width="102px" height='32px' alt="" />
+                  <img src='../img/logonew2.jpg' className='d-block rounded border p-1 border-danger' width="120px"  alt="" />
                 </NavLink>
               </div>
               <h2 className="form-title text-center">Log In</h2>

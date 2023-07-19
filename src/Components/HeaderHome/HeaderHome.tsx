@@ -53,12 +53,12 @@ export default function HeaderHome() {
       <>
         <li>
           <NavLink className="dropdown-item" to="/user/register">
-          <i className="bi bi-person-fill-add"></i> Sign Up
+            <i className="bi bi-person-fill-add"></i> Sign Up
           </NavLink>
         </li>
         <li>
           <NavLink className="dropdown-item" to="/user/login">
-          <i className="bi bi-person-fill-up"></i> Log In
+            <i className="bi bi-person-fill-up"></i> Log In
           </NavLink>
         </li>
       </>
@@ -109,7 +109,7 @@ export default function HeaderHome() {
       <div className="header-page">
         <div className="header-home">
           <NavLink to="/">
-            <img src='./img/logo.png' alt="" />
+            <img src='./img/logonew2.jpg' className='rounded m-1 border border-danger' width='120px' alt="" />
           </NavLink>
         </div>
         <div className="header-center">

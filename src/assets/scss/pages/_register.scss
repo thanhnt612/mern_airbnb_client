@@ -1,12 +1,17 @@
 .register-page {
   .row {
     min-height: 500px;
-    padding: 100px;
     background-color: $bg-header-light;
     box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-around;
     align-items: center;
+    @include responsive("xs") {
+      padding: 20px;
+    }
+    @include responsive("md") {
+      padding: 100px;
+    }
     .signup-content {
       .signup-form {
         .form-title {
