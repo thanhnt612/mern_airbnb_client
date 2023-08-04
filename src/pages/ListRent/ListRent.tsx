@@ -13,10 +13,12 @@ export default function ListRent() {
     useEffect(() => {
         dispatch(getOwnerRoomApi(userLogin._id))
         setLoading(true);
-        setTimeout(() => {
+        if (arrOwnerRoom.length === 0) {
+            setLoading(true);
+          } else {
             setLoading(false);
-        }, 1500);
-    }, [])
+          }
+    }, [arrOwnerRoom.length])
     const renderListRoom = () => {
         if (Object.keys(userLogin).length === 0) {
             return (

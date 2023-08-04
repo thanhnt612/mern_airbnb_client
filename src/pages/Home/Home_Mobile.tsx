@@ -16,11 +16,13 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getBookingApi())
-    setLoading(true);
-    setTimeout(() => {
+    if (arrBooking.length === 0) {
+      setLoading(true);
+    } else {
       setLoading(false);
-    }, 2000);
-  }, [])
+    }
+  }, [arrBooking.length])
+  
   const onList = async (event: any) => {
     await dispatch(getBookingLocationApi(event));
     history.push(`/list/${event}`);
@@ -245,55 +247,11 @@ export default function Home() {
                     return <div className="list-city col-12 col-md-6 pb-3" key={index}>
                       <div className={`list-room item-${index} bg-light d-flex p-3 border border-2 
                       border-success border-opacity-25 rounded wow`}>
-                        <div className="thumbnail col-6 p-1">
-                          {location.address.includes("Ho Chi Minh") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/tphcm.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
-                          {location.address.includes("Ha Noi") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/hanoi.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
-                          {location.address.includes("Can Tho") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/cantho.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
-                          {location.address.includes("Khanh Hoa") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/nhatrang.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
-                          {location.address.includes("Kien Giang") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/phuquoc.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
-                          {location.address.includes("Da Nang") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/danang.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
-                          {location.address.includes("Lam Dong") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/dalat.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
-                          {location.address.includes("Binh Thuan") ? (
-                            <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src="../../img/slider/phanthiet.jpg"
-                                className='w-100 rounded' alt="" />
-                            </button>
-                          ) : ""}
+                        <div className="thumbnail rounded col-6 p-1">
+                          <button className='border-0' onClick={() => onList(location.address)}>
+                            <img src={location.photos[0]}
+                              className='w-100 rounded' alt="" />
+                          </button>
                         </div>
                         <div className="detail p-2 col-6 d-flex flex-column justify-content-center">
                           <h5 className='text-truncate' onClick={() => onList(location.address)}>

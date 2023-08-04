@@ -13,15 +13,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const listProvince = arrBooking.filter((ele, ind) => ind === arrBooking.findIndex(elem => elem.address === ele.address))
-  
+
   useEffect(() => {
     dispatch(getBookingApi())
-    setLoading(true);
-    setTimeout(() => {
+    if (arrBooking.length === 0) {
+      setLoading(true);
+    } else {
       setLoading(false);
-    }, 1500);
-  }, [])
-
+    }
+  }, [arrBooking.length])
   const onList = async (event: any) => {
     await dispatch(getBookingLocationApi(event));
     history.push(`/list/${event}`);
@@ -275,10 +275,10 @@ export default function Home() {
                       <div className={`list-room item-${index} d-flex p-3 bg-light border border-2 
                       border-success border-opacity-25 rounded wow`}>
                         <div className="thumbnail rounded col-6 p-1">
-                        <button className='border-0' onClick={() => onList(location.address)}>
-                              <img src={location.photos[0]}
-                                className='w-100 rounded' alt="" />
-                            </button>
+                          <button className='border-0' onClick={() => onList(location.address)}>
+                            <img src={location.photos[0]}
+                              className='w-100 rounded' alt="" />
+                          </button>
                         </div>
                         <div className="detail p-2 col-6 d-flex flex-column justify-content-center">
                           <h5 className='text-truncate' onClick={() => onList(location.address)}>

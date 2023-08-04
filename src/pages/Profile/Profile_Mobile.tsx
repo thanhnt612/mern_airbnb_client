@@ -30,11 +30,12 @@ export default function Profile() {
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBookingProfileApi(userLogin._id))
-    setLoading(true);
-    setTimeout(() => {
+    if (arrHistory.length === 0) {
+      setLoading(true);
+    } else {
       setLoading(false);
-    }, 1500);
-  }, []);
+    }
+  }, [arrHistory.length]);
   const frm: FormikProps<EditProfile> = useFormik<EditProfile>({
     initialValues: {
       email: userLogin.email,
