@@ -110,7 +110,7 @@ export default function HeaderHome() {
                             <ul className="dropdown-menu list-info">
                                 {renderLogin()}
                                 <li><hr /></li>
-                                <li><NavLink className="dropdown-item" to="">Airbnb your home</NavLink></li>
+                                <li><NavLink className="dropdown-item" to="">TravelDnD Your Home</NavLink></li>
                                 <li><NavLink className="dropdown-item" to="">Help</NavLink></li>
                             </ul>
                         </li>

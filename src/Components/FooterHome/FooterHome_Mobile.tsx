@@ -46,7 +46,7 @@ export default function Footerhome() {
                         <ul>
                             <li>
                                 <NavLink to="">
-                                    Airbnb.org: relief housing
+                                TravelDnD: relief housing
                                 </NavLink>
                             </li>
                             <li>
@@ -61,7 +61,7 @@ export default function Footerhome() {
                         <ul>
                             <li>
                                 <NavLink to="">
-                                    Rent a house on Airbnb
+                                    Rent a house on TravelDnD
                                 </NavLink>
                             </li>
                             <li>
@@ -87,7 +87,7 @@ export default function Footerhome() {
                         </ul>
                     </div>
                     <div className="footer-4 col-6">
-                        <p>Airbnb</p>
+                        <p>TravelDnD</p>
                         <ul>
                             <li>
                                 <NavLink to="">
@@ -118,7 +118,7 @@ export default function Footerhome() {
                     </div>
                 </div>
                 <div className='license border-top py-3 d-flex align-items-center'>
-                    <p>© 2023 Airbnb, Inc.</p>
+                    <p>© 2023 TravelDnD, Inc.</p>
                 </div>
                 <div className="list-license">
                     <ul>

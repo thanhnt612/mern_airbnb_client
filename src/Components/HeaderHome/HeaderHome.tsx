@@ -119,7 +119,7 @@ export default function HeaderHome() {
         </div>
         <div className="header-info">
           <div className="left-info">
-            <div>Airbnb your home</div>
+            <div>TravelDnD Your Home</div>
           </div>
           <div className="center-info">
             <i className="fa fa-globe"></i>
@@ -133,7 +133,7 @@ export default function HeaderHome() {
               <ul className="dropdown-menu list-info">
                 {renderLogin()}
                 <li><hr /></li>
-                <li><NavLink className="dropdown-item" to="">Airbnb your home</NavLink></li>
+                <li><NavLink className="dropdown-item" to="">TravelDnD Your Home</NavLink></li>
                 <li><NavLink className="dropdown-item" to=""><i className="bi bi-info-circle-fill"></i> Help</NavLink></li>
               </ul>
             </li>
