@@ -34,7 +34,7 @@ export default function Register() {
       password: yup
         .string()
         .min(5)
-        .matches(passwordRegex, { message: "Please create a stronger password" })
+        .matches(passwordRegex, { message: "Password must be min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit" })
         .required("Required"),
       confirmPassword: yup
         .string()

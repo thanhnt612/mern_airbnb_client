@@ -60,7 +60,6 @@ export const registerApi = (register: UserRegister) => {
 export const loginApi = (userLogin: UserLogin) => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/login', userLogin);
-        console.log(result);
         if (result.data.status === 200) {
             toast.success('Login Successfully !!!', {
                 position: "top-center",
