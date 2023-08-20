@@ -77,7 +77,7 @@ export default function Home() {
             <h3>Let's start the journey</h3>
             <button className='btn'
               onClick={() => scrollToSection(content)}>
-              Booking your table now!
+              👉 Booking your table now! 👈
             </button>
           </div>
           <div className="carousel-indicators" style={{ zIndex: "3" }}>
@@ -201,8 +201,8 @@ export default function Home() {
       <div className='content'>
         <div className="main">
           <div className="list-detail mb-3" ref={content}>
-            <div className="tittle text-center text-white">
-              <h3 className='fw-bold'>Rooms</h3>
+            <div className="tittle text-center">
+              <h3 className='fw-bold'>Apartment</h3>
             </div>
             {loading ? (
               <div className="loader-container">
@@ -237,16 +237,14 @@ export default function Home() {
                           </div>
                           <div className="detail rounded-bottom col-12 py-3 p-2">
                             <div className="info">
-                              <h5>{room.address}</h5>
-                              <p className='text-truncate mb-1'>{room.title}</p>
-                              <p><span className='fw-bold'>${room.price}</span> - night</p>
+                              <h5>🏩{room.address}</h5>
+                              <p className='text-truncate mb-1'>🔔{room.title}</p>
+                              <p><span className='fw-bold'>💲{room.price}</span> - night</p>
                             </div>
                             <div className="view-more">
                               <div className="button">
-                                <NavLink to={`/detail/${room._id}`} className="btn">
-                                  <span>
-                                    View Room Details
-                                  </span>
+                                <NavLink to={`/detail/${room._id}`} className="btn">                              
+                                    View
                                 </NavLink>
                               </div>
                             </div>
@@ -271,22 +269,16 @@ export default function Home() {
               ) : (
                 <div className="list-choose row">
                   {listProvince.map((location, index) => {
-                    return <div className="list-city col-xl-3 col-lg-4 col-md-6 pb-3" key={index}>
-                      <div className={`list-room item-${index} d-flex p-3 bg-light border border-2 
+                    return <div className="list-city col-lg-4 col-md-6 pb-3" key={index}>
+                      <div className={`list-room item-${index} p-3 bg-light border border-2 
                       border-success border-opacity-25 rounded wow`}>
-                        <div className="thumbnail rounded col-6 p-1">
-                          <button className='border-0' onClick={() => onList(location.address)}>
-                            <img src={location.photos[0]}
-                              className='w-100 rounded' alt="" />
-                          </button>
-                        </div>
-                        <div className="detail p-2 col-6 d-flex flex-column justify-content-center">
-                          <h5 className='text-truncate' onClick={() => onList(location.address)}>
-                            {location.address}
+                        <div className="detail p-2 d-flex flex-row justify-content-between align-items-center">
+                          <h5 className='col-8 d-flex align-items-center' onClick={() => onList(location.address)}>
+                          📌{location.address}
                           </h5>
-                          <div className="locate">
+                          <div className="locate col-4 text-end">
                             <button className="btn" onClick={() => onList(location.address)}>
-                              List Room
+                            👉 List
                             </button>
                           </div>
                         </div>

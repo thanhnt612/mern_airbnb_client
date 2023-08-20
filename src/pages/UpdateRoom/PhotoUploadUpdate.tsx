@@ -22,7 +22,7 @@ export default function PhotoUpload({ addPhoto, onChange }: any) {
     }
     return (
         <>
-            <p className='fw-bold mb-2'>Photo</p>
+            <p className='fw-bold mb-2'>📷Photo</p>
             <div className="d-flex flex-row flex-wrap mb-3">
                 {addPhoto.map((item: any, index: number) => {
                     return <div className='col-6 col-md-3 col-lg-2 col-2 p-1 position-relative' key={index}>
@@ -32,7 +32,7 @@ export default function PhotoUpload({ addPhoto, onChange }: any) {
                         </button>
                     </div>
                 })}
-                <label className='col-6 col-md-3 col-lg-2 p-5 border rounded bg-white d-flex align-items-center justify-content-center' style={{ cursor: "pointer" }}>
+                <label className='col-6 col-md-3 col-lg-2 p-5 border rounded bg-white text-dark d-flex align-items-center justify-content-center' style={{ cursor: "pointer" }}>
                     <i className="fs-4 bi bi-cloud-arrow-up"></i>&nbsp;Upload
                     <input type="file" className='d-none' multiple
                         onChange={uploadPhoto} />

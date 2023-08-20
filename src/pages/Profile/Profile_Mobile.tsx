@@ -133,37 +133,37 @@ export default function Profile() {
                 <div className="spinner"></div>
               </div>
             ) : (
-              <>
+              <div className='d-flex flex-row flex-wrap'>
                 {arrHistory.map((item: any, index: number) => {
-                  return <div key={index}>
+                  return <div className='col-12 p-2' key={index}>
                     {arrBooking.map((prod: any, index: number) => {
                       if (item.placeId === prod._id) {
                         return <div className="list-choose d-flex flex-wrap p-3 bg-light border border-2 border-success 
                                         border-opacity-25 rounded mb-4" key={index}>
-                          <div className="thumbnail col-12 col-md-4 p-2">
+                          <div className="thumbnail col-12 col-md-7 p-2">
                             <img src={prod.photos[0]}
                               className='w-100 h-100 rounded' alt="" />
                           </div>
-                          <div className="detail col-12 col-md-8 p-2">
+                          <div className="detail d-flex flex-column justify-content-center col-12 col-md-5 p-2">
                             <div className="info">
-                              <h5>{prod.address}</h5>
-                              <p className='fw-bold'>{prod.title}</p>
-                              <p>
+                              <h5>📌{prod.address}</h5>
+                              <p className='mb-1 text-truncate fw-bold'>🔔{prod.title}</p>
+                              <p className='mb-1'>
                                 Guest: <span className='fw-bold'>{item.numberOfGuest}</span>
                               </p>
                             </div>
                             <div className="time">
-                              <p>Check In: <span className='fw-bold'> {(new Date(item.checkIn)).toLocaleDateString()}</span></p>
-                              <p>Check Out: <span className='fw-bold'> {(new Date(item.checkOut)).toLocaleDateString()}</span></p>
+                              <p className='mb-1'>Check In: <span className='fw-bold'> {(new Date(item.checkIn)).toLocaleDateString()}</span></p>
+                              <p className='mb-1'>Check Out: <span className='fw-bold'> {(new Date(item.checkOut)).toLocaleDateString()}</span></p>
                             </div>
                             <div>
-                              <p>Total: <span className='fw-bold'>${item.price}</span></p>
+                              <p className='mb-1'>Total: <span className='fw-bold'>💲{item.price}</span></p>
                             </div>
                             <div className="view-more">
                               <div className="button">
                                 <NavLink to={`/detail/${prod._id}`} className="btn">
                                   <span>
-                                    View Room Details
+                                    View Detail
                                   </span>
                                 </NavLink>
                               </div>
@@ -175,7 +175,7 @@ export default function Profile() {
                     }
                   </div>
                 })}
-              </>
+              </div>
             )}
           </div>
         </div>

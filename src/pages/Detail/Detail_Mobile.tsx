@@ -172,40 +172,31 @@ export default function Detail() {
     return (
         <div className='detail-page-mobile'>
             <div className="container">
-                <h3 className='pt-3'>{arrBookingId?.title}</h3>
-                <div className="title">
+                <h3 className='py-3 text-center border-bottom border-2'>🔔{arrBookingId?.title}</h3>
+                <div className="title pt-2">
                     <div className="info">
                         <ul>
-                            <li>
-                                <p><i className='fa fa-star'></i>5,0
-                                    <span
-                                        className='underline'>(20 reviews)
-                                    </span></p>
+                            <li className='py-1'>
+                                🏨<span>Super host ⭐5,0</span>
                             </li>
                             <li>
-                                <i className="fa-solid fa-house-user"></i>
-                                <span>Super host</span>
-                            </li>
-                            <li className='underline'>
-                                {arrBookingId?.address}
+                                📌{arrBookingId?.address}
                             </li>
                         </ul>
                     </div>
                     <div className="share">
                         <ul>
-                            <li className='underline'>
-                                <i className='fa fa-share'></i>
-                                <span>Share</span>
+                            <li>
+                                ↪️<span>Share</span>
                             </li>
                             <li>
-                                <i className='fa fa-heart'></i>
-                                <span>Save</span>
+                                ❤️ <span>Save</span>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="image py-2">
-                    <div className='d-none d-md-block pic'>
+                    <div className='d-none pic'>
                         {arrBookingId?.photos.map((pic: any, index: number) => {
                             return (
                                 <img src={pic} className={`w-100 h-100 p-1 item-${index}`} alt="" key={index}
@@ -246,62 +237,51 @@ export default function Detail() {
                     <div className="row">
                         <div className="content col-12">
                             <div className="row">
-                                <div className="title-left col-9">
-                                    <h3>Entire apartment - Apartments for Rent</h3>
+                                <div className="title-left">
+                                    <h3>🔔Entire apartment - Apartments for Rent</h3>
                                 </div>
                             </div>
                             <div className="service col-12 border-top border-bottom py-3">
                                 <div className="row">
                                     <div className="item d-flex pb-2">
-                                        <div className="col-1">
-                                            <i className='fa fa-home'></i>
+                                        <div className="col-1 fs-2">
+                                            🏨
                                         </div>
-                                        <div className="col-11">
-                                            <h4>The Whole House</h4>
+                                        <div className="col-11 d-flex flex-column justify-content-center">
+                                            <h4 className='m-0'>The Whole House</h4>
                                             <p>Luxury Apartments</p>
                                         </div>
                                     </div>
                                     <div className="item d-flex pb-2">
-                                        <div className="col-1">
-                                            <i className="fa-solid fa-hand-sparkles"></i>
+                                        <div className="col-1 fs-2">
+                                            🧼️
                                         </div>
-                                        <div className="col-11">
-                                            <h4>Enhanced Clean</h4>
-                                            <p>The five-step enhanced cleaning process for Airbnb <NavLink to=''>Show more</NavLink>
+                                        <div className="col-11 d-flex flex-column justify-content-center">
+                                            <h4 className='m-0'>Enhanced Clean</h4>
+                                            <p>The five-step enhanced cleaning process for DnD
                                             </p>
                                         </div>
                                     </div>
                                     <div className="item d-flex pb-2">
-                                        <div className="col-1">
-                                            <i className="fa-solid fa-house-user"></i>
+                                        <div className="col-1 fs-2">
+                                            💯
                                         </div>
-                                        <div className="col-11">
-                                            <h4>Super host</h4>
+                                        <div className="col-11 d-flex flex-column justify-content-center">
+                                            <h4 className='m-0'>Super host</h4>
                                             <p>
                                                 {arrBookingId?.description}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="item d-flex pb-2">
-                                        <div className="col-1">
-                                            <i className="fa-regular fa-calendar-days"></i>
+                                        <div className="col-1 fs-2">
+                                            📅
                                         </div>
-                                        <div className="col-11">
-                                            <h4>Free for 48 hours</h4>
+                                        <div className="col-11 d-flex flex-column justify-content-center">
+                                            <h4 className='m-0'>Free for 48 hours</h4>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="authority py-3">
-                                <img src="https://a0.muscache.com/im/pictures/54e427bb-9cb7-4a81-94cf-78f19156faad.jpg" alt=""
-                                    width={125} height={26}
-                                />
-                                <p className='pt-3'>
-                                    AirCover is comprehensive protection for Airbnb guests, included for free with every booking. It includes protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in, as well as a 24-hour Safety Line.
-                                </p>
-                                <NavLink to=''>
-                                    Find out more
-                                </NavLink>
                             </div>
                             <div className="facility py-3 border-top w-100">
                                 <h4>What this place offers</h4>
@@ -344,23 +324,23 @@ export default function Detail() {
                             </div>
                             <div className="schedule">
                                 {checkIn >= 12 ?
-                                    <p><span className='fw-bold'>Check In:</span> {arrBookingId?.checkIn}:00 PM</p>
+                                    <p><span className='fw-bold'>➡️Check In:</span> {arrBookingId?.checkIn}:00 PM</p>
                                     :
-                                    <p><span className='fw-bold'>Check In</span> {arrBookingId?.checkIn}:00 AM</p>
+                                    <p><span className='fw-bold'>➡️Check In</span> {arrBookingId?.checkIn}:00 AM</p>
                                 }
                                 {checkOut >= 12 ?
-                                    <p><span className='fw-bold'>Check Out:</span> {arrBookingId?.checkOut}:00 PM</p>
+                                    <p><span className='fw-bold'>⬅️Check Out:</span> {arrBookingId?.checkOut}:00 PM</p>
                                     :
-                                    <p><span className='fw-bold'>Check Out:</span>  {arrBookingId?.checkOut}:00 AM</p>
+                                    <p><span className='fw-bold'>⬅️Check Out:</span>  {arrBookingId?.checkOut}:00 AM</p>
                                 }
-                                <p><span className='fw-bold'>Max guest:</span> {arrBookingId?.maxGuest} guest</p>
+                                <p><span className='fw-bold'>#️⃣Max guest:</span> {arrBookingId?.maxGuest} guest</p>
                             </div>
                         </div>
                         <div className="payment col-12 p-3 d-flex justify-content-center">
                             <form onSubmit={handleSubmit}>
                                 <div className="check p-4 bg-light">
                                     <div className="cost">
-                                        <p> <span className='fw-bold'>${arrBookingId?.price}</span>/night</p>
+                                        <p> <span className='fw-bold'>💲{arrBookingId?.price}</span>/night</p>
                                     </div>
                                     <div className="row">
                                         <div className="calendar p-2 text-center ">
@@ -449,27 +429,27 @@ export default function Detail() {
                                         </div>
                                         <div className="check-payment border-bottom">
                                             <div className="cost-amount d-flex justify-content-between">
-                                                <div className="cost-date text-decoration-underline">
+                                                <div className="cost-date">
                                                     <p>
-                                                        ${price} x {dateDiff
+                                                        💲{price} x {dateDiff
                                                             (format(range[0].startDate, "yyyy-MM-dd"),
                                                                 format(range[0].endDate, "yyyy-MM-dd"))} night
                                                     </p>
                                                 </div>
                                                 <div className="bill">
                                                     <p>
-                                                        ${price * dateDiff
+                                                        💲{price * dateDiff
                                                             (format(range[0].startDate, "yyyy-MM-dd"),
                                                                 format(range[0].endDate, "yyyy-MM-dd"))}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="service-cost d-flex justify-content-between">
-                                                <div className="service text-decoration-underline">
+                                                <div className="service">
                                                     <p>Cleaning fee</p>
                                                 </div>
                                                 <div className="cost">
-                                                    $10
+                                                    💲10
                                                 </div>
                                             </div>
                                         </div>
@@ -478,7 +458,7 @@ export default function Detail() {
                                                 <p>Total before taxes</p>
                                             </div>
                                             <div className="in-total">
-                                                ${price *
+                                                💲{price *
                                                     dateDiff
                                                         (format(range[0].startDate, "yyyy-MM-dd"),
                                                             format(range[0].endDate, "yyyy-MM-dd")) + 10}

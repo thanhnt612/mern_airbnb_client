@@ -50,7 +50,7 @@ export default function Register() {
   });
   return (
     <div className='register-page '>
-      <div className="row rounded">
+      <div className="main row rounded">
         <div className="signup-content">
           <div className="signup-form">
             <div className='d-flex flex-column align-items-center'>

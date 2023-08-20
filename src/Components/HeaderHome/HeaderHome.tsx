@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { DispatchType, RootState } from '../../redux/configStore'
 import { USER_LOGIN } from '../../utils/config';
 import { getBookingLocationApi } from '../../redux/reducers/bookingReducer';
 import { history } from "../../index";
+import useThemeSwitcher from '../hooks/useThemeSwitcher';
 
 
 export default function HeaderHome() {
@@ -104,25 +105,79 @@ export default function HeaderHome() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
+
+  const [mode, setMode]: any = useThemeSwitcher();
+
   return (
-    <div className='header-layout'>
+    <div className='header-layout px-5 bg-white sticky-top border-bottom border-danger border-3'>
       <div className="header-page">
         <div className="header-home">
           <NavLink to="/">
             <img src='./img/logonew2.jpg' className='rounded m-1 border border-danger' width='120px' alt="" />
           </NavLink>
         </div>
-        <div className="header-center">
-          <h6>Stays</h6>
-          <h6>Experiences</h6>
-          <h6>Online Experiences</h6>
-        </div>
+          <div className="header-search">
+            <form onSubmit={handleSubmit}>
+              <div className="form-fill border-2 border row">
+                <div className="location col-9">
+                  <h4>Where</h4>
+                  <div className="destination d-flex">
+                    <input
+                      value={search}
+                      onChange={handleChange}
+                      placeholder='Search destinations' style={{ height: "32px" }} />
+                    {show && <button
+                      className={isActive ? 'btn p-0 visible' : 'btn p-0'}
+                      onClick={() => { setSearch(""); handleClick() }}>
+                      <i className="text-danger fs-5 bi bi-x-circle"></i>
+                    </button>}
+                  </div>
+                </div>
+                <div className="add col-3">
+                  <div className="btn col-5">
+                    <button type='submit'
+                      onClick={() => onSearchRoom(search)}
+                    >
+                      <i className='fa fa-search'></i> Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {search.length !== 0 && (
+                <div className="result-location rounded">
+                  {address
+                    .filter((item) => {
+                      const searchTerm = search.toString().toLowerCase();
+                      const location = item.address.toLowerCase();
+                      const province = item.address.substring(item.address.indexOf(",") + 1).trim().toLowerCase()
+                      return (
+                        searchTerm &&
+                        (location.startsWith(searchTerm) || province.startsWith(searchTerm)) &&
+                        (location !== searchTerm || province !== searchTerm)
+                      );
+                    }).map((item, index) => (
+                      <button
+                        onClick={() => { onSearchRoom(item.address); handleClick() }}
+                        className={isActive ? 'data-result p-2 invisible' : 'data-result p-2'}
+                        key={index}>
+                        {item.address}
+                      </button>
+                    ))}
+                </div>
+              )}
+            </form>
+          </div >
         <div className="header-info">
-          <div className="left-info">
-            <div>TravelDnD Your Home</div>
-          </div>
           <div className="center-info">
-            <i className="fa fa-globe"></i>
+            <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
+              className={`btn border-1 border-dark
+            ${mode === 'light' ? "bg-dark text-light" : "bg-light text-dark"}`}>
+              {
+                mode === 'dark'
+                  ? <i className="bi bi-brightness-high"></i>
+                  : <i className="bi bi-moon-stars"></i>
+              }
+            </button>
           </div>
           <div className="right-info">
             <li className="nav-item dropdown">
@@ -132,9 +187,6 @@ export default function HeaderHome() {
               </NavLink>
               <ul className="dropdown-menu list-info">
                 {renderLogin()}
-                <li><hr /></li>
-                <li><NavLink className="dropdown-item" to="">TravelDnD Your Home</NavLink></li>
-                <li><NavLink className="dropdown-item" to=""><i className="bi bi-info-circle-fill"></i> Help</NavLink></li>
               </ul>
             </li>
             <div>
@@ -142,57 +194,6 @@ export default function HeaderHome() {
           </div>
         </div>
       </div>
-      <div className="header-search container">
-        <form onSubmit={handleSubmit}>
-          <div className="form-fill border row">
-            <div className="location col-9">
-              <h4>Where</h4>
-              <div className="destination d-flex">
-                <input
-                  value={search}
-                  onChange={handleChange}
-                  placeholder='Search destinations' style={{ height: "32px" }} />
-                {show && <button
-                  className={isActive ? 'btn p-0 visible' : 'btn p-0'}
-                  onClick={() => { setSearch(""); handleClick() }}>
-                  <i className="text-danger fs-5 bi bi-x-circle"></i>
-                </button>}
-              </div>
-            </div>
-            <div className="add col-3">
-              <div className="btn col-5">
-                <button type='submit'
-                  onClick={() => onSearchRoom(search)}
-                >
-                  <i className='fa fa-search'></i> Search
-                </button>
-              </div>
-            </div>
-          </div>
-          {search.length !== 0 && (
-            <div className="result-location">
-              {address
-                .filter((item) => {
-                  const searchTerm = search.toString().toLowerCase();
-                  const location = item.address.toLowerCase();
-                  const province = item.address.substring(item.address.indexOf(",") + 1).trim().toLowerCase()
-                  return (
-                    searchTerm &&
-                    (location.startsWith(searchTerm) || province.startsWith(searchTerm)) &&
-                    (location !== searchTerm || province !== searchTerm)
-                  );
-                }).map((item, index) => (
-                  <button
-                    onClick={() => { onSearchRoom(item.address); handleClick() }}
-                    className={isActive ? 'data-result p-2 invisible' : 'data-result p-2'}
-                    key={index}>
-                    {item.address}
-                  </button>
-                ))}
-            </div>
-          )}
-        </form>
-      </div >
     </div >
   )
 }

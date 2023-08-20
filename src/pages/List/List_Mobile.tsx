@@ -21,27 +21,28 @@ export default function List() {
       <div className="container">
         <div className="row">
           <div className="content col-12">
-            <div className="tittle pt-3" >
+            <div className="tittle pt-3 text-center" >
               <p>
-                Have <span className='fw-bold'>{arrLocation?.length}</span> selected accommodation
+                Have <span className='fw-bold text-danger'>{arrLocation?.length}</span> selected accommodation
               </p>
-              <h5>
-                Selected accommodation in {arrLocation?.[0].address}
+              <h5 className='text-center'>
+                Selected accommodation in <br /> {arrLocation?.[0].address}
               </h5>
             </div>
             {arrLocation?.map((location: any, index: number) => {
-              return <div className={`list-choose item-${index} d-flex bg-light border border-2 
+              return <div className={`list-choose item-${index} d-flex flex-wrap bg-light border border-2 
                             border-success border-opacity-25 rounded wow`} key={index}>
-                <div className="thumbnail d-flex align-items-center p-2 col-5">
+                <div className="thumbnail d-flex align-items-center p-2 col-12 col-md-5">
                   <img src={location.photos[0]}
                     className='w-100 rounded' alt="" />
                 </div>
-                <div className="detail d-flex flex-column justify-content-center p-3 col-7">
+                <div className="detail d-flex flex-column justify-content-center p-3 col-12 col-md-7">
                   <div className="info">
-                    <h5>{location.title}</h5>
-                    <div className="d-flex flex-row flex-wrap">
+                    <h5 className='m-0 text-truncate'>🏩{location.title}</h5>
+                    <div className="d-flex flex-row flex-nowrap text-truncate py-2">
+                      <span className='fw-bold me-2'>⚙️Service:</span>
                       {location?.perks.map((perk: any, index: number) => {
-                        return (<div className='col-3 me-2 d-flex flex-row' key={index}>
+                        return (<div className='col-2 col-md-2 d-flex flex-row' key={index}>
                           {perk === 'wifi' ?
                             (<>
                               <i className="me-1 bi bi-wifi"></i> <span>Wifi</span>
@@ -59,25 +60,25 @@ export default function List() {
                             : ""}
                           {perk === 'park' ?
                             (<>
-                              <i className="me-1 bi bi-p-circle"></i> <span>Parking</span>
+                              <i className="me-1 bi bi-p-circle"></i> <span>Park</span>
                             </>)
                             : ""}
                           {perk === 'entrance' ?
                             (<>
-                              <i className="me-1 bi bi-signpost-split"></i> <span>Entrance</span>
+                              <i className="me-1 bi bi-signpost-split"></i> <span>Entry</span>
                             </>)
                             : ""}
                         </div>)
                       })}
                     </div>
-                    <p className='my-1'>Max guest: <span className='fw-bold'>{location.maxGuest}</span></p>
-                    <p className='my-1'><span className='fw-bold'>${location.price}</span> / night </p>
+                    <p className='mb-2'>#️⃣Max guest: <span className='fw-bold'>{location.maxGuest}</span></p>
+                    <p className='m-0'><span className='fw-bold'>💲{location.price}</span> / night </p>
                   </div>
                   <div className="view-more">
                     <div className="button">
                       <NavLink to={`/detail/${location._id}`} className="btn">
                         <span>
-                          View Room Details
+                          View
                         </span>
                       </NavLink>
                     </div>

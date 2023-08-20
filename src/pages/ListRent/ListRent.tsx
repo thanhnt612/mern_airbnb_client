@@ -15,9 +15,9 @@ export default function ListRent() {
         setLoading(true);
         if (arrOwnerRoom.length === 0) {
             setLoading(true);
-          } else {
+        } else {
             setLoading(false);
-          }
+        }
     }, [arrOwnerRoom.length])
     const renderListRoom = () => {
         if (Object.keys(userLogin).length === 0) {
@@ -48,13 +48,16 @@ export default function ListRent() {
             return (
                 <div className='py-3'>
                     {arrOwnerRoom.map((item: any, index: number) => {
-                        return <div className="main p-3 d-flex flex-row flex-wrap rounded border border-2 border-success 
+                        return <div className="main my-3 p-3 d-flex flex-row flex-wrap rounded border border-2 border-success 
                         border-opacity-25" key={index}>
-                            <div className="col-12 col-md-3 ">
+                            <div className="col-12 col-md-3 position-relative">
                                 <img src={item.photos[0]} alt="" className='object-fit-cover rounded w-100 h-100' />
+                                    <NavLink className="d-block d-md-none m-2 position-absolute text-light btn btn-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0" to={`/place/update-room/${item._id}`}>
+                                        ✏️
+                                    </NavLink>
                             </div>
                             <div className="col-12 col-md-9 detail p-3 position-relative">
-                                <h5 className='fw-bold'>
+                                <h5 className='fw-bold text-truncate'>
                                     {item.address}
                                 </h5>
                                 <p>
@@ -63,12 +66,12 @@ export default function ListRent() {
                                 <p className='text-truncate'>
                                     {item.description}
                                 </p>
-                                <NavLink className="position-absolute pt-2 top-0 end-0" to={`/place/update-room/${item._id}`}>
-                                    <i className="fs-2 bi bi-pencil-square"></i>
+                                <NavLink className="d-none d-md-block position-absolute text-light btn btn-outline-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0" to={`/place/update-room/${item._id}`}>
+                                    ✏️
                                 </NavLink>
-                                <NavLink to={`/detail/${item._id}`} className="btn btn-outline-danger">
+                                <NavLink to={`/detail/${item._id}`} className="btn btn-danger">
                                     <span>
-                                        View Room Details
+                                        👉View Details
                                     </span>
                                 </NavLink>
                             </div>
@@ -79,13 +82,13 @@ export default function ListRent() {
         }
     }
     return (
-        <div className='container bg-white p-4 rounded'>
+        <div className='container list-rent bg-white p-4 rounded'>
             <NavLink to="/" className='text-decoration-none'>
                 <span className='p-2 rounded-pill text-white bg-danger'>
                     <i className="bi bi-sign-turn-left-fill"></i> Home
                 </span>
             </NavLink>
-            <div className='title text-center p-4'>
+            <div className='title text-start text-md-center py-4 p-md-4'>
                 <span className='p-2 rounded-pill text-white bg-danger'>
                     <i className="bi bi-house-add"></i> Your apartment for rent
                 </span>

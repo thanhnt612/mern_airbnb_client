@@ -11,8 +11,8 @@ export default function Perk({ selected, onChange }: any) {
     }
     return (
         <>
-            <p className='fw-bold mb-2'>Perks</p>
-            <div className="d-flex flex-row flex-wrap">
+            <p className='fw-bold mb-2'>⚙️Perks</p>
+            <div className="check-item d-flex flex-row flex-wrap">
                 <label className='col-12 col-md-6 col-lg-3 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
                     <input type="checkbox" className='me-2' 
                     checked={selected.includes('wifi')} 

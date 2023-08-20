@@ -45,20 +45,20 @@ export default function New() {
             return (
                 <div className="py-5" >
                     <form onSubmit={addNewPlace}>
-                        <p className='fw-bold mb-2'>Title</p>
+                        <p className='fw-bold mb-2'>🔔Title</p>
                         <input className='form-control mb-3'
                             type='text'
                             placeholder='Your title...'
                             value={title}
                             onChange={e => setTitle(e.target.value)} />
-                        <p className='fw-bold mb-2'>Address</p>
+                        <p className='fw-bold mb-2'>📌Address</p>
                         <input className='form-control mb-3'
                             type='text'
                             placeholder='District, Province, Country...'
                             value={address}
                             onChange={e => setAddress(e.target.value)} />
                         <PhotoUpload addPhoto={addPhoto} onChange={setAddPhoto} />
-                        <p className='fw-bold mb-2'>Description</p>
+                        <p className='fw-bold mb-2'>📜Description</p>
                         <textarea className='form-control mb-3'
                             rows={5}
                             placeholder='Description...'
@@ -67,7 +67,7 @@ export default function New() {
                         <Perk selected={perk} onChange={setPerk} />
                         <div className='py-5 d-flex flex-row flex-wrap'>
                             <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                                <p className='fw-bold'>Check In (ex: 14h00 = enter 14)</p>
+                                <p className='fw-bold'>📅Check In (14h00 = enter 14)</p>
                                 <input className='w-75 form-control'
                                     type="text"
                                     placeholder='Set time ...'
@@ -75,7 +75,7 @@ export default function New() {
                                     onChange={e => setCheckIn(e.target.value)} />
                             </div>
                             <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                                <p className='fw-bold'>Check Out (ex: 12h00 = enter 12)</p>
+                                <p className='fw-bold'>📅Check Out (12h00 = enter 12)</p>
                                 <input className='w-75 form-control'
                                     type="text"
                                     placeholder='Set time ...'
@@ -83,7 +83,7 @@ export default function New() {
                                     onChange={e => setCheckOut(e.target.value)} />
                             </div>
                             <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                                <p className='fw-bold'>Max Guest: </p>
+                                <p className='fw-bold'>#️⃣Max Guest: </p>
                                 <input className='w-75 form-control'
                                     type="number"
                                     placeholder='Set guest ...'
@@ -91,7 +91,7 @@ export default function New() {
                                     onChange={e => setMaxGuest(e.target.value)} />
                             </div>
                             <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                                <p className='fw-bold'>Price($) / night:</p>
+                                <p className='fw-bold'>Price(💲) / night:</p>
                                 <input className='w-75 form-control'
                                     type="price"
                                     placeholder='Set price ...'
@@ -107,9 +107,6 @@ export default function New() {
             )
         }
     }
-
-
-
 
     const addNewPlace = async (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -167,7 +164,7 @@ export default function New() {
         }
     }
     return (
-        <div className='new-place container bg-white p-4 rounded'>
+        <div className='new-place bg-white container p-4 rounded'>
             <NavLink to="/" className='text-decoration-none'>
                 <span className='p-2 rounded-pill text-white bg-danger'>
                     <i className="bi bi-sign-turn-left-fill"></i> Home

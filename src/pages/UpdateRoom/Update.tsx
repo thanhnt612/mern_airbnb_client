@@ -76,7 +76,7 @@ export default function Update() {
         }
     }
     return (
-        <div className='container bg-white p-4 rounded'>
+        <div className='container update-place bg-white p-4 rounded'>
             <NavLink to="/" className='text-decoration-none'>
                 <span className='p-2 rounded-pill text-white bg-danger'>
                     <i className="bi bi-sign-turn-left-fill"></i> Home
@@ -90,20 +90,20 @@ export default function Update() {
             <ToastContainer />
             <div className="py-5">
                 <form onSubmit={updatePlace}>
-                    <p className='fw-bold mb-2'>Title</p>
+                    <p className='fw-bold mb-2'>🔔Title</p>
                     <input className='form-control mb-3'
                         type='text'
                         placeholder='Title'
                         value={title}
                         onChange={e => setTitle(e.target.value)} />
-                    <p className='fw-bold mb-2'>Address</p>
+                    <p className='fw-bold mb-2'>📌Address</p>
                     <input className='form-control mb-3'
                         type='text'
                         placeholder='Address'
                         value={address}
                         onChange={e => setAddress(e.target.value)} />
                     <PhotoUpload addPhoto={addPhoto} onChange={setAddPhoto} />
-                    <p className='fw-bold mb-2'>Description</p>
+                    <p className='fw-bold mb-2'>📜Description</p>
                     <textarea className='form-control mb-3'
                         rows={5}
                         placeholder='Description...'
@@ -112,7 +112,7 @@ export default function Update() {
                     <Perk selected={perk} onChange={setPerk} />
                     <div className='py-5 d-flex flex-row flex-wrap'>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check In (ex: 14h00 = enter 14)</p>
+                            <p className='fw-bold'>📅Check In (14h00 = enter 14)</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set time...'
@@ -120,7 +120,7 @@ export default function Update() {
                                 onChange={e => setCheckIn(e.target.value)} />
                         </div>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Check Out (ex: 12h00 = enter 12)</p>
+                            <p className='fw-bold'>📅Check Out (12h00 = enter 12)</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set time...'
@@ -128,7 +128,7 @@ export default function Update() {
                                 onChange={e => setCheckOut(e.target.value)} />
                         </div>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Max Guest:</p>
+                            <p className='fw-bold'>#️⃣Max Guest:</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set guest...'
@@ -136,7 +136,7 @@ export default function Update() {
                                 onChange={e => setMaxGuest(e.target.value)} />
                         </div>
                         <div className='col-12 col-md-6 col-lg-3 mb-3 mb-lg-0'>
-                            <p className='fw-bold'>Price($) / night:</p>
+                            <p className='fw-bold'>Price(💲) / night:</p>
                             <input className='w-75 form-control'
                                 type="text"
                                 placeholder='Set price...'

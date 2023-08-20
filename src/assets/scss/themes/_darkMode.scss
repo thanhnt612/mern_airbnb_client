@@ -1,0 +1,125 @@
+.dark {
+  background-color: #1b1b1b;
+  color: #f5f5f5;
+  //LIST PAGE DARK-THEME
+  .list-page {
+    .content {
+      .list-choose {
+        color: #1b1b1b;
+      }
+    }
+  }
+  .list-page-mobile {
+    .content {
+      .list-choose {
+        color: #1b1b1b;
+      }
+    }
+  }
+  //=================================END=====================================
+
+  //NAVBAR DARK-THEME
+  .header-layout {
+    background-color: #1b1b1b !important;
+    color: #f5f5f5;
+  }
+  .header-layout-mobile {
+    @extend .header-layout;
+  }
+  .location {
+    h4 {
+      color: #000;
+    }
+  }
+  //=================================END=====================================
+
+  //LIST RENT DARK-THEME
+  .list-rent {
+    background-color: #1b1b1b !important;
+    .main {
+      background-color: #f5f5f5;
+      color: #1b1b1b;
+    }
+  }
+  //=================================END=====================================
+
+  //NEW PLACE DARK-THEME
+  .new-place {
+    background-color: #1b1b1b !important;
+    color: #f5f5f5;
+    .check-item {
+      label {
+        color: #1b1b1b;
+      }
+    }
+  }
+  //=================================END=====================================
+
+  //UPDATE PLACE DARK-THEME
+  .update-place {
+    @extend .new-place;
+  }
+  //=================================END=====================================
+
+  //PROFILE PAGE DARK-THEME
+  .profile-page {
+    .history {
+      .list-choose {
+        background-color: #f5f5f5;
+        color: #1b1b1b;
+        border-color: #f5f5f5 !important;
+      }
+    }
+  }
+  .profile-page-mobile {
+    @extend .profile-page;
+  }
+  //=================================END=====================================
+
+  //REGISTER PAGE DARK-THEME
+  .register-page {
+    .main {
+      background-color: #1b1b1b;
+      color: #f5f5f5;
+    }
+  }
+  //=================================END=====================================
+
+  //LOGIN PAGE DARK-THEME
+  .login-page {
+    .main {
+      background-color: #1b1b1b;
+      color: #f5f5f5;
+    }
+  }
+  //=================================END=====================================
+
+  //DETAIL PAGE DARK-THEME
+  .show-more {
+    color: #000;
+  }
+  .payment {
+    form {
+      .check {
+        background-color: #f5f5f5;
+        color: #1b1b1b;
+      }
+    }
+  }
+  //=================================END=====================================
+
+  //FOOTER DARK-THEME
+  .footer {
+    ul {
+      li {
+        a {
+          color: #f5f5f5 !important;
+        }
+      }
+    }
+  }
+  .footer-mobile {
+    @extend .footer;
+  }
+}
+//=================================END=====================================

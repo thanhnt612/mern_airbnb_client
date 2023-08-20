@@ -1,9 +1,7 @@
 .home-page {
-  background-image: linear-gradient(174.2deg, #fff4e4 7.1%, #f0f6ee 67.4%);
   .carousel {
     width: 100%;
     opacity: 1;
-    top: -40px;
     .slider {
       position: relative;
       .carousel-inner {
@@ -49,31 +47,12 @@
     .introduce {
       z-index: 10;
       position: absolute;
-      width: 20%;
-      transform: translate(0, 200%);
-      color: $text-c1-main;
-      left: 200px;
-      top: 100px;
-      @include responsive("mdd") {
-        width: 40%;
-        left: 90px;
-        top: 20px;
-      }
-      @include responsive("lg") {
-        width: 35%;
-        left: 200px;
-        top: 100px;
-      }
-      @include responsive("xl") {
-        width: 30%;
-      }
-      @include responsive("xxl") {
-        width: 23%;
-      }
+      transform: translate(50%, 379%);
+      width: 300px;
+      text-align: center;
       h3 {
         animation: FadeInLeft 3s;
-        background-color: #f0f6ee;
-        width: 100%;
+        color: $text-c1-light;
         border-radius: 10px;
         padding: 10px;
         font-size: $text-2xl;
@@ -106,27 +85,10 @@
   .content {
     .main {
       .list-detail {
-        background-color: #f9ea8f;
-        background-image: linear-gradient(
-          to right top,
-          #f5fb5f,
-          #ffe862,
-          #ffd669,
-          #ffc672,
-          #f9b87b,
-          #f6ad79,
-          #f1a378,
-          #ec9977,
-          #f08d6e,
-          #f47f67,
-          #f87062,
-          #fb5f5f
-        );
         padding: 20px;
         margin-bottom: 30px;
         min-height: 250px;
         position: relative;
-        top: -80px;
         .room-detail {
           .booking-room {
             .room-body {
@@ -156,26 +118,25 @@
                     margin-right: 10px;
                     a {
                       font-size: $text-xl;
-                      border: 1px solid $bg-header-main;
-                      color: $text-c1-main;
-                      background: $bg-header-light;
+                      color: $text-c1-light;
+                      background: $bg-header-main;
                       text-align: center;
                       position: relative;
                       transition: all 0.7s;
                       &::after {
                         position: absolute;
-                        content: "";
-                        top: 0;
-                        left: 0;
-                        width: 0;
-                        height: 100%;
-                        background: #ff003b;
-                        transition: all 0.7s;
+                        content: '🏨';
+                        transition: all 0.5s;
+                        opacity: 0;  
+                        top: 7px;
+                        right: -20px;
                       }
                       &:hover {
-                        color: $text-c1-light;
+                        padding-right:40px;
+                        padding-left:10px;
                         &::after {
-                          width: 100%;
+                            opacity: 1;
+                            right: 10px;
                         }
                       }
                       span {
@@ -200,13 +161,12 @@
             }
           }
         }
-
       }
       .list {
         .menu {
           .list-choose {
             .list-city {
-              @for $i from 0 to 7 {
+              @for $i from 0 to 11 {
                 .item-#{$i + 1} {
                   animation: FadeInRight (0.1s * $i + 1);
                 }
@@ -218,6 +178,8 @@
                     object-fit: cover;
                     cursor: pointer;
                     transition: 0.3s;
+                    width: 150px!important;
+                    height: 100px;
                     &:hover {
                       transform: scale(1.7);
                     }
@@ -237,11 +199,11 @@
                       padding: 10px;
                       font-style: $text-base;
                       border-radius: 10px;
-                      color: $text-c1-main;
-                      border: 1px solid $bg-header-main;
+                      color: $text-c1-light;
+                      background-color: $bg-header-main;
                       &:hover {
-                        color: $text-c1-light;
-                        background-color: $bg-header-main;
+                        background-color: transparent;
+                        color: $text-c1-main;
                         border: 1px solid $bg-header-main;
                         transition: 0.5s;
                       }

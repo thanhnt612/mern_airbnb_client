@@ -5,6 +5,7 @@ import { DispatchType, RootState } from '../../redux/configStore'
 import { getBookingLocationApi } from '../../redux/reducers/bookingReducer'
 import { USER_LOGIN } from '../../utils/config';
 import { history } from "../../index";
+import useThemeSwitcher from '../hooks/useThemeSwitcher';
 
 export default function HeaderHome() {
     const dispatch: DispatchType = useDispatch();
@@ -20,17 +21,17 @@ export default function HeaderHome() {
                 <>
                     <li>
                         <NavLink className="dropdown-item" to="/profile">
-                            Profile: {userLogin.name}
+                            <i className="bi bi-person-check"></i> Profile: {userLogin.name}
                         </NavLink>
                     </li>
                     <li>
                         <NavLink className="dropdown-item" to="/place/new">
-                            New Place
+                            <i className="bi bi-plus-circle-fill"></i> New Place
                         </NavLink>
                     </li>
                     <li>
                         <NavLink className="dropdown-item" to="/place/list-rent">
-                            Your apartment
+                            <i className="bi bi-house-check-fill"></i> Your apartment
                         </NavLink>
                     </li>
                     <li>
@@ -39,7 +40,7 @@ export default function HeaderHome() {
                                 localStorage.removeItem(USER_LOGIN);
                                 window.location.href = "/user/login";
                             }} to={''}>
-                            Log Out
+                            <i className="bi bi-box-arrow-left"></i> Log Out
                         </NavLink>
                     </li>
                 </>
@@ -47,8 +48,12 @@ export default function HeaderHome() {
         }
         return (
             <>
-                <li><NavLink className="dropdown-item" to="/user/register">Sign Up</NavLink></li>
-                <li><NavLink className="dropdown-item" to="/user/login">Log In</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/user/register">
+                    <i className="bi bi-person-fill-add"></i> Sign Up
+                </NavLink></li>
+                <li><NavLink className="dropdown-item" to="/user/login">
+                    <i className="bi bi-person-fill-up"></i> Log In
+                </NavLink></li>
             </>
         );
     };
@@ -92,8 +97,11 @@ export default function HeaderHome() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     };
+
+    const [mode, setMode]: any = useThemeSwitcher();
+
     return (
-        <div className='header-layout-mobile'>
+        <div className='header-layout-mobile bg-white sticky-top border-bottom border-danger border-3'>
             <div className="header-page">
                 <div className="header-home">
                     <NavLink to="/">
@@ -101,6 +109,17 @@ export default function HeaderHome() {
                     </NavLink>
                 </div>
                 <div className="header-info">
+                    <div className="center-info">
+                        <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
+                            className={`btn border-1 border-dark
+            ${mode === 'light' ? "bg-dark text-light" : "bg-light text-dark"}`}>
+                            {
+                                mode === 'dark'
+                                    ? <i className="bi bi-brightness-high"></i>
+                                    : <i className="bi bi-moon-stars"></i>
+                            }
+                        </button>
+                    </div>
                     <div className="right-info">
                         <li className="nav-item dropdown">
                             <NavLink className="nav-link dropdown-toggle" to="" role="button"
@@ -109,9 +128,6 @@ export default function HeaderHome() {
                             </NavLink>
                             <ul className="dropdown-menu list-info">
                                 {renderLogin()}
-                                <li><hr /></li>
-                                <li><NavLink className="dropdown-item" to="">TravelDnD Your Home</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="">Help</NavLink></li>
                             </ul>
                         </li>
                         <div>
@@ -120,8 +136,8 @@ export default function HeaderHome() {
                 </div>
             </div>
             <div className="header-search">
-                <form onSubmit={handleSubmit}>
-                    <div className="form-fill">
+                <form onSubmit={handleSubmit} className='px-4'>
+                    <div className="form-fill border-2 border p-1">
                         <div className="location col-8">
                             <h4>Where</h4>
                             <div className="destination d-flex">
@@ -145,7 +161,7 @@ export default function HeaderHome() {
                         </div>
                     </div>
                     {search.length !== 0 && (
-                        <div className="result-location">
+                        <div className="result-location rounded">
                             {address
                                 .filter((item) => {
                                     const searchTerm = search.toString().toLowerCase();

@@ -23,7 +23,7 @@ export default function List() {
                     <div className="content col-md-12 col-lg-6 mb-3">
                         <div className="tittle pt-3" >
                             <p>
-                                Have <span className='fw-bold'>{arrLocation?.length}</span> selected accommodation &nbsp;
+                                Have <span className='fw-bold text-danger'>{arrLocation?.length}</span> selected accommodation &nbsp;
                                 <i className="text-danger bi bi-house-down-fill"></i>
                             </p>
                             <h5>
@@ -39,47 +39,54 @@ export default function List() {
                                 </div>
                                 <div className="detail col-8 p-2">
                                     <div className="info">
-                                        <h5>{location.title}</h5>
-                                        <div className="d-flex flex-row flex-wrap">
-
+                                        <p className='fw-bold m-0 text-truncate'>🏩{location.title}</p>
+                                        <div className='d-flex flex-row flex-wrap py-2'>
+                                            <span className='fw-bold me-2 '>⚙️Service:</span>
                                             {location?.perks.map((perk: any, index: number) => {
-                                                return (<div className='col-3 me-2 d-flex flex-row' key={index}>
-                                                    {perk === 'wifi' ?
-                                                        (<>
-                                                            <i className="me-1 bi bi-wifi"></i> <span>Wifi</span>&nbsp;
-                                                        </>)
-                                                        : ""}
-                                                    {perk === 'tv' ?
-                                                        (<>
-                                                            <i className="me-1 bi bi-tv"></i> <span>TV</span>
-                                                        </>)
-                                                        : ""}
-                                                    {perk === 'pet' ?
-                                                        (<>
-                                                            <i className="me-1 bi bi-piggy-bank"></i> <span>Pets</span>
-                                                        </>)
-                                                        : ""}
-                                                    {perk === 'park' ?
-                                                        (<>
-                                                            <i className="me-1 bi bi-p-circle"></i> <span>Parking</span>
-                                                        </>)
-                                                        : ""}
-                                                    {perk === 'entrance' ?
-                                                        (<>
-                                                            <i className="me-1 bi bi-signpost-split"></i> <span>Entrance</span>
-                                                        </>)
-                                                        : ""}
-                                                </div>)
+                                                return (
+                                                    <>
+                                                        <div className='col-2 d-flex flex-row' key={index}>
+                                                            {perk === 'wifi' ?
+                                                                (<>
+                                                                    <i className="me-1 bi bi-wifi"></i> <span>Wifi</span>&nbsp;
+                                                                </>)
+                                                                : ""}
+                                                            {perk === 'tv' ?
+                                                                (<>
+                                                                    <i className="me-1 bi bi-tv"></i> <span>TV</span>
+                                                                </>)
+                                                                : ""}
+                                                            {perk === 'pet' ?
+                                                                (<>
+                                                                    <i className="me-1 bi bi-piggy-bank"></i> <span>Pets</span>
+                                                                </>)
+                                                                : ""}
+                                                            {perk === 'park' ?
+                                                                (<>
+                                                                    <i className="me-1 bi bi-p-circle"></i> <span>Park</span>
+                                                                </>)
+                                                                : ""}
+                                                            {perk === 'entrance' ?
+                                                                (<>
+                                                                    <i className="me-1 bi bi-signpost-split"></i> <span>Entry</span>
+                                                                </>)
+                                                                : ""}
+                                                        </div>
+                                                    </>
+                                                )
                                             })}
                                         </div>
-                                        <p className='my-1'>Max guest: <span className='fw-bold'>{location.maxGuest}</span></p>
-                                        <p className='my-1'><span className='fw-bold'>${location.price}</span> / night </p>
+                                        <div className='pb-2'>
+                                            <span className='my-1 fw-bold'>#️⃣Max guest: </span>
+                                            <span>{location.maxGuest}</span>
+                                        </div>
+                                        <p className='my-1'><span className='fw-bold'>💲{location.price}</span> / night </p>
                                     </div>
                                     <div className="view-more">
                                         <div className="button">
                                             <NavLink to={`/detail/${location._id}`} className="btn">
                                                 <span>
-                                                    View Room Details
+                                                    View
                                                 </span>
                                             </NavLink>
                                         </div>

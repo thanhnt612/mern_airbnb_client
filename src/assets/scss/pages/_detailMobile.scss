@@ -24,10 +24,6 @@
               font-size: $text-base;
             }
           }
-          .underline {
-            text-decoration: underline;
-            cursor: pointer;
-          }
         }
       }
       .share {
@@ -41,16 +37,12 @@
               font-size: $text-base;
             }
           }
-          .underline {
-            text-decoration: underline;
-            cursor: pointer;
-          }
         }
       }
     }
     .image {
       .pic {
-        @include responsive("mdd") {
+        @include responsive("md") {
           padding-bottom: 30px;
           display: grid !important;
           grid-template-columns: 1fr 1fr 1fr 1fr;

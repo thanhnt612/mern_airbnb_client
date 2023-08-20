@@ -1,13 +1,10 @@
 .detail-page {
-  background-image: linear-gradient(174.2deg, #fff4e4 7.1%, #f0f6ee 67.4%);
   .container {
     .title {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       .info {
-        h3 {
-        }
         ul {
           display: flex;
           list-style: none;
@@ -142,16 +139,6 @@
             }
           }
         }
-        .authority {
-          p {
-            @include responsive("md") {
-              font-size: $text-base;
-            }
-            @include responsive("lg") {
-              font-size: $text-xl;
-            }
-          }
-        }
         .facility {
           .show-more {
             .btn {
@@ -213,8 +200,6 @@
                 }
               }
               .add-guest {
-                p {
-                }
                 input {
                   width: 100%;
                   padding: 10px;

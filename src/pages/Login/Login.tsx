@@ -37,7 +37,7 @@ export default function Login() {
   return (
     <div>
       <div className='login-page '>
-        <div className="row rounded">
+        <div className="main row rounded">
           <div className="signin-content">
             <div className="signin-form">
               <div className='d-flex flex-column align-items-center'>
