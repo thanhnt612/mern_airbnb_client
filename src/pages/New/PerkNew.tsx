@@ -13,23 +13,23 @@ export default function Perk({ selected, onChange }: any) {
         <>
             <p className='fw-bold mb-2'>⚙️Perks</p>
             <div className="check-item d-flex flex-row flex-wrap">
-                <label className='col-12 col-md-6 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
+                <label className='col-6 col-md-3 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
                     <input type="checkbox" className='me-2' name='wifi' onChange={handleChoose} />
                     <i className="text-primary bi bi-wifi"></i> <span>Wifi</span>
                 </label>
-                <label className='col-12 col-md-6 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
+                <label className='col-6 col-md-3 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
                     <input type="checkbox" className='me-2' name='park' onChange={handleChoose} />
                     🚘 <span>Parking</span>
                 </label>
-                <label className='col-12 col-md-6 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
+                <label className='col-6 col-md-3 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
                     <input type="checkbox" className='me-2' name='tv' onChange={handleChoose} />
                     📺 <span>TV</span>
                 </label>
-                <label className='col-12 col-md-6 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
+                <label className='col-6 col-md-3 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
                     <input type="checkbox" className='me-2' name='pet' onChange={handleChoose} />
                     🐶 <span>Pets</span>
                 </label>
-                <label className='col-12 col-md-6 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
+                <label className='col-6 col-md-3 col-lg-2 border p-3 bg-white rounded' style={{ cursor: 'pointer' }}>
                     <input type="checkbox" className='me-2' name='entrance' onChange={handleChoose} />
                     🚪 <span>Entry</span>
                 </label>
