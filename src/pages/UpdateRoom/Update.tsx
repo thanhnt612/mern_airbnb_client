@@ -145,7 +145,7 @@ export default function Update() {
                         </div>
                     </div>
                     <button className='btn w-100 btn-danger'>
-                        Update
+                        Update ✔️
                     </button>
                 </form>
             </div>

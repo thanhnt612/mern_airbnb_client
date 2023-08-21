@@ -287,35 +287,31 @@ export default function Detail() {
                                 <h4>What this place offers</h4>
                                 <div className="show-more d-flex flex-row flex-wrap pt-3">
                                     {arrBookingId?.perks.map((perk: any, index: number) => {
-                                        return <div className="col-6 col-md-4 border p-3 bg-white rounded" key={index}>
+                                        return <div className="col-3 border p-3 bg-white rounded" key={index}>
                                             {perk === 'wifi' ?
                                                 (<label>
-                                                    <input type="checkbox" checked className='me-2' />
-                                                    <i className="bi bi-wifi"></i> <span>Wifi</span>
+                                                    <i className="text-primary  bi bi-wifi"></i> <span>Wifi</span>
                                                 </label>)
                                                 : ""}
                                             {perk === 'tv' ?
                                                 (<label>
-                                                    <input type="checkbox" checked className='me-2' />
-                                                    <i className="bi bi-tv"></i> <span>TV</span>
+                                                                              📺<span>TV</span>
+
                                                 </label>)
                                                 : ""}
                                             {perk === 'pet' ?
                                                 (<label>
-                                                    <input type="checkbox" checked className='me-2' />
-                                                    <i className="bi bi-piggy-bank"></i> <span>Pets</span>
+                                                    🐶 <span>Pets</span>
                                                 </label>)
                                                 : ""}
                                             {perk === 'park' ?
                                                 (<label>
-                                                    <input type="checkbox" checked className='me-2' />
-                                                    <i className="bi bi-p-circle"></i> <span>Free parking spot</span>
+                                                   🚘 <span>Park</span>
                                                 </label>)
                                                 : ""}
                                             {perk === 'entrance' ?
                                                 (<label>
-                                                    <input type="checkbox" checked className='me-2' />
-                                                    <i className="bi bi-signpost-split"></i> <span>Private entrance</span>
+                                                    🚪 <span>Entry</span>
                                                 </label>)
                                                 : ""}
                                         </div>

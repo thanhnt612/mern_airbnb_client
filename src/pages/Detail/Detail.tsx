@@ -215,7 +215,7 @@ export default function Detail() {
                     <div className="col-1 fs-2">
                       🏨
                     </div>
-                    <div className="col-11">
+                    <div className="col-11 d-flex flex-column justify-content-center">
                       <h4>The Whole House</h4>
                       <p>Luxury Apartments</p>
                     </div>
@@ -224,7 +224,7 @@ export default function Detail() {
                     <div className="col-1 fs-2">
                       🧼️
                     </div>
-                    <div className="col-11">
+                    <div className="col-11 d-flex flex-column justify-content-center">
                       <h4>Enhanced Clean</h4>
                       <p>The five-step enhanced cleaning process for TravelDnD
                       </p>
@@ -234,7 +234,7 @@ export default function Detail() {
                     <div className="col-1 fs-2">
                       💯
                     </div>
-                    <div className="col-11">
+                    <div className="col-11 d-flex flex-column justify-content-center">
                       <h4>Super host</h4>
                       <p>
                         {arrBookingId?.description}
@@ -245,7 +245,7 @@ export default function Detail() {
                     <div className="col-1 fs-2">
                       📅
                     </div>
-                    <div className="col-11">
+                    <div className="col-11 d-flex flex-column justify-content-center">
                       <h4>Free for 48 hours</h4>
                     </div>
                   </div>
@@ -255,35 +255,30 @@ export default function Detail() {
                 <h4>What this place offers</h4>
                 <div className="show-more d-flex flex-row flex-wrap pt-3">
                   {arrBookingId?.perks.map((perk: any, index: number) => {
-                    return <div className='col-3 border p-3 bg-white rounded' key={index}>
+                    return <div className='text-center col-md-4 col-lg-2 border mb-md-2 mb-lg-0 me-2 p-3 bg-white rounded' key={index}>
                       {perk === 'wifi' ?
                         (<label>
-                          <input type="checkbox" checked className='me-2' />
-                          <i className="bi bi-wifi"></i> <span>Wifi</span>
+                          <i className="fw-bold text-primary bi bi-wifi"></i> <span>Wifi</span>
                         </label>)
                         : ""}
                       {perk === 'tv' ?
                         (<label>
-                          <input type="checkbox" checked className='me-2' />
-                          <i className="bi bi-tv"></i> <span>TV</span>
+                          📺 <span>TV</span>
                         </label>)
                         : ""}
                       {perk === 'pet' ?
                         (<label>
-                          <input type="checkbox" checked className='me-2' />
-                          <i className="bi bi-piggy-bank"></i> <span>Pets</span>
+                          🐶 <span>Pets</span>
                         </label>)
                         : ""}
                       {perk === 'park' ?
                         (<label>
-                          <input type="checkbox" checked className='me-2' />
-                          <i className="bi bi-p-circle"></i> <span>Free parking spot</span>
+                          🚘 <span>Park</span>
                         </label>)
                         : ""}
                       {perk === 'entrance' ?
                         (<label>
-                          <input type="checkbox" checked className='me-2' />
-                          <i className="bi bi-signpost-split"></i> <span>Private entrance</span>
+                          🚪 <span>Entry</span>
                         </label>)
                         : ""}
                     </div>

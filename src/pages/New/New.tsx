@@ -100,7 +100,7 @@ export default function New() {
                             </div>
                         </div>
                         <button className='btn w-100 btn-danger'>
-                            Make A New Place
+                            Make A New Place ✔️
                         </button>
                     </form>
                 </div>
