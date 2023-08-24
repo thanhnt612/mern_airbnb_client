@@ -107,7 +107,7 @@ export default function Login() {
                     }}>
                     Log In
                   </button>
-                  {loading ? <LoadingIcon className={`text-center`} /> : null}
+                  {loading ? <LoadingIcon className={`loading-spinner`} /> : null}
 
                   <ToastContainer
                     position="top-center"

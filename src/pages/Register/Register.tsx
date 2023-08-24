@@ -174,7 +174,7 @@ export default function Register() {
                   }}>
                   Sign Up
                 </button>
-                {loading ? <LoadingIcon className={`text-center`} /> : null}
+                {loading ? <LoadingIcon className={`loading-spinner`} /> : null}
                 <br />
                 <ToastContainer
                   position="top-center"
