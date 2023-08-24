@@ -142,11 +142,11 @@ export default function Profile() {
                                             if (item.placeId === prod._id) {
                                                 return <div className="list-choose d-flex border border-2 border-success 
                                         border-opacity-25 rounded mb-4" key={index} style={{ height: '310px' }}>
-                                                    <div className="thumbnail col-7">
+                                                    <div className="thumbnail col-8 p-3">
                                                         <img src={prod.photos[0]}
                                                             className='w-100 h-100 rounded' alt="" />
                                                     </div>
-                                                    <div className="detail d-flex flex-column justify-content-center col-5 p-3">
+                                                    <div className="detail d-flex flex-column justify-content-center col-4 p-3">
                                                         <div className="info">
                                                             <h5>📌{prod.address}</h5>
                                                             <p className="mb-2 text-truncate fw-bold">🔔{prod.title}</p>
@@ -160,15 +160,6 @@ export default function Profile() {
                                                         </div>
                                                         <div>
                                                             <p className="mb-2">Total: <span className='fw-bold'>💲{item.price}</span></p>
-                                                        </div>
-                                                        <div className="view-more">
-                                                            <div className="button text-center">
-                                                                <NavLink to={`/detail/${prod._id}`} className="btn">
-                                                                    <span>
-                                                                        View
-                                                                    </span>
-                                                                </NavLink>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

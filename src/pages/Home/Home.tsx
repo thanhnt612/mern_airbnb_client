@@ -10,10 +10,10 @@ import { history } from '../../index';
 export default function Home() {
   const dispatch: DispatchType = useDispatch();
   const content = useRef(null);
-  const [loading, setLoading] = useState(false)
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const listProvince = arrBooking.filter((ele, ind) => ind === arrBooking.findIndex(elem => elem.address === ele.address))
-
+  
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     dispatch(getBookingApi())
     if (arrBooking.length === 0) {
@@ -22,6 +22,7 @@ export default function Home() {
       setLoading(false);
     }
   }, [arrBooking.length])
+
   const onList = async (event: any) => {
     await dispatch(getBookingLocationApi(event));
     history.push(`/list/${event}`);
@@ -208,7 +209,7 @@ export default function Home() {
               <div className="loader-container">
                 <div className="spinner"></div>
               </div>
-            ) : (
+            ) : (  
               <div className="room-detail">
                 <div className="booking-room row">
                   <Carousel

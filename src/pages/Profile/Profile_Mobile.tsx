@@ -159,15 +159,6 @@ export default function Profile() {
                             <div>
                               <p className='mb-1'>Total: <span className='fw-bold'>💲{item.price}</span></p>
                             </div>
-                            <div className="view-more">
-                              <div className="button">
-                                <NavLink to={`/detail/${prod._id}`} className="btn">
-                                  <span>
-                                    View Detail
-                                  </span>
-                                </NavLink>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       }

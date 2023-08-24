@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormikProps, useFormik } from 'formik'
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux'
@@ -7,6 +7,7 @@ import { DispatchType } from '../../redux/configStore'
 import { registerApi } from '../../redux/reducers/userReducer';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { LoadingIcon } from '../../Components/Icon';
 
 export type UserRegister = {
   email: string,
@@ -48,6 +49,19 @@ export default function Register() {
       dispatch(registerApi(values))
     }
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setShowPassword(!showPassword)
+  }
+
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const togglePasswordConfirm = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setShowPasswordConfirm(!showPasswordConfirm)
+  }
+  const [loading, setLoading] = useState(false)
+
   return (
     <div className='register-page '>
       <div className="main row rounded">
@@ -80,34 +94,56 @@ export default function Register() {
               </div>
               <div className="form-group d-flex flex-column">
                 <p className='fw-bold mb-1'>Password</p>
-                <input className=
-                  {
-                    frm.errors.password && frm.touched.password
-                      ? 'border border-danger p-2 rounded'
-                      : 'border border-dark p-2 rounded'
-                  }
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={frm.values.password}
-                  onChange={frm.handleChange}
-                  onBlur={frm.handleBlur} />
+                <div className='position-relative'>
+                  <input className=
+                    {
+                      frm.errors.password && frm.touched.password
+                        ? 'border border-danger p-2 rounded'
+                        : 'border border-dark p-2 rounded'
+                    }
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    placeholder="Password"
+                    value={frm.values.password}
+                    onChange={frm.handleChange}
+                    onBlur={frm.handleBlur} />
+                  <button
+                    className='btn position-absolute top-0 end-0'
+                    onClick={togglePassword}
+                    style={{ border: 'none' }}>
+                    {showPassword
+                      ? <i className="bi bi-eye-fill"></i>
+                      : <i className="bi bi-eye-slash-fill"></i>
+                    }
+                  </button>
+                </div>
                 {frm.errors.password && frm.touched.password &&
                   <p className="text text-danger">{frm.errors.password}</p>}
               </div>
               <div className="form-group d-flex flex-column">
                 <p className='fw-bold mb-1'>Confirm Password</p>
-                <input className=
-                  {
-                    frm.errors.confirmPassword && frm.touched.confirmPassword
-                      ? 'border border-danger p-2 rounded'
-                      : 'border border-dark p-2 rounded'
-                  }
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="Confirm Password"
-                  onChange={frm.handleChange}
-                  onBlur={frm.handleBlur} />
+                <div className='position-relative'>
+                  <input className=
+                    {
+                      frm.errors.confirmPassword && frm.touched.confirmPassword
+                        ? 'border border-danger p-2 rounded'
+                        : 'border border-dark p-2 rounded'
+                    }
+                    type={showPasswordConfirm ? 'text' : 'password'}
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    onChange={frm.handleChange}
+                    onBlur={frm.handleBlur} />
+                  <button
+                    className='btn position-absolute top-0 end-0'
+                    onClick={togglePasswordConfirm}
+                    style={{ border: 'none' }}>
+                    {showPasswordConfirm
+                      ? <i className="bi bi-eye-fill"></i>
+                      : <i className="bi bi-eye-slash-fill"></i>
+                    }
+                  </button>
+                </div>
                 {frm.errors.confirmPassword && frm.touched.confirmPassword &&
                   <p className="text text-danger">{frm.errors.confirmPassword}</p>}
               </div>
@@ -129,7 +165,17 @@ export default function Register() {
                   <p className="text text-danger">{frm.errors.name}</p>}
               </div>
               <div className="button d-flex flex-column align-items-center">
-                <button type="submit" className="btn-register">Sign Up</button> <br />
+                <button type="submit" className="btn-register"
+                  onClick={() => {
+                    setLoading(true);
+                    setTimeout(() => {
+                      setLoading(false);
+                    }, 2000);
+                  }}>
+                  Sign Up
+                </button>
+                {loading ? <LoadingIcon className={`text-center`} /> : null}
+                <br />
                 <ToastContainer
                   position="top-center"
                   autoClose={2000}
