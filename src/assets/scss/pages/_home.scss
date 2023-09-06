@@ -50,6 +50,12 @@
       transform: translate(50%, 379%);
       width: 300px;
       text-align: center;
+      @include responsive("lg") {
+        transform: translate(100%, 400%);
+      }
+      @include responsive("xl") {
+        transform: translate(50%, 379%);
+      }
       h3 {
         animation: FadeInLeft 3s;
         color: $text-c1-light;
@@ -125,18 +131,18 @@
                       transition: all 0.7s;
                       &::after {
                         position: absolute;
-                        content: '🏨';
+                        content: "🏨";
                         transition: all 0.5s;
-                        opacity: 0;  
+                        opacity: 0;
                         top: 7px;
                         right: -20px;
                       }
                       &:hover {
-                        padding-right:40px;
-                        padding-left:10px;
+                        padding-right: 40px;
+                        padding-left: 10px;
                         &::after {
-                            opacity: 1;
-                            right: 10px;
+                          opacity: 1;
+                          right: 10px;
                         }
                       }
                       span {
@@ -178,7 +184,7 @@
                     object-fit: cover;
                     cursor: pointer;
                     transition: 0.3s;
-                    width: 150px!important;
+                    width: 150px !important;
                     height: 100px;
                     &:hover {
                       transform: scale(1.7);

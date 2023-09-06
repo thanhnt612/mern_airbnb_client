@@ -101,7 +101,7 @@ export default function HeaderHome() {
     const [mode, setMode]: any = useThemeSwitcher();
 
     return (
-        <div className='header-layout-mobile bg-white sticky-top border-bottom border-danger border-3'>
+        <div className='header-layout-mobile border-bottom border-danger border-3'>
             <div className="header-page">
                 <div className="header-home">
                     <NavLink to="/">

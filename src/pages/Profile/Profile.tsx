@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getBookingApi, getBookingProfileApi } from '../../redux/reducers/bookingReducer';
+import { LoadingPage } from '../../Components/Icon';
 
 export type EditProfile = {
     email: string,
@@ -20,27 +21,74 @@ export default function Profile() {
     const { userLogin } = useSelector((state: RootState) => state.userReducer);
     const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
     const { arrHistory } = useSelector((state: RootState) => state.bookingReducer);
-    const [image, setImage] = useState<File | null>(null);
     const [loading, setLoading] = useState(false)
 
     if (Object.keys(userLogin).length === 0) {
         window.location.href = "/user/login";
     }
-
-    const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (!event.target.files) return
-        setImage(event.target.files[0]);
-    }
-
     useEffect(() => {
         dispatch(getBookingApi())
         dispatch(getBookingProfileApi(userLogin._id))
         if (arrHistory.length === 0) {
             setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000)
         } else {
             setLoading(false);
         }
     }, [arrHistory.length]);
+    const renderHistoryBooking = () => {
+        if (arrHistory.length === 0) {
+            return (
+                <div className='text-center notification border border-dark border-2 py-3 rounded'>
+                    <h4>
+                        We haven't received confirmation of place booking yet
+                    </h4>
+                    <div className='py-2'>
+                        <NavLink className="text-decoration-none p-2 btn btn-danger rounded me-2" to="/">Back to Home</NavLink>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className='d-flex flex-row flex-wrap'>
+                    {arrHistory.map((item: any, index: number) => {
+                        return <div className='col-12 p-2' key={index}>
+                            {arrBooking.map((prod: any, index: number) => {
+                                if (item.placeId === prod._id) {
+                                    return <div className="list-choose d-flex border border-2 border-success 
+                        border-opacity-25 rounded mb-4" key={index} style={{ height: '310px' }}>
+                                        <div className="thumbnail col-8 p-3">
+                                            <img src={prod.photos[0]}
+                                                className='w-100 h-100 rounded' alt="" />
+                                        </div>
+                                        <div className="detail d-flex flex-column justify-content-center col-4 p-3">
+                                            <div className="info">
+                                                <h5>📌{prod.address}</h5>
+                                                <p className="mb-2 text-truncate fw-bold">🔔{prod.title}</p>
+                                                <p className="mb-2">
+                                                    Guest: <span className='fw-bold'>{item.numberOfGuest}</span>
+                                                </p>
+                                            </div>
+                                            <div className="time">
+                                                <p className="mb-2">Check In: <span className='fw-bold'> {(new Date(item.checkIn)).toLocaleDateString()}</span></p>
+                                                <p className="mb-2">Check Out: <span className='fw-bold'> {(new Date(item.checkOut)).toLocaleDateString()}</span></p>
+                                            </div>
+                                            <div>
+                                                <p className="mb-2">Total: <span className='fw-bold'>💲{item.price}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            })
+                            }
+                        </div>
+                    })}
+                </div>
+            )
+        }
+    }
     const frm: FormikProps<EditProfile> = useFormik<EditProfile>({
         initialValues: {
             email: userLogin.email,
@@ -55,7 +103,7 @@ export default function Profile() {
         }
     });
     return (
-        <div className='profile-page pt-3'>
+        <div className='profile-page'>
             <div className="container">
                 <div className="row">
                     <div className="history mb-3">
@@ -131,44 +179,12 @@ export default function Profile() {
                             <h4>Your booking</h4>
                         </div>
                         {loading ? (
-                            <div className="loader-container">
-                                <div className="spinner"></div>
-                            </div>
+                            <LoadingPage className={`loading-spinner bg-transparent mt-5`}
+                                width="70px" height='70px' />
                         ) : (
-                            <div className='d-flex flex-row flex-wrap'>
-                                {arrHistory.map((item: any, index: number) => {
-                                    return <div className='col-12 p-2' key={index}>
-                                        {arrBooking.map((prod: any, index: number) => {
-                                            if (item.placeId === prod._id) {
-                                                return <div className="list-choose d-flex border border-2 border-success 
-                                        border-opacity-25 rounded mb-4" key={index} style={{ height: '310px' }}>
-                                                    <div className="thumbnail col-8 p-3">
-                                                        <img src={prod.photos[0]}
-                                                            className='w-100 h-100 rounded' alt="" />
-                                                    </div>
-                                                    <div className="detail d-flex flex-column justify-content-center col-4 p-3">
-                                                        <div className="info">
-                                                            <h5>📌{prod.address}</h5>
-                                                            <p className="mb-2 text-truncate fw-bold">🔔{prod.title}</p>
-                                                            <p className="mb-2">
-                                                                Guest: <span className='fw-bold'>{item.numberOfGuest}</span>
-                                                            </p>
-                                                        </div>
-                                                        <div className="time">
-                                                            <p className="mb-2">Check In: <span className='fw-bold'> {(new Date(item.checkIn)).toLocaleDateString()}</span></p>
-                                                            <p className="mb-2">Check Out: <span className='fw-bold'> {(new Date(item.checkOut)).toLocaleDateString()}</span></p>
-                                                        </div>
-                                                        <div>
-                                                            <p className="mb-2">Total: <span className='fw-bold'>💲{item.price}</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        })
-                                        }
-                                    </div>
-                                })}
-                            </div>
+                            <>
+                                {renderHistoryBooking()}
+                            </>
                         )}
                     </div>
                 </div>

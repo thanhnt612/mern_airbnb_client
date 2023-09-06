@@ -3,18 +3,22 @@ import { getOwnerRoomApi } from '../../redux/reducers/bookingReducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../redux/configStore';
 import { NavLink } from 'react-router-dom';
+import { LoadingPage } from '../../Components/Icon';
+import useThemeSwitcher from '../../Components/hooks/useThemeSwitcher';
 
 export default function ListRent() {
     const dispatch: DispatchType = useDispatch();
     const { userLogin } = useSelector((state: RootState) => state.userReducer);
     const { arrOwnerRoom } = useSelector((state: RootState) => state.bookingReducer);
     const [loading, setLoading] = useState(false)
-
+    const [mode, setMode]: any = useThemeSwitcher();
     useEffect(() => {
         dispatch(getOwnerRoomApi(userLogin._id))
-        setLoading(true);
         if (arrOwnerRoom.length === 0) {
             setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000)
         } else {
             setLoading(false);
         }
@@ -40,7 +44,10 @@ export default function ListRent() {
                         Click below to add new place
                     </h4>
                     <div className='py-2'>
-                        <NavLink className="text-decoration-none p-2 bg-danger text-white rounded me-2" to="/new">Add New Place</NavLink>
+                        <NavLink className="text-decoration-none p-2 btn btn-danger text-white rounded me-2"
+                            to="/place/new">
+                            Add New Place
+                        </NavLink>
                     </div>
                 </div>
             )
@@ -52,9 +59,9 @@ export default function ListRent() {
                         border-opacity-25" key={index}>
                             <div className="col-12 col-md-3 position-relative">
                                 <img src={item.photos[0]} alt="" className='object-fit-cover rounded w-100 h-100' />
-                                    <NavLink className="d-block d-md-none m-2 position-absolute text-light btn btn-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0" to={`/place/update-room/${item._id}`}>
-                                        ✏️
-                                    </NavLink>
+                                <NavLink className="d-block d-md-none m-2 position-absolute text-light btn btn-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0" to={`/place/update-room/${item._id}`}>
+                                    ✏️
+                                </NavLink>
                             </div>
                             <div className="col-12 col-md-9 detail p-3 position-relative">
                                 <h5 className='fw-bold text-truncate'>
@@ -94,9 +101,8 @@ export default function ListRent() {
                 </span>
             </div>
             {loading ? (
-                <div className="loader-container">
-                    <div className="spinner"></div>
-                </div>
+                <LoadingPage className={`loading-spinner dark bg-transparent`}
+                    width="50px" height='50px' />
             ) : (
                 <>
                     {renderListRoom()}

@@ -36,12 +36,24 @@ export default function Login() {
       dispatch(loginApi(values))
     }
   });
+  const { userLogin } = useSelector((state: RootState) => state.userReducer);
+
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setShowPassword(!showPassword)
   }
   const [loading, setLoading] = useState(false)
+  const handleLogin = () => {
+    if (Object.keys(userLogin).length === 0) {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000)
+    } else {
+      setLoading(false);
+    }
+  }
   return (
     <div>
       <div className='login-page '>
@@ -99,16 +111,19 @@ export default function Login() {
                 </div>
                 <div className="button d-flex flex-column align-items-center">
                   <button type="submit" className="btn-login"
-                    onClick={() => {
-                      setLoading(true);
-                      setTimeout(() => {
-                        setLoading(false);
-                      }, 2000);
-                    }}>
-                    Log In
+                    disabled={!(frm.isValid && frm.dirty)}
+                    onClick={handleLogin}
+                  >
+                    {loading
+                      ?
+                      <div className='d-flex align-items-center'>
+                        <LoadingIcon className={`loading-spinner text-light bg-transparent`}
+                          width="30px" height='30px' />
+                      </div>
+                      : <>
+                        Log In
+                      </>}
                   </button>
-                  {loading ? <LoadingIcon className={`loading-spinner`} /> : null}
-
                   <ToastContainer
                     position="top-center"
                     autoClose={2000}

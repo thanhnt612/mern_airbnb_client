@@ -69,7 +69,7 @@ export default function HeaderHome() {
     if (userLogin?.name) {
       return (
         <>
-          <span>
+          <span className='text-light'>
             <i className="user fa-solid fa-user"></i> {userLogin.name} <i className="bi bi-caret-down-fill"></i>
           </span>
         </>
@@ -107,71 +107,79 @@ export default function HeaderHome() {
   };
 
   const [mode, setMode]: any = useThemeSwitcher();
-
+  const [navbar, setNavbar] = useState(false);
+  const changeBackground = () => {
+    if (window.scrollY >= 80) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+  window.addEventListener("scroll", changeBackground);
   return (
-    <div className='header-layout px-5 bg-white sticky-top border-bottom border-danger border-3'>
+    <div className={navbar ? "header-layout border-bottom border-danger border-3  px-5 active-navbar" : "header-layout px-5"} >
       <div className="header-page">
         <div className="header-home">
           <NavLink to="/">
             <img src='./img/logonew2.jpg' className='rounded m-1 border border-danger' width='120px' alt="" />
           </NavLink>
         </div>
-          <div className="header-search">
-            <form onSubmit={handleSubmit}>
-              <div className="form-fill border-2 border row">
-                <div className="location col-9">
-                  <h4>Where</h4>
-                  <div className="destination d-flex">
-                    <input
-                      value={search}
-                      onChange={handleChange}
-                      placeholder='Search destinations' style={{ height: "32px" }} />
-                    {show && <button
-                      className={isActive ? 'btn p-0 visible' : 'btn p-0'}
-                      onClick={() => { setSearch(""); handleClick() }}>
-                      <i className="text-danger fs-5 bi bi-x-circle"></i>
-                    </button>}
-                  </div>
-                </div>
-                <div className="add col-3">
-                  <div className="btn col-5">
-                    <button type='submit'
-                      onClick={() => onSearchRoom(search)}
-                    >
-                      <i className='fa fa-search'></i> Search
-                    </button>
-                  </div>
+        <div className="header-search">
+          <form onSubmit={handleSubmit}>
+            <div className="form-fill border-2 border row">
+              <div className="location col-9">
+                <h4>Where</h4>
+                <div className="destination d-flex">
+                  <input
+                    value={search}
+                    onChange={handleChange}
+                    placeholder='Search destinations' style={{ height: "32px" }} />
+                  {show && <button
+                    className={isActive ? 'btn p-0 visible' : 'btn p-0'}
+                    onClick={() => { setSearch(""); handleClick() }}>
+                    <i className="text-danger fs-5 bi bi-x-circle"></i>
+                  </button>}
                 </div>
               </div>
-              {search.length !== 0 && (
-                <div className="result-location rounded">
-                  {address
-                    .filter((item) => {
-                      const searchTerm = search.toString().toLowerCase();
-                      const location = item.address.toLowerCase();
-                      const province = item.address.substring(item.address.indexOf(",") + 1).trim().toLowerCase()
-                      return (
-                        searchTerm &&
-                        (location.startsWith(searchTerm) || province.startsWith(searchTerm)) &&
-                        (location !== searchTerm || province !== searchTerm)
-                      );
-                    }).map((item, index) => (
-                      <button
-                        onClick={() => { onSearchRoom(item.address); handleClick() }}
-                        className={isActive ? 'data-result p-2 invisible' : 'data-result p-2'}
-                        key={index}>
-                        {item.address}
-                      </button>
-                    ))}
+              <div className="add col-3">
+                <div className="btn col-5">
+                  <button type='submit'
+                    onClick={() => onSearchRoom(search)}
+                  >
+                    <i className='fa fa-search'></i> Search
+                  </button>
                 </div>
-              )}
-            </form>
-          </div >
+              </div>
+            </div>
+            {search.length !== 0 && (
+              <div className="result-location rounded">
+                {address
+                  .filter((item) => {
+                    const searchTerm = search.toString().toLowerCase();
+                    const location = item.address.toLowerCase();
+                    const province = item.address.substring(item.address.indexOf(",") + 1).trim().toLowerCase()
+                    return (
+                      searchTerm &&
+                      (location.startsWith(searchTerm) || province.startsWith(searchTerm)) &&
+                      (location !== searchTerm || province !== searchTerm)
+                    );
+                  }).map((item, index) => (
+                    <button
+                      onClick={() => { onSearchRoom(item.address); handleClick() }}
+                      className={isActive ? 'data-result p-2 invisible' : 'data-result p-2'}
+                      key={index}>
+                      {item.address}
+                    </button>
+                  ))}
+              </div>
+            )}
+          </form>
+        </div >
         <div className="header-info">
           <div className="center-info">
             <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
-              className={`btn border-1 border-dark
-            ${mode === 'light' ? "bg-dark text-light" : "bg-light text-dark"}`}>
+              className={`btn border-1
+            ${mode === 'light' ? "bg-dark text-light border-light" : "bg-light text-dark"}`}>
               {
                 mode === 'dark'
                   ? <i className="bi bi-brightness-high"></i>
@@ -179,7 +187,7 @@ export default function HeaderHome() {
               }
             </button>
           </div>
-          <div className="right-info">
+          <div className="right-info bg-dark">
             <li className="nav-item dropdown">
               <NavLink className="nav-link" to="" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">

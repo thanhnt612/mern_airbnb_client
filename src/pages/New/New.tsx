@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { http } from '../../utils/config';
 import { NavLink } from 'react-router-dom';
+import { LoadingPage } from '../../Components/Icon';
 
 
 export default function New() {
@@ -176,9 +177,8 @@ export default function New() {
                 </span>
             </div>
             {loading ? (
-                <div className="loader-container">
-                    <div className="spinner"></div>
-                </div>
+                <LoadingPage className={`loading-spinner bg-transparent mt-5`}
+                    width="70px" height='70px' />
             ) : (
                 <>
                     {renderNewForm()}

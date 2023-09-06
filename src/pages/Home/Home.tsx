@@ -6,13 +6,14 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
 import { history } from '../../index';
+import { LoadingPage } from '../../Components/Icon';
+
 
 export default function Home() {
   const dispatch: DispatchType = useDispatch();
   const content = useRef(null);
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const listProvince = arrBooking.filter((ele, ind) => ind === arrBooking.findIndex(elem => elem.address === ele.address))
-  
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     dispatch(getBookingApi())
@@ -96,7 +97,7 @@ export default function Home() {
               <img src="../../img/slider/tphcm.jpg"
                 className="d-block"
                 width="100%"
-                height="850px"
+                height="1080px"
                 alt="..." />
               <div className="carousel-caption d-none d-md-block" style={{ zIndex: "2" }}>
                 <h5>Ho Chi Minh</h5>
@@ -206,10 +207,9 @@ export default function Home() {
               <h3 className='fw-bold'>Apartment</h3>
             </div>
             {loading ? (
-              <div className="loader-container">
-                <div className="spinner"></div>
-              </div>
-            ) : (  
+              <LoadingPage className={`loading-spinner bg-transparent mt-5`}
+                width="70px" height='70px' />
+            ) : (
               <div className="room-detail">
                 <div className="booking-room row">
                   <Carousel
@@ -244,8 +244,8 @@ export default function Home() {
                             </div>
                             <div className="view-more">
                               <div className="button">
-                                <NavLink to={`/detail/${room._id}`} className="btn">                              
-                                    View
+                                <NavLink to={`/detail/${room._id}`} className="btn">
+                                  View
                                 </NavLink>
                               </div>
                             </div>
@@ -264,9 +264,8 @@ export default function Home() {
             </div>
             <div className="menu pt-3">
               {loading ? (
-                <div className="loader-container">
-                  <div className="spinner"></div>
-                </div>
+                <LoadingPage className={`loading-spinner bg-transparent mt-5`}
+                  width="70px" height='70px' />
               ) : (
                 <div className="list-choose row">
                   {listProvince.map((location, index) => {
@@ -275,11 +274,11 @@ export default function Home() {
                       border-success border-opacity-25 rounded wow`}>
                         <div className="detail p-2 d-flex flex-row justify-content-between align-items-center">
                           <h5 className='col-8 d-flex align-items-center' onClick={() => onList(location.address)}>
-                          📌{location.address}
+                            📌{location.address}
                           </h5>
                           <div className="locate col-4 text-end">
                             <button className="btn" onClick={() => onList(location.address)}>
-                            👉 List
+                              👉 List
                             </button>
                           </div>
                         </div>

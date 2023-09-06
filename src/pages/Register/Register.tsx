@@ -62,6 +62,16 @@ export default function Register() {
   }
   const [loading, setLoading] = useState(false)
 
+  // const handleRegister = () => {
+  //   if (Object.keys(userLogin).length === 0) {
+  //     setLoading(true);
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, 3000)
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }
   return (
     <div className='register-page '>
       <div className="main row rounded">
@@ -166,15 +176,23 @@ export default function Register() {
               </div>
               <div className="button d-flex flex-column align-items-center">
                 <button type="submit" className="btn-register"
+                  disabled={!(frm.isValid && frm.dirty)}
                   onClick={() => {
                     setLoading(true);
                     setTimeout(() => {
                       setLoading(false);
-                    }, 2000);
+                    }, 3000)
                   }}>
-                  Sign Up
+                  {loading
+                    ?
+                    <div className='d-flex align-items-center'>
+                      <LoadingIcon className={`loading-spinner text-light bg-transparent`}
+                        width="30px" height='30px' />
+                    </div>
+                    : <>
+                      Sign Up
+                    </>}
                 </button>
-                {loading ? <LoadingIcon className={`loading-spinner`} /> : null}
                 <br />
                 <ToastContainer
                   position="top-center"

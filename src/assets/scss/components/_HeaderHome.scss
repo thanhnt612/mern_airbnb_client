@@ -1,4 +1,11 @@
+.active-navbar {
+  background-color: white;
+  transition: all 1s;
+}
 .header-layout {
+  position: fixed;
+  top: 0;
+  z-index: 9999;
   width: 100%;
   opacity: 1;
   .header-page {
@@ -128,6 +135,7 @@
         display: flex;
         border: 2px solid $bg-grey;
         border-radius: 10px;
+        color: white;
         &:hover {
           background-color: $bg-header-main;
           color: white;
