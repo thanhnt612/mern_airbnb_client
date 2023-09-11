@@ -13,7 +13,9 @@ export default function Home() {
   const dispatch: DispatchType = useDispatch();
   const content = useRef(null);
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
-  const listProvince = arrBooking.filter((ele, ind) => ind === arrBooking.findIndex(elem => elem.address === ele.address))
+  const listProvince = arrBooking.filter((ele, ind) => ind === 
+  arrBooking.findIndex(elem => elem.address === ele.address))
+  
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     dispatch(getBookingApi())
@@ -207,8 +209,7 @@ export default function Home() {
               <h3 className='fw-bold'>Apartment</h3>
             </div>
             {loading ? (
-              <LoadingPage className={`loading-spinner bg-transparent mt-5`}
-                width="70px" height='70px' />
+              <LoadingPage className={`loading-spinner bg-transparent mt-5`} />
             ) : (
               <div className="room-detail">
                 <div className="booking-room row">
@@ -264,8 +265,7 @@ export default function Home() {
             </div>
             <div className="menu pt-3">
               {loading ? (
-                <LoadingPage className={`loading-spinner bg-transparent mt-5`}
-                  width="70px" height='70px' />
+                <LoadingPage className={`loading-spinner bg-transparent mt-5`}/>
               ) : (
                 <div className="list-choose row">
                   {listProvince.map((location, index) => {

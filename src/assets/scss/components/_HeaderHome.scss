@@ -116,6 +116,12 @@
       z-index: 10;
       display: flex;
       align-items: center;
+      @include responsive("lg") {
+        width: 23%;
+      }
+      @include responsive("xl") {
+        width: 15%;
+      }
       .left-info {
         margin: 0 10px;
         @include responsive("md") {

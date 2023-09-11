@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef, ChangeEvent } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { DispatchType, RootState } from '../../redux/configStore';
 import { getBookingDetailApi, postBookingApi } from '../../redux/reducers/bookingReducer';
 import { DateRangePicker, RangeKeyDict } from "react-date-range"
@@ -17,11 +17,8 @@ import { history } from '../../index';
 export default function Detail() {
   const { userLogin } = useSelector((state: RootState) => state.userReducer);
   const { arrBookingId } = useSelector((state: RootState) => state.bookingReducer);
-
   const dispatch: DispatchType = useDispatch();
-
   const params: any = useParams();
-
   const [clickedImg, setClickedImg] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [open, setOpen] = useState(false)
@@ -38,10 +35,8 @@ export default function Detail() {
   useEffect(() => {
     dispatch(getBookingDetailApi(params.id));
   }, [params.id])
-  useEffect(() => {
-    // event listeners
-    document.addEventListener("keydown", hideOnEscape, true)
-  }, [])
+
+
 
 
   //Set image when click show full screen------------------------------//
@@ -77,7 +72,6 @@ export default function Detail() {
     const newUrl = arrBookingId?.photos.filter((item: any) => {
       return arrBookingId?.photos.indexOf(item) === newIndex;
     });
-    console.log(newUrl)
     const newItem = newUrl[0];
     setClickedImg(newItem);
     setCurrentIndex(newIndex);
@@ -88,24 +82,43 @@ export default function Detail() {
     }
   };
 
-  // hide dropdown on ESC press---------------------------------//
+
+
+
+  // Close calendar on ESC press----------------------------------------------------------------
   const hideOnEscape = (event: any) => {
     if (event.key === "Escape") {
       setOpen(false)
     }
   }
-  // get the target element to toggle 
-  const refOne = useRef<HTMLInputElement>(null)
-  // Process data to dispatch
+  useEffect(() => {
+    document.addEventListener("keydown", hideOnEscape, true)
+  }, [])
+
+
+
+  // Click outside to close calendar----------------------------------------------------------------
+  const myRef = useRef<HTMLInputElement>(null);
+  const handleClickOutside = (event: any) => {
+      if (!myRef.current?.contains(event.target)) {
+        setOpen(false)
+      }
+  };
+  useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+  });
+
+
+
+  // Process data to dispatch----------------------------------------------------------------
   const checkIn: any = arrBookingId?.checkIn;
   const checkOut: any = arrBookingId?.checkOut;
   const price: any = arrBookingId?.price;
-
   const handleChangeDate = (rangesByKey: RangeKeyDict) => {
     const changeDate: any = rangesByKey
     setRange([changeDate.selection]);
   }
-
   const dateDiff = (date1: any, date2: any) => {
     const dt1 = new Date(date1);
     const dt2 = new Date(date2);
@@ -312,29 +325,29 @@ export default function Detail() {
                       <div className="check row">
                         <div className="check-in col-lg-12 col-xl-6">
                           <p>
-                            <i className="fa-regular fa-calendar-days"></i> Check In</p>
+                            🗓 Check In</p>
                           <input
                             id='dateIn'
                             name='dateIn'
-                            value={format(range[0].startDate, "yyyy-MM-dd")}
+                            value={format(range[0].startDate, "dd-MM-yyyy")}
                             readOnly
                             className="date-in text-center"
                             onClick={() => setOpen(open => !open)}
                           />
                         </div>
                         <div className="check-out col-lg-12 col-xl-6">
-                          <p><i className="fa-regular fa-calendar-days"></i> Check Out</p>
+                          <p>🗓 Check Out</p>
                           <input
                             id='dateOut'
                             name='dateOut'
-                            value={format(range[0].endDate, "yyyy-MM-dd")}
+                            value={format(range[0].endDate, "dd-MM-yyyy")}
                             readOnly
                             className="date-out text-center"
                             onClick={() => setOpen(open => !open)}
                           />
                         </div>
                       </div>
-                      <div ref={refOne}>
+                      <div ref={myRef}>
                         {open &&
                           <DateRangePicker
                             onChange={handleChangeDate}

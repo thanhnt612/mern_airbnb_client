@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -179,8 +179,7 @@ export default function Profile() {
                             <h4>Your booking</h4>
                         </div>
                         {loading ? (
-                            <LoadingPage className={`loading-spinner bg-transparent mt-5`}
-                                width="70px" height='70px' />
+                            <LoadingPage className={`loading-spinner bg-transparent mt-5`}/>
                         ) : (
                             <>
                                 {renderHistoryBooking()}

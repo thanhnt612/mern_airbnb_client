@@ -101,8 +101,7 @@ export default function ListRent() {
                 </span>
             </div>
             {loading ? (
-                <LoadingPage className={`loading-spinner dark bg-transparent`}
-                    width="50px" height='50px' />
+                <LoadingPage className={`loading-spinner dark bg-transparent`}/>
             ) : (
                 <>
                     {renderListRoom()}

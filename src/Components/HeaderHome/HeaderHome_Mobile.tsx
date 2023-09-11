@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { DispatchType, RootState } from '../../redux/configStore'
-import { getBookingLocationApi } from '../../redux/reducers/bookingReducer'
+import { getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer'
 import { USER_LOGIN } from '../../utils/config';
 import { history } from "../../index";
 import useThemeSwitcher from '../hooks/useThemeSwitcher';
@@ -14,7 +14,14 @@ export default function HeaderHome() {
     const [show, setShow] = useState(false);
     const { userLogin } = useSelector((state: RootState) => state.userReducer);
     const { arrBooking } = useSelector((state: RootState) => state.bookingReducer)
-    const address = arrBooking.filter((ele, ind) => ind === arrBooking.findIndex(elem => elem.address === ele.address))
+    const address = arrBooking.filter((ele, ind) => ind === 
+    arrBooking.findIndex(elem => elem.address === ele.address))
+    useEffect(() => {
+        dispatch(getBookingApi())
+      }, [])
+    const imageBasePath =
+    window.location.protocol + "//" + window.location.host + "/img/logonew2.jpg";
+
     const renderLogin = () => {
         if (userLogin?.name) {
             return (
@@ -68,10 +75,10 @@ export default function HeaderHome() {
             )
         }
         return (
-            <>
+            <span>
                 <i className="bar fa-solid fa-bars"></i>
                 <i className="user fa-solid fa-user"></i>
-            </>
+            </span>
         );
     }
 
@@ -105,7 +112,7 @@ export default function HeaderHome() {
             <div className="header-page">
                 <div className="header-home">
                     <NavLink to="/">
-                        <img src='./img/logonew2.jpg' className='rounded m-1 border border-danger' width='120px' alt="" />
+                        <img src={imageBasePath}  className='rounded m-1 border border-danger' width='120px' alt="" />
                     </NavLink>
                 </div>
                 <div className="header-info">
@@ -141,14 +148,15 @@ export default function HeaderHome() {
                         <div className="location col-8">
                             <h4>Where</h4>
                             <div className="destination d-flex">
-                                <input className='w-100'
+                                <input
                                     value={search}
                                     onChange={handleChange}
-                                    placeholder='Search destinations' style={{ height: "32px" }} />
+                                    placeholder='Search destinations' 
+                                    style={{height: "32px" }} />
                                 {show && <button
                                     className={isActive ? 'btn p-0 visible' : 'btn p-0'}
                                     onClick={() => { setSearch(""); handleClickMobile() }}>
-                                    <i className="text-danger fs-5 bi bi-x-circle"></i>
+                                   ❌
                                 </button>}
                             </div>
                         </div>

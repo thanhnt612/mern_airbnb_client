@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getBookingApi, getBookingProfileApi } from '../../redux/reducers/bookingReducer';
+import { LoadingPageMobile } from '../../Components/Icon';
 
 
 export type EditProfile = {
@@ -33,7 +34,9 @@ export default function Profile() {
     if (arrHistory.length === 0) {
       setLoading(true);
     } else {
-      setLoading(false);
+      // setLoading(false);
+      setLoading(true);
+
     }
   }, [arrHistory.length]);
   const frm: FormikProps<EditProfile> = useFormik<EditProfile>({
@@ -129,9 +132,7 @@ export default function Profile() {
               <h4>Your booking</h4>
             </div>
             {loading ? (
-              <div className="loader-container">
-                <div className="spinner"></div>
-              </div>
+           <LoadingPageMobile className={`loading-spinner bg-transparent mt-5`}/>
             ) : (
               <div className='d-flex flex-row flex-wrap'>
                 {arrHistory.map((item: any, index: number) => {

@@ -26,7 +26,8 @@ export default function List() {
                 Have <span className='fw-bold text-danger'>{arrLocation?.length}</span> selected accommodation
               </p>
               <h5 className='text-center'>
-                Selected accommodation in <br /> {arrLocation?.[0].address}
+                Selected accommodation in <br/>
+                <span className="text-danger">{arrLocation?.[0].address}</span>
               </h5>
             </div>
             {arrLocation?.map((location: any, index: number) => {

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { http } from '../../utils/config';
 
 export default function PhotoUpload({ addPhoto, onChange }: any) {

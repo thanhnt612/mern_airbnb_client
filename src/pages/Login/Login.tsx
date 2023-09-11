@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useFormik, FormikProps } from 'formik';
-
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -117,8 +116,7 @@ export default function Login() {
                     {loading
                       ?
                       <div className='d-flex align-items-center'>
-                        <LoadingIcon className={`loading-spinner text-light bg-transparent`}
-                          width="30px" height='30px' />
+                        <LoadingIcon className={`loading-spinner text-light bg-transparent`}/>
                       </div>
                       : <>
                         Log In

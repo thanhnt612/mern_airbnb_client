@@ -186,8 +186,7 @@ export default function Register() {
                   {loading
                     ?
                     <div className='d-flex align-items-center'>
-                      <LoadingIcon className={`loading-spinner text-light bg-transparent`}
-                        width="30px" height='30px' />
+                      <LoadingIcon className={`loading-spinner text-light bg-transparent`} />
                     </div>
                     : <>
                       Sign Up

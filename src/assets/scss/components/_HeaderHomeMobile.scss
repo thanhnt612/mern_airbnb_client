@@ -94,6 +94,12 @@
             input {
               border: none;
               outline: none;
+              @include responsive("xs") {
+                width:100% !important ;
+              }
+              @include responsive("md") {
+                width: 70% !important;
+              }
             }
           }
         }

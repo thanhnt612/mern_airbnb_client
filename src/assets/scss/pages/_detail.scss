@@ -194,10 +194,18 @@
                   border-radius: 5px;
                   position: absolute;
                   left: 0;
-                  transform: translateX(-70%);
                   top: 110px;
                   border: 1px solid #ccc;
                   z-index: 999;
+                  @include responsive("lg") {
+                    transform: translateX(-61%);
+                  }
+                  @include responsive("xl") {
+                    transform: translateX(-21%);
+                  }
+                }
+                .rdrDefinedRangesWrapper {
+                  display: none;
                 }
               }
               .add-guest {

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Perk from './PerkNew';
 import PhotoUpload from './PhotoUploadNew';
 import { useSelector } from 'react-redux';
@@ -177,8 +177,7 @@ export default function New() {
                 </span>
             </div>
             {loading ? (
-                <LoadingPage className={`loading-spinner bg-transparent mt-5`}
-                    width="70px" height='70px' />
+                <LoadingPage className={`loading-spinner bg-transparent mt-5`}/>
             ) : (
                 <>
                     {renderNewForm()}

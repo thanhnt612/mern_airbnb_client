@@ -6,6 +6,7 @@ import { history } from '../../index';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
+import { LoadingPageMobile } from '../../Components/Icon';
 
 export default function Home() {
   const dispatch: DispatchType = useDispatch();
@@ -188,14 +189,12 @@ export default function Home() {
               <h3>Rooms</h3>
             </div>
             {loading ? (
-              <div className="loader-container">
-                <div className="spinner"></div>
-              </div>
+              <LoadingPageMobile className={`loading-spinner bg-transparent mt-4`} />
             ) : (
               <div className="room-detail">
                 <div className="booking-room row">
                   <Carousel
-                    showDots={true}
+                    showDots={false}
                     responsive={responsive}
                   >
                     {arrBooking.map((room, index) => {
@@ -238,9 +237,7 @@ export default function Home() {
             </div>
             <div className="menu" ref={content}>
               {loading ? (
-                <div className="loader-container">
-                  <div className="spinner"></div>
-                </div>
+               <LoadingPageMobile className={`loading-spinner bg-transparent mt-4`}/>
               ) : (
                 <div className="row">
                   {listProvince.map((location, index) => {
