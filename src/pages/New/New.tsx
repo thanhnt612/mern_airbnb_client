@@ -29,6 +29,7 @@ export default function New() {
             setLoading(false);
         }, 1500);
     }, [])
+
     const renderNewForm = () => {
         if (Object.keys(userLogin).length === 0) {
             return (
@@ -100,9 +101,13 @@ export default function New() {
                                     onChange={e => setPrice(e.target.value)} />
                             </div>
                         </div>
-                        <button className='btn w-100 btn-danger'>
-                            Make A New Place ✔️
-                        </button>
+                        <div className='text-center'>
+                            <button className='btn btn-danger'
+                                disabled={
+                                    !(title && address && description && checkIn && checkOut && price)
+                                }>Make A New Place ✔️
+                            </button>
+                        </div>
                     </form>
                 </div>
             )
@@ -177,7 +182,7 @@ export default function New() {
                 </span>
             </div>
             {loading ? (
-                <LoadingPage className={`loading-spinner bg-transparent mt-5`}/>
+                <LoadingPage className={`loading-spinner bg-transparent mt-5`} />
             ) : (
                 <>
                     {renderNewForm()}

@@ -23,7 +23,6 @@ export default function Profile() {
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const { arrHistory } = useSelector((state: RootState) => state.bookingReducer);
   const [loading, setLoading] = useState(false)
-
   if (Object.keys(userLogin).length === 0) {
     window.location.href = "/user/login";
   }
@@ -34,9 +33,7 @@ export default function Profile() {
     if (arrHistory.length === 0) {
       setLoading(true);
     } else {
-      // setLoading(false);
-      setLoading(true);
-
+      setLoading(false);
     }
   }, [arrHistory.length]);
   const frm: FormikProps<EditProfile> = useFormik<EditProfile>({

@@ -100,13 +100,13 @@ export default function Detail() {
   // Click outside to close calendar----------------------------------------------------------------
   const myRef = useRef<HTMLInputElement>(null);
   const handleClickOutside = (event: any) => {
-      if (!myRef.current?.contains(event.target)) {
-        setOpen(false)
-      }
+    if (!myRef.current?.contains(event.target)) {
+      setOpen(false)
+    }
   };
   useEffect(() => {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   });
 
 
@@ -199,10 +199,10 @@ export default function Detail() {
         </div>
         {clickedImg && (
           <div className="overlay dismiss" onClick={handleClickModal}>
-            <img src={clickedImg} alt="bigger pic" />
-            <span className='close'>
-              <i className="dismiss bi bi-x-square-fill" onClick={handleClickModal}></i>
-            </span>
+              <img src={clickedImg} alt="bigger pic" />
+              <span className='close'>
+                <i className="dismiss bi bi-x-square-fill" onClick={handleClickModal}></i>
+              </span>
             <div onClick={handelRotationLeft} className="overlay-arrows_left">
               <i className="bi bi-arrow-left-circle-fill" style={{ cursor: 'pointer' }}></i>
             </div>

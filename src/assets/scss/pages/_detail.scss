@@ -73,6 +73,10 @@
         color: #ffffff;
         z-index: 999;
         cursor: pointer;
+        &:hover {
+          color: red;
+          transition: 1s all;
+        }
       }
       .overlay-arrows_left {
         display: flex;

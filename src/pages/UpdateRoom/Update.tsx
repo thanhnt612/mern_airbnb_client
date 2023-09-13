@@ -144,9 +144,13 @@ export default function Update() {
                                 onChange={e => setPrice(e.target.value)} />
                         </div>
                     </div>
-                    <button className='btn w-100 btn-danger'>
-                        Update ✔️
-                    </button>
+                    <div className='text-center'>
+                        <button className='btn btn-danger'
+                            disabled={
+                                !(title && address && description && checkIn && checkOut && price)
+                            }>Update ✔️
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
