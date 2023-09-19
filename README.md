@@ -13,12 +13,12 @@ This section should list any major frameworks/libraries used to bootstrap your p
 Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 - [![React.js]][React-url]
-- [![Node.js]][Node-url] Node-v16
+- [![Node.js]][Node-url]
 - [![Mongodb]][Mongodb-url]
 - [![Javascript]][Javascript-url]
 - [![Typescript.ts]][Typescript-url]
 - [![Sass]][Sass-url]
-- [![Express]][Express-url]
+- [![Express.js]][Express-url]
 - [![Redux.js]][Redux-url]
 - [![Netlify]][Netlify-url]
 - [![Bootstrap]][Bootstrap-url]
@@ -29,7 +29,7 @@ Leave any add-ons/plugins for the acknowledgements section. Here are a few examp
 [React-url]: https://reactjs.org/
 [Javascript]: https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
 [Javascript-url]: https://www.w3schools.com/js/
-[Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[Node.js]: https://img.shields.io/badge/Node.js<V16>-43853D?style=for-the-badge&logo=node.js&logoColor=white
 [Node-url]: https://nodejs.org/en/about
 [Typescript.ts]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
 [Typescript-url]: https://www.typescriptlang.org/
