@@ -5,7 +5,10 @@ Book your travel on GitHub with [TravelDnD]!
 
 [TravelDnD] is a web-based travel booking platform that allows you to book place, hotels. We offer a wide selection of travel options from all major providers, and our prices are competitive.
 
-To book your travel with [TravelDnD], simply create an account on our website. Then, browse our selection of travel options and choose the ones that are right for you.
+This project allows users to create a new account by signing up and logging in, and it allows hosts to create and update room bookings for rent.<br/>
+
+To book your travel with [TravelDnD], simply create an account on our website. Then, browse our selection of travel options and choose the ones that are right for you.<br/>
+
 Once you've selected your place, hotels, you can booking and check history in profile
 
 ### Deployment
