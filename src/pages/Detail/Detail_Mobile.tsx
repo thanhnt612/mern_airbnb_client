@@ -418,7 +418,7 @@ export default function Detail() {
                           <input
                             id="dateIn"
                             name="dateIn"
-                            value={format(range[0].startDate, "dd-MM-yyyy")}
+                            value={format(range[0].startDate, "yyyy-MM-dd")}
                             readOnly
                             className="date-in text-center"
                             onClick={() => setOpen((open) => !open)}
@@ -431,7 +431,7 @@ export default function Detail() {
                           <input
                             id="dateOut"
                             name="dateOut"
-                            value={format(range[0].endDate, "dd-MM-yyyy")}
+                            value={format(range[0].endDate, "yyyy-MM-dd")}
                             readOnly
                             className="date-out text-center"
                             onClick={() => setOpen((open) => !open)}
