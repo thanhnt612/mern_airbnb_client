@@ -127,7 +127,7 @@ export const postBookingApi = (
         });
         if (result.data.status === 200) {
             toast.success('Booking room successfully !!!', {
-                position: "top-center",
+                position: "bottom-center",
                 autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,

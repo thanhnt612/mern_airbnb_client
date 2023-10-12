@@ -129,13 +129,23 @@ export default function Profile() {
               <h4>Your booking</h4>
             </div>
             {loading ? (
-           <LoadingPageMobile className={`loading-spinner bg-transparent mt-5`}/>
+              <LoadingPageMobile className={`loading-spinner bg-transparent mt-5`} />
             ) : (
               <div className='d-flex flex-row flex-wrap'>
                 {arrHistory.map((item: any, index: number) => {
+                  //Current Date
+                  let newDate = new Date();
+                  let dateCurrent = new Date(newDate.getTime() - (newDate.getTimezoneOffset() * 60000))
+                    .toISOString()
+                    .split("T")[0];
+                  //Checkout Date
+                  let checkOut = new Date(item.checkOut);
+                  let checkOutBooking = new Date(checkOut.getTime() - (checkOut.getTimezoneOffset() * 60000))
+                    .toISOString()
+                    .split("T")[0];
                   return <div className='col-12 p-2' key={index}>
                     {arrBooking.map((prod: any, index: number) => {
-                      if (item.placeId === prod._id) {
+                      if (item.placeId === prod._id && dateCurrent < checkOutBooking) {
                         return <div className="list-choose d-flex flex-wrap p-3 bg-light border border-2 border-success 
                                         border-opacity-25 rounded mb-4" key={index}>
                           <div className="thumbnail col-12 col-md-7 p-2">
