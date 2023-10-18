@@ -4,6 +4,15 @@
 }
 .header-layout {
   position: fixed;
+  @include responsive("xs") {
+    position: inherit;
+  }
+  @include responsive("md") {
+    position: inherit;
+  }
+  @include responsive("lg") {
+    position: fixed;
+  }
   top: 0;
   z-index: 999;
   width: 100%;
@@ -13,7 +22,6 @@
     justify-content: space-between;
     align-items: center;
     .header-home {
-      width: 15%;
       z-index: 10;
       a {
         display: inline-block;
@@ -23,29 +31,31 @@
     .header-search {
       display: flex;
       justify-content: center;
-      padding-bottom: 35px;
+      @include responsive("xs") {
+        padding: 20px;
+        // width: 100%;
+      }
+      @include responsive("mdd") {
+      }
       @include responsive("md") {
-        margin-top: 20px;
+        // width: 40%;
+      }
+      @include responsive("lg") {
+        // width: 35%;
       }
       @include responsive("xl") {
-        margin-top: 20px;
-        padding-bottom: 20px;
+        // width: 25%;
       }
       form {
         z-index: 2;
         position: relative;
         .form-fill {
           background: $bg-header-light;
-          border-radius: 50px;
-          align-items: center;
-          padding: 10px 30px;
           @include responsive("md") {
             font-size: $text-base;
-            padding: 5px 20px;
           }
           @include responsive("xl") {
             font-size: $text-xl;
-            padding: 10px 30px;
           }
           h4 {
             font-size: $text-xl;
@@ -62,40 +72,30 @@
               }
             }
           }
-          .add {
-            text-align: end;
-            .btn {
-              padding-right: 85px;
-              white-space: nowrap;
-              button {
-                padding: 5px 10px;
-                border: none;
-                background: $bg-header-main;
-                border-radius: 50px;
-                color: $text-c1-light;
-                &:hover {
-                  color: $text-c1-main;
-                  background-color: $bg-grey;
-                  transition: 0.6s;
-                }
-                @include responsive("md") {
-                  font-size: $text-xs;
-                }
-                @include responsive("xl") {
-                  font-size: $text-xl;
-                }
-              }
-            }
-          }
         }
         .result-location {
           position: absolute;
-          top: 80px;
+          top: 60px;
           right: 185px;
-          width: 250px;
-          height: 120px;
+          width: 60%;
           overflow: hidden;
-          overflow-y: auto;
+          overflow-y: scroll;
+          @include responsive("xs") {
+            width: 80%;
+            top: 40px;
+            right: 70px;
+          }
+          @include responsive("mdd") {
+            width: 100%;
+            top: 40px;
+            left: 0;
+          }
+          @include responsive("lg") {
+            width: 80%;
+          }
+          @include responsive("xl") {
+            width: 70%;
+          }
           &::-webkit-scrollbar {
             display: none;
           }
@@ -114,13 +114,11 @@
     }
     .header-info {
       z-index: 10;
-      display: flex;
-      align-items: center;
       @include responsive("lg") {
-        width: 23%;
+        // width: 25%;
       }
       @include responsive("xl") {
-        width: 15%;
+        // width: 15%;
       }
       .left-info {
         margin: 0 10px;
@@ -155,7 +153,6 @@
             }
           }
           .list-info {
-            right: -10px !important;
             li {
               a {
                 background: $bg-header-light;

@@ -30,7 +30,7 @@ export default function HeaderHome() {
     window.location.protocol +
     "//" +
     window.location.host +
-    "/img/logonew2.jpg";
+    "/img/logo.png";
 
   const renderLogin = () => {
     if (userLogin?.name) {
@@ -49,6 +49,16 @@ export default function HeaderHome() {
           <li>
             <NavLink className="dropdown-item" to="/place/list-rent">
               <i className="bi bi-house-check-fill"></i> Your apartment
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className="dropdown-item" to="/blog/new">
+              <i className="bi bi-plus-circle-fill"></i> New Blog
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className="dropdown-item" to="/blog/list-blog">
+              <i className="bi bi-file-earmark-post-fill"></i> Your Blog
             </NavLink>
           </li>
           <li>
@@ -137,32 +147,31 @@ export default function HeaderHome() {
     <div
       className={
         navbar
-          ? "header-layout border-bottom border-danger border-3  px-5 active-navbar"
-          : "header-layout px-5"
+          ? "header-layout border-bottom border-danger border-1  px-1 px-md-2 px-lg-5 active-navbar"
+          : "header-layout  px-1 px-md-2 px-lg-5"
       }
     >
-      <div className="header-page">
-        <div className="header-home">
+      <div className="header-page flex-wrap py-1">
+        <div className="header-home order-0 col-6 col-md-3">
           <NavLink to="/">
             <img
               src={imageBasePath}
-              className="rounded m-1 border border-danger"
-              width="120px"
+              className="rounded-3 m-1 bg-white"
+              width="100px"
               alt=""
             />
           </NavLink>
         </div>
-        <div className="header-search">
-          <form onSubmit={handleSubmit}>
-            <div className="form-fill border-2 border row">
-              <div className="location col-9">
-                <h4>Where</h4>
+        <div className="header-search order-3 order-md-2 col-12 col-md-6 col-lg-3">
+          <form onSubmit={handleSubmit} className="w-100">
+            <div className="form-fill border border-danger rounded-5 p-2 row align-items-center">
+              <div className="location">
                 <div className="destination d-flex">
                   <input
+                    className="w-100"
                     value={search}
                     onChange={handleChange}
-                    placeholder="Search destinations"
-                    style={{ width: "75%", height: "32px" }}
+                    placeholder="Search . . ."
                   />
                   {show && (
                     <button
@@ -175,13 +184,6 @@ export default function HeaderHome() {
                       ❌
                     </button>
                   )}
-                </div>
-              </div>
-              <div className="add col-3">
-                <div className="btn col-5">
-                  <button type="submit" onClick={() => onSearchRoom(search)}>
-                    <i className="fa fa-search"></i> Search
-                  </button>
                 </div>
               </div>
             </div>
@@ -211,7 +213,7 @@ export default function HeaderHome() {
                       className={
                         isActive
                           ? "data-result p-2 invisible"
-                          : "data-result p-2"
+                          : "data-result p-2 border border-danger"
                       }
                       key={index}
                     >
@@ -222,16 +224,16 @@ export default function HeaderHome() {
             )}
           </form>
         </div>
-        <div className="header-info">
+        <div className="header-info order-2 order-md-3 col-6 col-md-3 
+        d-flex align-items-center justify-content-end">
           <div className="center-info">
             <button
               onClick={() => setMode(mode === "light" ? "dark" : "light")}
               className={`btn border-1
-            ${
-              mode === "light"
-                ? "bg-dark text-light border-light"
-                : "bg-light text-dark"
-            }`}
+            ${mode === "light"
+                  ? "bg-dark text-light border-light"
+                  : "bg-light text-dark"
+                }`}
             >
               {mode === "dark" ? (
                 <i className="bi bi-brightness-high"></i>

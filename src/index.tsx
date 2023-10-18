@@ -27,9 +27,12 @@ import New from './pages/New/New';
 import ListRent from './pages/ListRent/ListRent';
 import Update from './pages/UpdateRoom/Update';
 import PlaceTemplate from './templates/PlaceTemplate';
+import Blog from './pages/Blog/Blog';
+import BlogTemplate from './templates/BlogTemplate';
+import { DetailBlog } from './pages/Blog/DetailBlog';
 
 export const history: any = createBrowserHistory();
-// axios.defaults.baseURL = "https://placebooking.vercel.app";
+
 
 
 
@@ -77,6 +80,25 @@ root.render(
             />
           }>
             <Route path=':id' element={<Update />}></Route>
+          </Route>
+        </Route>
+        <Route path='blog' element={<BlogTemplate />}>
+          <Route path='list-blog' element={<ListRent />}></Route>
+          <Route path='new' element={<ResponsiveItem component={Blog} />}>
+          </Route>
+          <Route path='update-blog' element={
+            <ResponsiveItem
+              component={Update}
+            />
+          }>
+            <Route path=':id' element={<Update />}></Route>
+          </Route>
+          <Route path='detail' element={
+            <ResponsiveItem
+              component={DetailBlog}
+            />
+          }>
+            <Route path=':id' element={<DetailBlog />}></Route>
           </Route>
         </Route>
         <Route path='user' element={<UserTemplate />}>

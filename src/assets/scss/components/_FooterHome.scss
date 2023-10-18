@@ -1,10 +1,15 @@
 .footer {
-  border-top: 1px solid rgb(221, 221, 221) !important;
   .list-footer {
     padding: 20px;
     display: flex;
     .footer-1 {
       animation: FadeInTop 1s;
+      @include responsive("xs") {
+        font-size: $text-base;
+      }
+      @include responsive("mdd") {
+        font-size: $text-xl;
+      }
       p {
         font-weight: $text-bold;
       }
@@ -41,24 +46,52 @@
       font-size: $text-xl;
     }
     ul {
-      display: flex;
-      list-style: inside;
+      list-style: none;
       margin-bottom: 0;
       padding-left: 0;
       li {
         margin-right: 10px;
         a {
           text-decoration: none;
-          font-size: $text-xl;
+          font-size: $text-3xl;
           line-height: 18px;
           color: $text-c1-footer;
+          @include responsive("xs") {
+            font-size: $text-xs;
+          }
+          @include responsive("mdd") {
+            font-size: $text-base;
+          }
           &:hover {
             text-decoration: underline;
             transition: 666s;
+          }
+        }
+        .facebook {
+          &:hover {
+            color: #4267b2 !important;
+            transition: 0.3s;
+          }
+        }
+        .instagram {
+          &:hover {
+            transition: 0.8s;
+            color: #c13584 !important;
+          }
+        }
+        .twitter {
+          &:hover {
+            transition: 0.8s;
+            color: #1da1f2 !important;
+          }
+        }
+        .youtube {
+          &:hover {
+            transition: 0.3s;
+            color: #ff0000 !important;
           }
         }
       }
     }
   }
 }
-

@@ -11,11 +11,11 @@ export default function HomeTemplate() {
 
   return (
     <div>
-      <ResponsiveItem component={HeaderHome} mobileComponent={HeaderHome_Mobile} />
+      <ResponsiveItem component={HeaderHome}/>
       <div className='home-template' style={{ minHeight: '88vh' }}>
         <Outlet />
       </div>
-      <ResponsiveItem component={FooterHome} mobileComponent={FooterHome_Mobile} />
+      <ResponsiveItem component={FooterHome} />
     </div>
   )
 }

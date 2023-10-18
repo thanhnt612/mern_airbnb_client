@@ -27,6 +27,14 @@ export interface HistoryBookingModel {
     numberOfGuest: number,
     price: number
 }
+export interface BlogModel {
+    _id: string;
+    title: string;
+    article: string;
+    photos: string[];
+    createdAt: string;
+    updatedAt: string
+}
 
 interface BookingState {
     arrBooking: BookingModel[],
@@ -34,6 +42,8 @@ interface BookingState {
     arrHistory: HistoryBookingModel[],
     arrBookingId: BookingModel | null,
     arrLocation: BookingModel[] | null,
+    arrBlog: BlogModel[],
+    arrBlogDetail: BlogModel | null,
 }
 
 const initialState: BookingState = {
@@ -41,7 +51,9 @@ const initialState: BookingState = {
     arrOwnerRoom: [],
     arrBookingId: null,
     arrHistory: [],
-    arrLocation: null
+    arrLocation: null,
+    arrBlog: [],
+    arrBlogDetail: null,
 }
 
 const bookingReducer = createSlice({
@@ -72,6 +84,16 @@ const bookingReducer = createSlice({
                 const arrLocationList: BookingModel[] = action.payload;
                 state.arrLocation = arrLocationList;
             },
+        setBlogAction:
+            (state: BookingState, action: PayloadAction<BlogModel[]>) => {
+                const arrBlogList: BlogModel[] = action.payload;
+                state.arrBlog = arrBlogList;
+            },
+        setBlogDetailAction:
+            (state: BookingState, action: PayloadAction<BlogModel>) => {
+                const arrBlogDetail: BlogModel = action.payload;
+                state.arrBlogDetail = arrBlogDetail;
+            },
     }
 });
 
@@ -80,7 +102,9 @@ export const {
     setArrIdAction,
     setArrOwnerAction,
     setHistoryAction,
-    setLocationAction
+    setLocationAction,
+    setBlogAction,
+    setBlogDetailAction
 } = bookingReducer.actions
 export default bookingReducer.reducer
 
@@ -155,6 +179,24 @@ export const getBookingLocationApi = (destination: string) => {
         const result: any = await http.get('/place/dest/' + destination);
         let arrBookingLocation: BookingModel[] = result.data.content;
         const action: PayloadAction<BookingModel[]> = setLocationAction(arrBookingLocation);
+        dispatch(action)
+    }
+}
+
+export const getBlogApi = () => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.get('/blog');
+        let arrBlog: BlogModel[] = result.data.data.content;
+        const action: PayloadAction<BlogModel[]> = setBlogAction(arrBlog);
+        dispatch(action)
+    }
+}
+
+export const getBlogDetailApi = (id: number) => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.get('/blog/' + id);
+        let arrBlogDetail: BlogModel = result.data.content;
+        const action: PayloadAction<BlogModel> = setBlogDetailAction(arrBlogDetail);
         dispatch(action)
     }
 }

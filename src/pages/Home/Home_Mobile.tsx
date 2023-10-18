@@ -5,18 +5,21 @@ import { DispatchType, RootState } from '../../redux/configStore';
 import { history } from '../../index';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
+import { getBlogApi, getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
 import { LoadingPageMobile } from '../../Components/Icon';
+import ReactPlayer from 'react-player';
+
 
 export default function Home() {
   const dispatch: DispatchType = useDispatch();
   const content = useRef(null);
   const [loading, setLoading] = useState(false)
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
-  const listProvince = arrBooking.filter((ele, ind) => ind === arrBooking.findIndex(elem => elem.address === ele.address))
+  const { arrBlog } = useSelector((state: RootState) => state.bookingReducer);
 
   useEffect(() => {
     dispatch(getBookingApi())
+    dispatch(getBlogApi())
     if (arrBooking.length === 0) {
       setLoading(true);
     } else {
@@ -58,10 +61,10 @@ export default function Home() {
         <div id="carouselExampleCaptions" className="slider carousel slide"
           data-bs-ride="carousel">
           <div className="introduce container d-none d-md-block">
-            <h3>Let's start the journey</h3>
+            <h3>Welcome to TravelDnD</h3>
             <button className='btn'
               onClick={() => scrollToSection(content)}>
-              👉 Booking your table now! 👈
+              👉 Let's start the journey 👈
             </button>
           </div>
           <div className="carousel-indicators" style={{ zIndex: "3" }}>
@@ -182,11 +185,35 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <div className="about-mobile row w-100 m-0 justify-content-center">
+        <div className="about-left container my-3 d-flex flex-column justify-content-center align-items-start col-lg-12 col-xl-6">
+          <h3 className='fw-bold w-100 text-center'>About Us</h3>
+          <p className='w-100 text-center'>
+            Place Booking at <span className='text-danger'>TravelDnD</span>
+          </p>
+          <p>
+            From mountain peaks to rainforests to tropical beaches,
+            luxury hotels with nature offer some of the most stunning scenery in the world.
+            Wake up to the sound of birdsong and fall asleep under the stars. <br /> <br />
+            Many luxury hotels with nature are committed to sustainable practices, such as using renewable energy, reducing waste, and supporting local communities. You can feel good about staying at a hotel that is doing its part to protect the environment.
+          </p>
+          <div className='text-center w-100'>
+            <a href="" className='btn text-light bg-danger text-decoration-none'>Learn more</a>
+          </div>
+        </div>
+        <div className="about-right col-lg-12 col-xl-6 p-4 d-flex justify-content-center">
+          <img src="../../img/about/about_1.png" className='col-4  rounded-3 wow pic-1'
+          />
+          <img src="../../img/about/about_2.png" className='col-4 mx-2 rounded-3 wow pic-2' />
+          <img src="../../img/about/about_3.png" className='col-4  rounded-3 wow pic-3'
+          />
+        </div>
+      </div>
       <div className='content' ref={content}>
         <div className="main">
           <div className="list-detail">
             <div className="tittle text-center">
-              <h3>Rooms</h3>
+              <h3 className='fw-bold'>Apartment</h3>
             </div>
             {loading ? (
               <LoadingPageMobile className={`loading-spinner bg-transparent mt-4`} />
@@ -198,22 +225,19 @@ export default function Home() {
                     responsive={responsive}
                   >
                     {arrBooking.map((room, index) => {
-                      return <div className='p-3' key={index}>
-                        <div className="room-body rounded d-flex flex-column mb-4 
-                    bg-light border border-2 
-                    border-success border-opacity-25 
-                    wow">
+                      return <div key={index}>
+                        <div className="room-body rounded d-flex flex-column mb-4 wow">
                           <div className="thumbnail col-12">
                             <img src={room.photos[0]}
                               className='w-100 rounded-top' alt="" />
                           </div>
-                          <div className="detail rounded-bottom col-12 p-2" style={{ width: "300px" }}>
+                          <div className="detail bg-light rounded-bottom col-12 p-2 py-2 shadow">
                             <div className="info">
-                              <h5>🏩{room.address}</h5>
-                              <p className='mb-1 text-truncate' style={{ height: "36px" }}>🔔{room.title}</p>
-                              <p><span className='fw-bold'>💲{room.price}</span> - night</p>
+                              <h5 className='text-truncate'>🏩{room.address}</h5>
+                              <p className='mb-1 text-truncate'>🔔{room.title}</p>
+                              <p className='mb-1'><span className='fw-bold'>💲{room.price}</span> - night</p>
                             </div>
-                            <div className="view-more">
+                            <div className="view-more text-end">
                               <div className="button">
                                 <NavLink to={`/detail/${room._id}`} className="btn">
                                   <span>
@@ -231,67 +255,111 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="list container mb-5">
-            <div className="title text-center pb-3">
-              <h3>Discover the beautiful places around the Vietnam</h3>
-            </div>
-            <div className="menu" ref={content}>
-              {loading ? (
-               <LoadingPageMobile className={`loading-spinner bg-transparent mt-4`}/>
-              ) : (
-                <div className="row">
-                  {listProvince.map((location, index) => {
-                    return <div className="list-city col-12 col-md-6 pb-3" key={index}>
-                      <div className={`list-room item-${index} bg-light d-flex flex-column p-3 border border-2 
-                      border-success border-opacity-25 rounded wow`}>
-                        <div className="detail p-2 col-12 d-flex flex-row justify-content-between">
-                          <h5 className='text-center col-8' onClick={() => onList(location.address)}>
-                            📌{location.address}
-                          </h5>
-                          <div className="locate col-4 text-center">
-                            <button className="btn" onClick={() => onList(location.address)}>
-                            👉 List
-                            </button>
-                          </div>
-                        </div>
-                      </div>
+        </div>
+      </div>
+      <div className="banner container-fluid my-5 p-0">
+        <div className="tittle text-center">
+          <h3 className='fw-bold mb-5'>Discovery Places</h3>
+        </div>
+        <ReactPlayer
+          url="../../video/discovery-video.mp4"
+          width="100%"
+          height="100%"
+          muted={true}
+          loop={true}
+          playing
+          light="../../img/discovery.jpg"
+          playIcon={
+            <div className='main position-relative'>
+              <div className="wrapper" style={{ zIndex: "2" }}>
+                <div className="video-main">
+                  <div className="promo-video">
+                    <div className="waves-block">
+                      <div className="waves wave-1"></div>
+                      <div className="waves wave-2"></div>
+                      <div className="waves wave-3"></div>
                     </div>
-                  })}
+                  </div>
+                  <a className="video video-popup mfp-iframe" data-lity>
+                    <i className="fs-2 text-danger bi bi-play-fill"></i>
+                  </a>
                 </div>
-              )}
-            </div>
-          </div>
-          <div className="convenient container">
-            <div className="tittle">
-              <h3>Wherever</h3>
-            </div>
-            <div className="main row">
-              <div className="service wow item-1 col-12 col-md-6">
-                <div className="thumbnail">
-                  <img src="/img/home/home.png" className='w-100 rounded' alt="" />
-                </div>
-                <p>Whole House</p>
-              </div>
-              <div className="service wow item-2 col-12 col-md-6">
-                <div className="thumbnail">
-                  <img src="/img/home/special.jpg" className='w-100 rounded ' alt="" />
-                </div>
-                <p>Unique Accommodation</p>
-              </div>
-              <div className="service wow item-3 col-12 col-md-6">
-                <div className="thumbnail">
-                  <img src="/img/home/farm.jpg" className='w-100 rounded' alt="" />
-                </div>
-                <p>Farm And Nature</p>
-              </div>
-              <div className="service wow item-4 col-12 col-md-6">
-                <div className="thumbnail">
-                  <img src="/img/home/dog.png" className='w-100 rounded' alt="" />
-                </div>
-                <p>Pets allowed</p>
               </div>
             </div>
-          </div>
+          } />
+      </div>
+      <div className="blog container">
+        <div className="tittle text-center">
+          <h3 className='fw-bold py-3'>Blog</h3>
+        </div>
+        <div className="main d-flex flex-row flex-wrap justify-content-md-center justify-content-lg-start">
+          {arrBlog.map((blog, index) => {
+            return <div className='item col-12 col-md-6 col-lg-4 p-2' key={index}>
+              <div className="thumbnail position-relative">
+                <div className="picture">
+                  <NavLink to={`/blog/detail/${blog._id}`}>
+                    <img src={blog.photos[0]} className="w-100" style={{ height: "200px" }} />
+                  </NavLink>
+                </div>
+                <div className="calendar  fw-700 position-absolute text-center">
+
+                </div>
+              </div>
+              <div className="detail shadow p-3">
+                <p>
+                  <NavLink className="text-decoration-none text-dark me-4" to="/">
+                    <i className="text-danger bi bi-person" /> Author
+                  </NavLink>
+                  <NavLink className="text-decoration-none text-dark " to="/">
+                    <i className="text-danger bi bi-chat" /> 0 Comments
+                  </NavLink>
+                </p>
+                <p className='fw-bold pt-2'>
+                  <NavLink to={`/blog/detail/${blog._id}`} className="text-decoration-none text-dark fw-700 ">{blog.title}</NavLink>
+                </p>
+                <div className="w-50 my-3 border-danger border-3 border-bottom" />
+                <p className="text-truncate">
+                  {blog.article}
+                </p>
+                <NavLink to={`/blog/detail/${blog._id}`} className="read-more text-decoration-none btn btn-danger">READ MORE &gt;</NavLink>
+              </div>
+            </div>
+          })}
+        </div>
+      </div>
+      <div className="media row m-0 justify-content-center">
+        <div className="tittle text-center">
+          <h3 className='fw-bold py-3'>Media</h3>
+        </div>
+        <div className="item position-relative p-0 col-12 col-md-6">
+          <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
+            <i className="bi bi-instagram"></i>
+          </a>
+          <img src="../../img/news/ins_1.png" className='w-100' alt="" />
+        </div>
+        <div className="item position-relative p-0 col-12 col-md-6">
+          <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
+            <i className="bi bi-instagram"></i>
+          </a>
+          <img src="../../img/news/ins_2.png" className='w-100' alt="" />
+        </div>
+        <div className="item position-relative p-0 col-12 col-md-6">
+          <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
+            <i className="bi bi-instagram"></i>
+          </a>
+          <img src="../../img/news/ins_3.png" className='w-100' alt="" />
+        </div>
+        <div className="item position-relative p-0 col-12 col-md-6">
+          <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
+            <i className="bi bi-instagram"></i>
+          </a>
+          <img src="../../img/news/ins_4.png" className='w-100' alt="" />
+        </div>
+        <div className="item position-relative p-0 col-12 col-md-6">
+          <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
+            <i className="bi bi-instagram"></i>
+          </a>
+          <img src="../../img/news/ins_5.png" className='w-100' alt="" />
         </div>
       </div>
     </div>

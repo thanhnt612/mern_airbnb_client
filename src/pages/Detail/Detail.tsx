@@ -325,8 +325,7 @@ export default function Detail() {
                     <div className="calendar p-2 text-center ">
                       <div className="check row">
                         <div className="check-in col-lg-12 col-xl-6">
-                          <p>
-                            🗓 Check In</p>
+                          <p>📅 Check In</p>
                           <input
                             id='dateIn'
                             name='dateIn'
@@ -337,7 +336,7 @@ export default function Detail() {
                           />
                         </div>
                         <div className="check-out col-lg-12 col-xl-6">
-                          <p>🗓 Check Out</p>
+                          <p>📅 Check Out</p>
                           <input
                             id='dateOut'
                             name='dateOut'
