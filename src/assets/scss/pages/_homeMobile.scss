@@ -105,15 +105,9 @@
     }
     .about-left {
       text-align: justify;
-      padding: 0 3vh;
+      padding: 0 4vh;
     }
     .about-right {
-      @include responsive("lg") {
-        // padding: 50px 0;
-      }
-      @include responsive("xl") {
-        padding-top: 0;
-      }
       @for $i from 0 to 4 {
         .pic-#{$i + 1} {
           animation: FadeInTop (0.5s * $i + 1);
@@ -211,88 +205,6 @@
           }
         }
       }
-      .list {
-        .title {
-          h3 {
-            font-size: $text-2xl;
-          }
-        }
-        .menu {
-          .row {
-            .list-city {
-              @for $i from 0 to 7 {
-                .item-#{$i + 1} {
-                  animation: FadeInTop (0.1s * $i + 1);
-                }
-              }
-              .list-room {
-                .thumbnail {
-                  overflow: hidden;
-                  img {
-                    object-fit: cover;
-                    cursor: pointer;
-                    width: 300px !important;
-                    height: 80px;
-                    transition: 0.3s;
-                    &:hover {
-                      transform: scale(1.7);
-                    }
-                  }
-                }
-                .detail {
-                  h5 {
-                    @include text($text-xl, $text-semiBold, $text-c1-dark);
-                    cursor: pointer;
-                  }
-                  p {
-                    @include text($text-base, $text-regular, $text-c1-dark);
-                    cursor: pointer;
-                  }
-                  .locate {
-                    .btn {
-                      padding: 10px;
-                      font-style: $text-base;
-                      border-radius: 10px;
-                      color: $text-c1-light;
-                      background-color: $bg-header-main;
-                      &:hover {
-                        background-color: transparent;
-                        color: $text-c1-main;
-                        border: 1px solid $bg-header-main;
-                        transition: 0.5s;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      .convenient {
-        .main {
-          @for $i from 0 to 4 {
-            .item-#{$i + 1} {
-              animation: FadeInTop (0.2s * $i + 1);
-            }
-          }
-          .service {
-            padding: 25px;
-            text-align: center;
-            .thumbnail {
-              img {
-                border-radius: 10px;
-                @include responsive("xs") {
-                  height: 200px;
-                }
-              }
-            }
-            p {
-              padding-top: 5px;
-            }
-          }
-        }
-      }
     }
   }
   .banner {
@@ -363,6 +275,12 @@
           .picture {
             overflow: hidden;
             object-fit: cover;
+            @include responsive("lg") {
+              height: 200px;
+            }
+            @include responsive("xl") {
+              height: 100px;
+            }
           }
           &:hover {
             img {
@@ -374,6 +292,7 @@
           }
         }
         .detail {
+            font-size: 12px;
           a {
             &:hover {
               transition: all 0.3s;
@@ -381,6 +300,7 @@
             }
           }
           .read-more {
+            font-size: 12px;
             &:hover {
               background-color: $bg-header-light;
             }

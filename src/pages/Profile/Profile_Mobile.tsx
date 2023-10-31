@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
-import { updateProfileApi } from '../../redux/reducers/userReducer';
+import { getProfileApi, updateProfileApi } from '../../redux/reducers/userReducer';
 import { useFormik, FormikProps } from 'formik';
 import * as yup from 'yup';
 import { ToastContainer } from 'react-toastify';
@@ -19,34 +19,34 @@ export type EditProfile = {
 
 export default function Profile() {
   const dispatch: DispatchType = useDispatch();
-  const { userLogin } = useSelector((state: RootState) => state.userReducer);
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const { arrHistory } = useSelector((state: RootState) => state.bookingReducer);
   const [loading, setLoading] = useState(false)
-  if (Object.keys(userLogin).length === 0) {
-    window.location.href = "/user/login";
-  }
-
+  const { token } = useSelector((state: RootState) => state.userReducer);
+  const { userProfile } = useSelector((state: RootState) => state.userReducer);
+  
+  // if (Object.keys(userProfile).length === 0) {
+  //   window.location.href = "/user/login";
+  // }
   useEffect(() => {
     dispatch(getBookingApi())
-    dispatch(getBookingProfileApi(userLogin._id))
-    if (arrHistory.length === 0) {
-      setLoading(true);
-    } else {
-      setLoading(false);
-    }
-  }, [arrHistory.length]);
+    dispatch(getProfileApi(token))
+  }, []);
+  useEffect(() => {
+    dispatch(getBookingProfileApi(userProfile._id))
+  }, [userProfile._id]);
+
   const frm: FormikProps<EditProfile> = useFormik<EditProfile>({
     initialValues: {
-      email: userLogin.email,
-      name: userLogin.name,
-      password: userLogin.password
+      email: userProfile.email,
+      name: userProfile.name,
+      password: userProfile.password
     },
     validationSchema: yup.object().shape({
       name: yup.string().required("Please enter your name !!!"),
     }),
     onSubmit: (values: EditProfile) => {
-      dispatch(updateProfileApi(userLogin._id, values))
+      dispatch(updateProfileApi(userProfile._id, values))
     }
   });
   return (
@@ -55,7 +55,7 @@ export default function Profile() {
         <div className="row">
           <div className="history d-flex flex-column col-12 mb-3 pt-3">
             <div className="title">
-              <h3>Hello, I'm {userLogin.name}</h3>
+              <h3>Hello, I'm {userProfile.name}</h3>
               <p>Joined 2023</p>
             </div>
             <div className="edit-profile mb-3">

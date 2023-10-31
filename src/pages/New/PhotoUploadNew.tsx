@@ -1,20 +1,31 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { http } from '../../utils/config';
+import { LoadingPage } from '../../Components/Icon';
+
 
 export default function PhotoUpload({ addPhoto, onChange }: any) {
+    const [loading, setLoading] = useState(false)
     const uploadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
         const files: any = event.target.files;
         const data = new FormData();
         for (let i = 0; i < files.length; i++) {
             data.append('picture', files[i]);
         }
-        http.post('/upload-source', data, {
+        http.post('/place/upload', data, {
             headers: { 'Content-type': 'multipart/form-data' }
         }).then(response => {
             const { data } = response;
             const newObject = [...addPhoto, ...data.content];
             onChange(newObject);
         })
+        if (addPhoto.length === 0) {
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+            }, 4000)
+        } else {
+            setLoading(false);
+        }
     }
     const removePhoto = (e: React.SyntheticEvent, link: any) => {
         e.preventDefault();
@@ -33,7 +44,13 @@ export default function PhotoUpload({ addPhoto, onChange }: any) {
                     </div>
                 })}
                 <label className='col-6 col-md-3 col-lg-2 p-5 border rounded text-dark bg-white d-flex align-items-center justify-content-center' style={{ cursor: "pointer" }}>
-                    <i className="fs-4 bi bi-cloud-arrow-up"></i>&nbsp;Upload
+                    {loading ? (
+                        <LoadingPage className={`loading-spinner bg-transparent`} />
+                    ) : (
+                        <>
+                            <i className="fs-4 bi bi-cloud-arrow-up"></i>&nbsp;Upload
+                        </>
+                    )}
                     <input type="file" className='d-none' multiple
                         onChange={uploadPhoto} />
                 </label>

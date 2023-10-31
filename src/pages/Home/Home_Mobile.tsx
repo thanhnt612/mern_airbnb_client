@@ -191,7 +191,9 @@ export default function Home() {
           <p className='w-100 text-center'>
             Place Booking at <span className='text-danger'>TravelDnD</span>
           </p>
-          <p>
+          <p
+            style={{ textAlign: "justify", hyphens: "auto" }}
+          >
             From mountain peaks to rainforests to tropical beaches,
             luxury hotels with nature offer some of the most stunning scenery in the world.
             Wake up to the sound of birdsong and fall asleep under the stars. <br /> <br />
@@ -288,24 +290,25 @@ export default function Home() {
             </div>
           } />
       </div>
-      <div className="blog container">
+      <div className="blog container px-5 px-md-0">
         <div className="tittle text-center">
           <h3 className='fw-bold py-3'>Blog</h3>
         </div>
         <div className="main d-flex flex-row flex-wrap justify-content-md-center justify-content-lg-start">
-          {arrBlog.map((blog, index) => {
-            return <div className='item col-12 col-md-6 col-lg-4 p-2' key={index}>
+          {arrBlog.filter((item, index) => index < 3).map((blog, index) => {
+            let date = new Date(blog.createdAt).toLocaleDateString('en-GB');
+            return <div className='item col-12 col-md-4 p-2' key={index}>
               <div className="thumbnail position-relative">
                 <div className="picture">
                   <NavLink to={`/blog/detail/${blog._id}`}>
-                    <img src={blog.photos[0]} className="w-100" style={{ height: "200px" }} />
+                    <img src={blog.photos[0]} className="w-100" style={{ height: "150px" }} />
                   </NavLink>
                 </div>
                 <div className="calendar  fw-700 position-absolute text-center">
 
                 </div>
               </div>
-              <div className="detail shadow p-3">
+              <div className="detail border rounded-bottom shadow shadow p-3">
                 <p>
                   <NavLink className="text-decoration-none text-dark me-4" to="/">
                     <i className="text-danger bi bi-person" /> Author
@@ -314,17 +317,22 @@ export default function Home() {
                     <i className="text-danger bi bi-chat" /> 0 Comments
                   </NavLink>
                 </p>
-                <p className='fw-bold pt-2'>
+                <p className='fw-bold text-truncate mb-0'>
                   <NavLink to={`/blog/detail/${blog._id}`} className="text-decoration-none text-dark fw-700 ">{blog.title}</NavLink>
                 </p>
-                <div className="w-50 my-3 border-danger border-3 border-bottom" />
-                <p className="text-truncate">
+                <div className="w-50 my-2 border-danger border-3 border-bottom" />
+                <p className="text-truncate mb-1">
                   {blog.article}
                 </p>
                 <NavLink to={`/blog/detail/${blog._id}`} className="read-more text-decoration-none btn btn-danger">READ MORE &gt;</NavLink>
               </div>
             </div>
           })}
+          <div className="w-100 p-2 text-center py-4">
+            <button className="btn btn-danger">
+              View More
+            </button>
+          </div>
         </div>
       </div>
       <div className="media row m-0 justify-content-center">
@@ -354,12 +362,6 @@ export default function Home() {
             <i className="bi bi-instagram"></i>
           </a>
           <img src="../../img/news/ins_4.png" className='w-100' alt="" />
-        </div>
-        <div className="item position-relative p-0 col-12 col-md-6">
-          <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
-            <i className="bi bi-instagram"></i>
-          </a>
-          <img src="../../img/news/ins_5.png" className='w-100' alt="" />
         </div>
       </div>
     </div>

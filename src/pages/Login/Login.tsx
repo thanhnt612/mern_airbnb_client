@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useFormik, FormikProps } from 'formik';
 import * as yup from 'yup';
@@ -8,7 +8,6 @@ import { loginApi } from '../../redux/reducers/userReducer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingIcon } from '../../Components/Icon';
-
 
 export type UserLogin = {
   email: string,
@@ -35,8 +34,7 @@ export default function Login() {
       dispatch(loginApi(values))
     }
   });
-  const { userLogin } = useSelector((state: RootState) => state.userReducer);
-
+  const { userProfile } = useSelector((state: RootState) => state.userReducer);
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -44,7 +42,7 @@ export default function Login() {
   }
   const [loading, setLoading] = useState(false)
   const handleLogin = () => {
-    if (Object.keys(userLogin).length === 0) {
+    if (Object.keys(userProfile).length === 0) {
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -55,8 +53,8 @@ export default function Login() {
   }
   return (
     <div>
-      <div className='login-page '>
-        <div className="main row rounded">
+      <div className='login-page'>
+        <div className="main row pt-5">
           <div className="signin-content">
             <div className="signin-form">
               <div className='d-flex flex-column align-items-center'>
@@ -64,15 +62,15 @@ export default function Login() {
                   <img src='../img/logonew2.jpg' className='d-block rounded border p-1 border-danger' width="120px" alt="" />
                 </NavLink>
               </div>
-              <h2 className="form-title text-center">Log In</h2>
+              <h2 className="form-title text-center fw-bold">Log In</h2>
               <form className="login-form" onSubmit={frm.handleSubmit}>
-                <div className="form-group d-flex flex-column">
-                  <p className='fw-bold mb-1'>Email</p>
+                <div className="form-group d-flex flex-column align-items-center pb-2">
+                  <p className='fw-bold w-50 mb-1'>Email</p>
                   <input className=
                     {
                       frm.errors.email && frm.touched.email
-                        ? 'border border-danger p-2 rounded'
-                        : 'border border-dark p-2 rounded'
+                        ? 'border border-danger p-3 rounded w-50'
+                        : 'border border-dark p-3 rounded w-50'
                     }
                     name="email"
                     placeholder="Email"
@@ -81,14 +79,14 @@ export default function Login() {
                   {frm.errors.email && frm.touched.email &&
                     <p className="text text-danger">{frm.errors.email}</p>}
                 </div>
-                <div className="form-group d-flex flex-column ">
-                  <p className='fw-bold mb-1'>Password</p>
-                  <div className='position-relative'>
+                <div className="form-group d-flex flex-column align-items-center">
+                  <p className='fw-bold w-50 mb-1'>Password</p>
+                  <div className='position-relative w-50'>
                     <input className=
                       {
                         frm.errors.password && frm.touched.password
-                          ? 'border border-danger p-2 rounded'
-                          : 'border border-dark p-2 rounded'
+                          ? 'border border-danger p-3 rounded w-100'
+                          : 'border border-dark p-3 rounded w-100'
                       }
                       name="password"
                       type={showPassword ? 'text' : 'password'}
@@ -96,9 +94,9 @@ export default function Login() {
                       onBlur={frm.handleBlur}
                       onChange={frm.handleChange} style={{ outline: 'none' }} />
                     <button
-                      className='btn position-absolute top-0 end-0'
+                      className='btn position-absolute end-0'
                       onClick={togglePassword}
-                      style={{ border: 'none' }}>
+                      style={{ border: 'none', top: "10px" }}>
                       {showPassword
                         ? <i className="bi bi-eye-fill"></i>
                         : <i className="bi bi-eye-slash-fill"></i>
@@ -109,14 +107,14 @@ export default function Login() {
                     <p className="text text-danger">{frm.errors.password}</p>}
                 </div>
                 <div className="button d-flex flex-column align-items-center">
-                  <button type="submit" className="btn-login"
+                  <button type="submit" className="btn-login fw-bold"
                     disabled={!(frm.isValid && frm.dirty)}
                     onClick={handleLogin}
                   >
                     {loading
                       ?
                       <div className='d-flex align-items-center'>
-                        <LoadingIcon className={`loading-spinner text-light bg-transparent`}/>
+                        <LoadingIcon className={`loading-spinner text-light bg-transparent`} />
                       </div>
                       : <>
                         Log In
@@ -133,6 +131,15 @@ export default function Login() {
                     draggable
                     pauseOnHover
                     theme="colored" />
+                  <a href="" className='text-decoration-none pt-2'>Forgot Password</a>
+                  <div className='my-3 w-50 border-top border border-danger'>
+                  </div>
+                  <div>
+                    <button className='btn btn-light border-dark p-2 d-flex flex-row align-items-center'>
+                      <img src="../../img/google.png" width="20px" height="20px" alt="" />
+                      <span className='ms-1'>Login by Google</span>
+                    </button>
+                  </div>
                   <span className='pt-4'>Don't have an Account?</span>
                   <NavLink to='/user/register'>
                     Please register here <i className="bi bi-arrow-left-square-fill"></i>

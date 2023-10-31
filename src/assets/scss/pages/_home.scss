@@ -97,6 +97,15 @@
     .about-left {
       text-align: justify;
       padding: 0 10vh;
+      a {
+        padding: 10px 30px;
+        color: #fff;
+        background-color: #f7345e;
+        &:hover {
+          transition: all 0.6s;
+          background-color: #1c0950;
+        }
+      }
     }
     .about-right {
       @include responsive("lg") {
@@ -334,10 +343,10 @@
             object-fit: cover;
             img {
               @include responsive("lg") {
-                height: 200px !important;
+                height: 150px !important;
               }
               @include responsive("xl") {
-                height: 300px !important;
+                height: 250px !important;
               }
             }
           }
@@ -351,15 +360,31 @@
           }
         }
         .detail {
+          @include responsive("lg") {
+            font-size: 12px;
+          }
+          @include responsive("xl") {
+            font-size: 16px;
+          }
           a {
             &:hover {
               transition: all 0.3s;
               color: $text-c1-main !important;
             }
           }
+          .comment {
+            a {
+            }
+          }
           .read-more {
             &:hover {
               background-color: $bg-header-light;
+            }
+            @include responsive("lg") {
+              font-size: 12px;
+            }
+            @include responsive("xl") {
+              font-size: 16px;
             }
           }
         }
@@ -368,7 +393,6 @@
   }
   .media {
     .item {
-      width: 20%;
       &::after {
         content: "";
         position: absolute;
@@ -387,7 +411,7 @@
       &:hover {
         &::before {
           cursor: pointer;
-          content: "Instagram";
+          content: "";
           font-size: 22px;
           font-weight: 700;
           writing-mode: vertical-lr;
@@ -407,11 +431,22 @@
           display: block;
           z-index: 555;
         }
+        .description {
+          transition: all 0.5s;
+          display: block;
+          z-index: 555;
+        }
       }
       .link {
         display: none;
         top: 45%;
         left: 45%;
+      }
+      .description {
+        display: none;
+        top: 0;
+        left: 0;
+        writing-mode: vertical-lr;
       }
       img {
       }

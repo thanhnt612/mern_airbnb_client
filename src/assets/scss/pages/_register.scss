@@ -1,17 +1,6 @@
 .register-page {
   .row {
-    min-height: 500px;
     background-color: $bg-header-light;
-    box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    @include responsive("xs") {
-      padding: 20px;
-    }
-    @include responsive("md") {
-      padding: 100px;
-    }
     .signup-content {
       .signup-form {
         .form-title {
@@ -22,11 +11,11 @@
             margin-bottom: 25px;
             overflow: hidden;
             input {
-              width: 100%;
               display: block;
               border: none;
               outline: none;
               padding: 6px 20px;
+              font-size: 16px;
             }
           }
           .button {

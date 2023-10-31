@@ -11,7 +11,7 @@ export default function FooterHome() {
               <li>
                 <a href="https://maps.app.goo.gl/D3jhHQaDcRcRt8yUA" target='blank' className="text-decoration-none">
                   <span><i className="bi bi-geo-alt-fill"></i></span>&nbsp;
-                  Go Vap District, Ho Chi Minh City, Vietnam
+                  Ho Chi Minh City, Vietnam
                 </a>
               </li>
             </ul>
@@ -26,9 +26,9 @@ export default function FooterHome() {
                 </a>
               </li>
               <li>
-                <a href="mailto:nguyentruongthanh0612@gmail.com" className="text-decoration-none">
+                <a href="mailto:traveldnd@gmail.com" className="text-decoration-none">
                   <span><i className="bi bi-envelope-fill"></i></span>&nbsp;
-                  nguyentruongthanh0612@gmail.com
+                  traveldnd@gmail.com
                 </a>
               </li>
             </ul>

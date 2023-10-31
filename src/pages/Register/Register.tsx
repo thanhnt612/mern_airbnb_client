@@ -62,19 +62,9 @@ export default function Register() {
   }
   const [loading, setLoading] = useState(false)
 
-  // const handleRegister = () => {
-  //   if (Object.keys(userLogin).length === 0) {
-  //     setLoading(true);
-  //     setTimeout(() => {
-  //       setLoading(false);
-  //     }, 3000)
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }
   return (
     <div className='register-page '>
-      <div className="main row rounded">
+      <div className="main row pt-5">
         <div className="signup-content">
           <div className="signup-form">
             <div className='d-flex flex-column align-items-center'>
@@ -84,13 +74,13 @@ export default function Register() {
             </div>
             <h2 className="form-title text-center">Sign up</h2>
             <form className="register-form" onSubmit={frm.handleSubmit} autoComplete='off'>
-              <div className="form-group d-flex flex-column">
-                <p className='fw-bold mb-1'>Email</p>
+              <div className="form-group d-flex flex-column align-items-center">
+                <p className='fw-bold mb-1 w-50'>Email</p>
                 <input className=
                   {
                     frm.errors.email && frm.touched.email
-                      ? 'border border-danger p-2 rounded'
-                      : 'border border-dark p-2 rounded'
+                      ? 'border border-danger p-3 rounded w-50'
+                      : 'border border-dark p-3 rounded w-50'
                   }
                   type="email"
                   id="email"
@@ -102,14 +92,14 @@ export default function Register() {
                 {frm.errors.email && frm.touched.email &&
                   <p className="text text-danger">{frm.errors.email}</p>}
               </div>
-              <div className="form-group d-flex flex-column">
-                <p className='fw-bold mb-1'>Password</p>
-                <div className='position-relative'>
+              <div className="form-group d-flex flex-column align-items-center">
+                <p className='fw-bold mb-1 w-50'>Password</p>
+                <div className='position-relative w-50'>
                   <input className=
                     {
                       frm.errors.password && frm.touched.password
-                        ? 'border border-danger p-2 rounded'
-                        : 'border border-dark p-2 rounded'
+                        ? 'border border-danger p-3 rounded w-100'
+                        : 'border border-dark p-3 rounded w-100'
                     }
                     type={showPassword ? 'text' : 'password'}
                     id="password"
@@ -118,9 +108,9 @@ export default function Register() {
                     onChange={frm.handleChange}
                     onBlur={frm.handleBlur} />
                   <button
-                    className='btn position-absolute top-0 end-0'
+                    className='btn position-absolute end-0'
                     onClick={togglePassword}
-                    style={{ border: 'none' }}>
+                    style={{ border: 'none', top: "10px" }}>
                     {showPassword
                       ? <i className="bi bi-eye-fill"></i>
                       : <i className="bi bi-eye-slash-fill"></i>
@@ -130,14 +120,14 @@ export default function Register() {
                 {frm.errors.password && frm.touched.password &&
                   <p className="text text-danger">{frm.errors.password}</p>}
               </div>
-              <div className="form-group d-flex flex-column">
-                <p className='fw-bold mb-1'>Confirm Password</p>
-                <div className='position-relative'>
+              <div className="form-group d-flex flex-column align-items-center">
+                <p className='fw-bold mb-1 w-50'>Confirm Password</p>
+                <div className='position-relative w-50'>
                   <input className=
                     {
                       frm.errors.confirmPassword && frm.touched.confirmPassword
-                        ? 'border border-danger p-2 rounded'
-                        : 'border border-dark p-2 rounded'
+                        ? 'border border-danger p-3 rounded w-100'
+                        : 'border border-dark p-3 rounded w-100'
                     }
                     type={showPasswordConfirm ? 'text' : 'password'}
                     id="confirmPassword"
@@ -145,9 +135,9 @@ export default function Register() {
                     onChange={frm.handleChange}
                     onBlur={frm.handleBlur} />
                   <button
-                    className='btn position-absolute top-0 end-0'
+                    className='btn position-absolute end-0'
                     onClick={togglePasswordConfirm}
-                    style={{ border: 'none' }}>
+                    style={{ border: 'none', top: "10px" }}>
                     {showPasswordConfirm
                       ? <i className="bi bi-eye-fill"></i>
                       : <i className="bi bi-eye-slash-fill"></i>
@@ -157,13 +147,13 @@ export default function Register() {
                 {frm.errors.confirmPassword && frm.touched.confirmPassword &&
                   <p className="text text-danger">{frm.errors.confirmPassword}</p>}
               </div>
-              <div className="form-group d-flex flex-column">
-                <p className='fw-bold mb-1'>Name</p>
+              <div className="form-group d-flex flex-column align-items-center">
+                <p className='fw-bold mb-1 w-50'>Name</p>
                 <input className=
                   {
                     frm.errors.name && frm.touched.name
-                      ? 'border border-danger p-2 rounded'
-                      : 'border border-dark p-2 rounded'
+                      ? 'border border-danger p-3 rounded w-50'
+                      : 'border border-dark p-3 rounded w-50'
                   }
                   type="text"
                   id="name"

@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
-import { USER_LOGIN } from "../../utils/config";
+import { ACCESS_TOKEN, settings } from "../../utils/config";
 import {
   getBookingApi,
   getBookingLocationApi,
 } from "../../redux/reducers/bookingReducer";
 import { history } from "../../index";
 import useThemeSwitcher from "../hooks/useThemeSwitcher";
+import { UserContext } from "../../pages/User/UserContext";
+
+
 
 export default function HeaderHome() {
   const dispatch: DispatchType = useDispatch();
+  const { userInfo }: any = useContext(UserContext);
   const [isActive, setIsActive] = useState(false);
   const [show, setShow] = useState(false);
-  const { userLogin } = useSelector((state: RootState) => state.userReducer);
-  const { arrBooking } = useSelector(
-    (state: RootState) => state.bookingReducer
-  );
+  const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const [search, setSearch] = useState("");
   const address = arrBooking.filter(
     (ele, ind) =>
@@ -31,84 +32,6 @@ export default function HeaderHome() {
     "//" +
     window.location.host +
     "/img/logo.png";
-
-  const renderLogin = () => {
-    if (userLogin?.name) {
-      return (
-        <>
-          <li>
-            <NavLink className="dropdown-item" to="/profile">
-              <i className="bi bi-person-check"></i> Profile: {userLogin.name}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="dropdown-item" to="/place/new">
-              <i className="bi bi-plus-circle-fill"></i> New Place
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="dropdown-item" to="/place/list-rent">
-              <i className="bi bi-house-check-fill"></i> Your apartment
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="dropdown-item" to="/blog/new">
-              <i className="bi bi-plus-circle-fill"></i> New Blog
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="dropdown-item" to="/blog/list-blog">
-              <i className="bi bi-file-earmark-post-fill"></i> Your Blog
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className="dropdown-item"
-              onClick={() => {
-                localStorage.removeItem(USER_LOGIN);
-                window.location.href = "/user/login";
-              }}
-              to={""}
-            >
-              <i className="bi bi-box-arrow-left"></i> Log Out
-            </NavLink>
-          </li>
-        </>
-      );
-    }
-    return (
-      <>
-        <li>
-          <NavLink className="dropdown-item" to="/user/register">
-            <i className="bi bi-person-fill-add"></i> Sign Up
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="dropdown-item" to="/user/login">
-            <i className="bi bi-person-fill-up"></i> Log In
-          </NavLink>
-        </li>
-      </>
-    );
-  };
-  const renderUser = () => {
-    if (userLogin?.name) {
-      return (
-        <>
-          <span className="text-light">
-            <i className="user fa-solid fa-user"></i> {userLogin.name}{" "}
-            <i className="bi bi-caret-down-fill"></i>
-          </span>
-        </>
-      );
-    }
-    return (
-      <span className="text-light">
-        <i className="bar fa-solid fa-bars"></i>
-        <i className="user fa-solid fa-user"></i>
-      </span>
-    );
-  };
 
   const onSearchRoom = async (search: any) => {
     setSearch(search);
@@ -251,9 +174,77 @@ export default function HeaderHome() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {renderUser()}
+                {userInfo
+                  ? <>
+                    <p className="text-light m-0">
+                      {userInfo.name}
+                    </p>
+                  </>
+                  : <>
+                    <span className="text-light">
+                      <i className="bar fa-solid fa-bars"></i>
+                      <i className="user fa-solid fa-user"></i>
+                    </span>
+                  </>
+                }
               </NavLink>
-              <ul className="dropdown-menu list-info">{renderLogin()}</ul>
+              <ul className="dropdown-menu list-info">
+                {userInfo?.name
+                  ?
+                  <>
+                    <li>
+                      <a className="dropdown-item" href="/profile">
+                        <i className="bi bi-person-check"></i> Profile: {userInfo.name}
+                      </a>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/place/new">
+                        <i className="bi bi-plus-circle-fill"></i> New Place
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/place/list-rent">
+                        <i className="bi bi-house-check-fill"></i> Your apartment
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/blog/new">
+                        <i className="bi bi-plus-circle-fill"></i> New Blog
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/blog/list-blog">
+                        <i className="bi bi-file-earmark-post-fill"></i> Your Blog
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        onClick={() => {
+                          settings.eraseCookie(ACCESS_TOKEN);
+                          window.location.href = "/";
+                        }}
+                        to={""}
+                      >
+                        <i className="bi bi-box-arrow-left"></i> Log Out
+                      </NavLink>
+                    </li>
+                  </>
+                  :
+                  <>
+                    <li>
+                      <NavLink className="dropdown-item" to="/user/register">
+                        <i className="bi bi-person-fill-add"></i> Sign Up
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/user/login">
+                        <i className="bi bi-person-fill-up"></i> Log In
+                      </NavLink>
+                    </li>
+                  </>
+                }
+              </ul>
             </li>
             <div></div>
           </div>

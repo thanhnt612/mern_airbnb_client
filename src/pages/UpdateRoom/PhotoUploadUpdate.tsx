@@ -8,7 +8,7 @@ export default function PhotoUpload({ addPhoto, onChange }: any) {
         for (let i = 0; i < files.length; i++) {
             data.append('picture', files[i]);
         }
-        http.post('/upload-source', data, {
+        http.post('/place/upload', data, {
             headers: { 'Content-type': 'multipart/form-data' }
         }).then(response => {
             const { data } = response;

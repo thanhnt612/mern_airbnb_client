@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { getOwnerRoomApi } from '../../redux/reducers/bookingReducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../redux/configStore';
 import { NavLink } from 'react-router-dom';
 import { LoadingPage } from '../../Components/Icon';
 import useThemeSwitcher from '../../Components/hooks/useThemeSwitcher';
+import { UserContext } from '../User/UserContext';
 
 export default function ListRent() {
     const dispatch: DispatchType = useDispatch();
-    const { userLogin } = useSelector((state: RootState) => state.userReducer);
+  const { userInfo }: any = useContext(UserContext);
     const { arrOwnerRoom } = useSelector((state: RootState) => state.bookingReducer);
     const [loading, setLoading] = useState(false)
     const [mode, setMode]: any = useThemeSwitcher();
     useEffect(() => {
-        dispatch(getOwnerRoomApi(userLogin._id))
+        dispatch(getOwnerRoomApi(userInfo._id))
         if (arrOwnerRoom.length === 0) {
             setLoading(true);
             setTimeout(() => {
@@ -24,7 +25,7 @@ export default function ListRent() {
         }
     }, [arrOwnerRoom.length])
     const renderListRoom = () => {
-        if (Object.keys(userLogin).length === 0) {
+        if (Object.keys(userInfo).length === 0) {
             return (
                 <div className='text-center py-3'>
                     <h4>

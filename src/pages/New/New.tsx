@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Perk from './PerkNew';
 import PhotoUpload from './PhotoUploadNew';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/configStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { DispatchType, RootState } from '../../redux/configStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { http } from '../../utils/config';
 import { NavLink } from 'react-router-dom';
 import { LoadingPage } from '../../Components/Icon';
+import { UserContext } from '../User/UserContext';
+import { getProfileApi } from '../../redux/reducers/userReducer';
 
 
 export default function New() {
+    const dispatch: DispatchType = useDispatch();
     const [title, setTitle] = useState('')
     const [address, setAddress] = useState('')
     const [addPhoto, setAddPhoto] = useState<null | any>([])
@@ -21,7 +24,11 @@ export default function New() {
     const [maxGuest, setMaxGuest] = useState('')
     const [price, setPrice] = useState('')
     const [loading, setLoading] = useState(false)
-    const { userLogin } = useSelector((state: RootState) => state.userReducer);
+    const { token } = useSelector((state: RootState) => state.userReducer);
+    const { userProfile } = useSelector((state: RootState) => state.userReducer);
+    useEffect(() => {
+        dispatch(getProfileApi(token))
+    }, [])
 
     useEffect(() => {
         setLoading(true);
@@ -31,7 +38,7 @@ export default function New() {
     }, [])
 
     const renderNewForm = () => {
-        if (Object.keys(userLogin).length === 0) {
+        if (Object.keys(userProfile).length === 0) {
             return (
                 <div className='text-center py-3'>
                     <h4>
@@ -117,7 +124,7 @@ export default function New() {
     const addNewPlace = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         const result = await http.post('/place', {
-            owner: userLogin._id, title, address, addPhoto, description, perk, checkIn, checkOut, maxGuest, price
+            owner: userProfile._id, title, address, addPhoto, description, perk, checkIn, checkOut, maxGuest, price
         })
         if (result.data.status === 200) {
             toast.success('Make a room successfully !!!', {

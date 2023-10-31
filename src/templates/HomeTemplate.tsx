@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom';
-import FooterHome_Mobile from '../Components/FooterHome/FooterHome_Mobile';
 import HeaderHome from '../Components/HeaderHome/HeaderHome';
-import HeaderHome_Mobile from '../Components/HeaderHome/HeaderHome_Mobile';
 import ResponsiveItem from '../Components/ResponsiveItem/ResponsiveItem';
 import FooterHome from '../Components/FooterHome/FooterHome';
 

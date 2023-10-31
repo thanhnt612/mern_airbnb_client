@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PhotoUpload from './PhotoUploadBlog';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/configStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { http } from '../../utils/config';
 import { NavLink } from 'react-router-dom';
 import { LoadingPage } from '../../Components/Icon';
+import { UserContext } from '../User/UserContext';
 
 
 export default function Blog() {
@@ -14,8 +13,9 @@ export default function Blog() {
     const [article, setArticle] = useState('')
     const [addPhoto, setAddPhoto] = useState<null | any>([])
     const [loading, setLoading] = useState(false)
-    const { userLogin } = useSelector((state: RootState) => state.userReducer);
+    const { userInfo }: any = useContext(UserContext);
 
+    console.log(userInfo._id);
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
@@ -24,7 +24,7 @@ export default function Blog() {
     }, [])
 
     const renderNewForm = () => {
-        if (Object.keys(userLogin).length === 0) {
+        if (Object.keys(userInfo).length === 0) {
             return (
                 <div className='text-center py-3'>
                     <h4>
@@ -71,7 +71,7 @@ export default function Blog() {
     const addNewBlog = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         const result = await http.post('/blog', {
-            author: userLogin._id, title, article, addPhoto
+            author: userInfo._id, title, article, addPhoto
         })
         if (result.data.status === 200) {
             toast.success('Successfully !!!', {

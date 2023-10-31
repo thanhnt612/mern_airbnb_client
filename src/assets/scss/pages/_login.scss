@@ -1,17 +1,7 @@
 .login-page {
-  .row {
-    min-height: 500px;
+  height: 900px;
+  .main {
     background-color: $bg-header-light;
-    box-shadow: 0 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    @include responsive("xs") {
-      padding: 20px;
-    }
-    @include responsive("md") {
-      padding: 100px;
-    }
     .signin-content {
       .signin-form {
         .form-title {
@@ -22,11 +12,11 @@
             margin-bottom: 25px;
             overflow: hidden;
             input {
-              width: 100%;
               display: block;
               border: none;
               outline: none;
               padding: 6px 20px;
+              font-size: 16px;
             }
           }
           .button {
@@ -36,7 +26,6 @@
               color: $text-c1-light;
               border-radius: 5px;
               margin-top: 25px;
-              margin-right: 10px;
               border: none;
               &:hover {
                 opacity: 0.5;

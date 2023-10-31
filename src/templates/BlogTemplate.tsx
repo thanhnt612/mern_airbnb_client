@@ -8,9 +8,9 @@ export default function BlogTemplate() {
     return (
         <div>
             <ResponsiveItem component={HeaderHome} />
-            <div className='blog-template  border-bottom border-dark border-2 pt-0 pt-lg-5'
+            <div className='blog-template  border-bottom border-dark border-2 p-0 p-md-5'
                 style={{ height: '100%' }}>
-                <div className="container p-0 p-md-3 ">
+                <div className="container p-0 p-4 ">
                     <Outlet />
                 </div>
             </div>

@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { history } from "../index";
-export const USER_LOGIN = 'userLogin';
+export const ACCESS_TOKEN = 'access_token';
+
+
 
 export const http = axios.create({
     baseURL: 'https://traveldndserver.cyclic.app'
+    // baseURL: 'http://localhost:8080'
 });
+
 //Cookie
 export const settings = {
     setStorageJson: (name: string, data: any): void => {
@@ -77,9 +81,6 @@ export const settings = {
 }
 //Configure Request
 http.interceptors.request.use((config) => {
-    // config.headers = {
-    //     ...config.headers,
-    // };
     return config;
 }, err => {
     return Promise.reject(err);

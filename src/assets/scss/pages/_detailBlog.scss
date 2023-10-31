@@ -1,0 +1,18 @@
+.detail-blog {
+  .recent-news {
+    img {
+      @include responsive("xs") {
+        height: 70px;
+      }
+      @include responsive("md") {
+        height: 120px;
+      }
+      @include responsive("lg") {
+        height: 110px;
+      }
+      @include responsive("xl") {
+        height: 80px;
+      }
+    }
+  }
+}

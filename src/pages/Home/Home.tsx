@@ -17,15 +17,20 @@ export default function Home() {
   const { arrBlog } = useSelector((state: RootState) => state.bookingReducer);
   const [loading, setLoading] = useState(false)
 
+  //Call Api
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBlogApi())
-    if (arrBooking.length === 0) {
+    // dispatch(getProfileApi(token))
+  }, [])
+
+  useEffect(() => {
+    if (arrBooking.length === 0 || arrBlog.length === 0) {
       setLoading(true);
     } else {
       setLoading(false);
     }
-  }, [arrBooking.length])
+  }, [arrBooking.length, arrBlog.length])
 
   const onList = async (event: any) => {
     await dispatch(getBookingLocationApi(event));
@@ -215,7 +220,9 @@ export default function Home() {
             Wake up to the sound of birdsong and fall asleep under the stars. <br /> <br />
             Many luxury hotels with nature are committed to sustainable practices, such as using renewable energy, reducing waste, and supporting local communities. You can feel good about staying at a hotel that is doing its part to protect the environment.
           </p>
-          <a href="" className='btn text-light bg-danger text-decoration-none'>Learn more</a>
+          <NavLink to="/about" className='rounded-pill fw-bold text-decoration-none'>
+            Learn more
+          </NavLink>
         </div>
         <div className="about-right col-lg-12 col-xl-6 d-flex 
         justify-content-center align-items-center gap-3">
@@ -340,74 +347,83 @@ export default function Home() {
         <div className="tittle text-center">
           <h3 className='fw-bold py-3'>Blog</h3>
         </div>
-        <div className="main d-flex flex-row flex-wrap justify-content-md-center justify-content-lg-start">
-          {arrBlog.map((blog, index) => {
-            return <div className='item col-12 col-md-6 col-lg-4 p-2' key={index}>
-              <div className="thumbnail position-relative">
-                <div className="picture">
-                  <NavLink to={`/blog/detail/${blog._id}`}>
-                    <img src={blog.photos[0]} className="w-100" />
-                  </NavLink>
-                </div>
-                <div className="calendar  fw-700 position-absolute text-center">
+        {loading ? (
+          <LoadingPage className={`loading-spinner bg-transparent mt-5`} />
+        ) : (
+          <div className="main d-flex flex-row flex-wrap justify-content-md-center justify-content-lg-start">
+            {arrBlog.filter((item, index) => index < 3).map((blog, index) => {
+              let date = new Date(blog.createdAt).toLocaleDateString('en-GB');
+              return <div className='item col-12 col-md-4 p-2' key={index}>
+                <div className="thumbnail position-relative">
+                  <div className="picture">
+                    <NavLink to={`/blog/detail/${blog._id}`}>
+                      <img src={blog.photos[0]} className="w-100" />
+                    </NavLink>
+                  </div>
+                  <div className="calendar  fw-700 position-absolute text-center">
 
+                  </div>
                 </div>
+                <div className="detail border rounded-bottom shadow p-2 p-lg-3">
+                  <p className='comment mb-0'>
+                    <NavLink className="text-decoration-none text-dark me-4" to="/">
+                      <i className="text-danger bi bi-person" /> Author
+                    </NavLink>
+                    <NavLink className="text-decoration-none text-dark " to="/">
+                      <i className="text-danger bi bi-chat" /> 0 Comments
+                    </NavLink>
+                  </p>
+                  <p className='fw-bold pt-2 text-truncate mb-0'>
+                    <NavLink to={`/blog/detail/${blog._id}`} className="text-decoration-none text-dark fw-700 ">{blog.title}</NavLink>
+                  </p>
+                  <div className="w-50 my-3 border-danger border-3 border-bottom" />
+                  <p className="text-truncate mb-2">
+                    {blog.article}
+                  </p>
+                  <NavLink to={`/blog/detail/${blog._id}`} className="read-more text-decoration-none btn btn-danger">READ MORE &gt;</NavLink>
+                </div>
+
               </div>
-              <div className="detail shadow p-3">
-                <p>
-                  <NavLink className="text-decoration-none text-dark me-4" to="/">
-                    <i className="text-danger bi bi-person" /> Author
-                  </NavLink>
-                  <NavLink className="text-decoration-none text-dark " to="/">
-                    <i className="text-danger bi bi-chat" /> 0 Comments
-                  </NavLink>
-                </p>
-                <p className='fw-bold pt-2 text-truncate'>
-                  <NavLink to={`/blog/detail/${blog._id}`} className="text-decoration-none text-dark fw-700 ">{blog.title}</NavLink>
-                </p>
-                <div className="w-50 my-3 border-danger border-3 border-bottom" />
-                <p className="text-truncate">
-                  {blog.article}
-                </p>
-                <NavLink to={`/blog/detail/${blog._id}`} className="read-more text-decoration-none btn btn-danger">READ MORE &gt;</NavLink>
-              </div>
+            })}
+            <div className="w-100 p-2 text-center py-4">
+              <button className="btn btn-danger">
+                View More
+              </button>
             </div>
-          })}
-        </div>
+          </div>
+        )}
       </div>
       <div className="media row m-0 p-0">
         <div className="tittle text-center">
           <h3 className='fw-bold py-3'>Media</h3>
         </div>
-        <div className="item position-relative p-0">
+        <div className="item position-relative p-0 col-3">
           <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
             <i className="bi bi-instagram"></i>
           </a>
+          <p className='m-0 p-3 fs-3 fw-bold position-absolute description text-light'>Instagram</p>
           <img src="../../img/news/ins_1.png" className='w-100' alt="" />
         </div>
-        <div className="item position-relative p-0">
+        <div className="item position-relative p-0 col-3">
           <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
             <i className="bi bi-instagram"></i>
           </a>
+          <p className='m-0 p-3 fs-3 fw-bold position-absolute description text-light'>Instagram</p>
           <img src="../../img/news/ins_2.png" className='w-100' alt="" />
         </div>
-        <div className="item position-relative p-0">
+        <div className="item position-relative p-0 col-3">
           <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
             <i className="bi bi-instagram"></i>
           </a>
+          <p className='m-0 p-3 fs-3 fw-bold position-absolute description text-light'>Instagram</p>
           <img src="../../img/news/ins_3.png" className='w-100' alt="" />
         </div>
-        <div className="item position-relative p-0">
+        <div className="item position-relative p-0 col-3">
           <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
             <i className="bi bi-instagram"></i>
           </a>
+          <p className='m-0 p-3 fs-3 fw-bold position-absolute description text-light'>Instagram</p>
           <img src="../../img/news/ins_4.png" className='w-100' alt="" />
-        </div>
-        <div className="item position-relative p-0">
-          <a href="https://www.instagram.com/" className='position-absolute link fs-2 text-light'>
-            <i className="bi bi-instagram"></i>
-          </a>
-          <img src="../../img/news/ins_5.png" className='w-100' alt="" />
         </div>
       </div>
     </div>

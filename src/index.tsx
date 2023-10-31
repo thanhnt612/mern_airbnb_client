@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './assets/scss/style.scss';
 import {
@@ -30,10 +29,12 @@ import PlaceTemplate from './templates/PlaceTemplate';
 import Blog from './pages/Blog/Blog';
 import BlogTemplate from './templates/BlogTemplate';
 import { DetailBlog } from './pages/Blog/DetailBlog';
+import { About } from './pages/About/About';
+import { Edit } from './pages/Profile/Edit';
+import { UserContextProvider } from './pages/User/UserContext';
+
 
 export const history: any = createBrowserHistory();
-
-
 
 
 const root = ReactDOM.createRoot(
@@ -41,73 +42,56 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <HistoryRouter history={history}>
-      <Routes>
-        <Route path='' element={<HomeTemplate />}>
-          <Route index element={<ResponsiveItem component={Home} mobileComponent={Home_Mobile} />}></Route>
-          <Route path='home' element={<ResponsiveItem component={Home} mobileComponent={Home_Mobile} />}></Route>
-          <Route path='detail' element={
-            <ResponsiveItem
-              component={Detail}
-              mobileComponent={Detail_Mobile}
-            />
-          }>
-            <Route path=':id' element={<Detail />}></Route>
+    <UserContextProvider>
+      <HistoryRouter history={history}>
+        <Routes>
+          {/* Path: "/" */}
+          <Route path='' element={<HomeTemplate />}>
+            <Route index element={<ResponsiveItem component={Home} mobileComponent={Home_Mobile} />}></Route>
+            <Route path='home' element={<ResponsiveItem component={Home} mobileComponent={Home_Mobile} />}></Route>
+            <Route path='about' element={<About />}></Route>
+            <Route path='detail' element={<ResponsiveItem component={Detail} mobileComponent={Detail_Mobile} />}>
+              <Route path=':id' element={<Detail />}></Route>
+            </Route>
+            <Route path='list' element={<ResponsiveItem component={List} mobileComponent={List_Mobile} />}>
+              <Route path=':dest' element={<List />}></Route>
+            </Route>
+            <Route path='profile' element={<ResponsiveItem component={Profile} mobileComponent={Profile_Mobile} />}>
+            </Route>
+            <Route path='edit' element={<Edit />}></Route>
+            <Route path='*' element={<Navigate to="" />}></Route>
           </Route>
-          <Route path='list' element={
-            <ResponsiveItem
-              component={List}
-              mobileComponent={List_Mobile}
-            />
-          }>
-            <Route path=':dest' element={<List />}></Route>
+
+          {/* Path: "/place" */}
+          <Route path='place' element={<PlaceTemplate />}>
+            <Route path='list-rent' element={<ListRent />}></Route>
+            <Route path='new' element={<New />}></Route>
+            <Route path='update-room' element={<Update />}>
+              <Route path=':id' element={<Update />}></Route>
+            </Route>
           </Route>
-          <Route path='profile' element={
-            <ResponsiveItem
-              component={Profile}
-              mobileComponent={Profile_Mobile}
-            />
-          }></Route>
-          <Route path='*' element={<Navigate to="" />}></Route>
-        </Route>
-        <Route path='place' element={<PlaceTemplate />}>
-          <Route path='list-rent' element={<ListRent />}></Route>
-          <Route path='new' element={<ResponsiveItem component={New} />}>
+
+          {/* Path: "/blog" */}
+          <Route path='blog' element={<BlogTemplate />}>
+            <Route path='list-blog' element={<ListRent />}></Route>
+            <Route path='new' element={<Blog />}></Route>
+            <Route path='update-blog' element={<Update />}>
+              <Route path=':id' element={<Update />}></Route>
+            </Route>
+            <Route path='detail' element={<DetailBlog />}>
+              <Route path=':id' element={<DetailBlog />}></Route>
+            </Route>
           </Route>
-          <Route path='update-room' element={
-            <ResponsiveItem
-              component={Update}
-            />
-          }>
-            <Route path=':id' element={<Update />}></Route>
+
+          {/* Path: "/user" */}
+          <Route path='user' element={<UserTemplate />}>
+            <Route path="login" element={<Login />}></Route>
+            <Route path="register" element={<Register />}></Route>
+            <Route path='*' element={<Navigate to="" />}></Route>
           </Route>
-        </Route>
-        <Route path='blog' element={<BlogTemplate />}>
-          <Route path='list-blog' element={<ListRent />}></Route>
-          <Route path='new' element={<ResponsiveItem component={Blog} />}>
-          </Route>
-          <Route path='update-blog' element={
-            <ResponsiveItem
-              component={Update}
-            />
-          }>
-            <Route path=':id' element={<Update />}></Route>
-          </Route>
-          <Route path='detail' element={
-            <ResponsiveItem
-              component={DetailBlog}
-            />
-          }>
-            <Route path=':id' element={<DetailBlog />}></Route>
-          </Route>
-        </Route>
-        <Route path='user' element={<UserTemplate />}>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="register" element={<Register />}></Route>
-          <Route path='*' element={<Navigate to="" />}></Route>
-        </Route>
-      </Routes>
-    </HistoryRouter>
+        </Routes>
+      </HistoryRouter>
+    </UserContextProvider>
   </Provider>
 );
 

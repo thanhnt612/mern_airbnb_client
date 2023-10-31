@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { DispatchType, RootState } from "../../redux/configStore";
@@ -17,9 +17,10 @@ import { toast } from "react-toastify";
 import { history } from "../../index";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { UserContext } from "../User/UserContext";
 
 export default function Detail() {
-  const { userLogin } = useSelector((state: RootState) => state.userReducer);
+  const { userInfo }: any = useContext(UserContext);
   const { arrBookingId } = useSelector(
     (state: RootState) => state.bookingReducer
   );
@@ -122,13 +123,13 @@ export default function Detail() {
   // Click outside to close calendar----------------------------------------------------------------
   const myRef = useRef<HTMLInputElement>(null);
   const handleClickOutside = (event: any) => {
-      if (!myRef.current?.contains(event.target)) {
-        setOpen(false)
-      }
+    if (!myRef.current?.contains(event.target)) {
+      setOpen(false)
+    }
   };
   useEffect(() => {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   });
 
 
@@ -146,15 +147,15 @@ export default function Detail() {
     return Math.floor(
       (Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) -
         Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) /
-        (1000 * 60 * 60 * 24)
+      (1000 * 60 * 60 * 24)
     );
   };
   const totalPrice =
     price *
-      dateDiff(
-        format(range[0].startDate, "yyyy-MM-dd"),
-        format(range[0].endDate, "yyyy-MM-dd")
-      ) +
+    dateDiff(
+      format(range[0].startDate, "yyyy-MM-dd"),
+      format(range[0].endDate, "yyyy-MM-dd")
+    ) +
     10;
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -166,7 +167,7 @@ export default function Detail() {
     const dateIn = target.dateIn.value;
     const dateOut = target.dateOut.value;
     const guest = target.guest.value;
-    if (Object.keys(userLogin).length === 0) {
+    if (Object.keys(userInfo).length === 0) {
       toast.error("Please login your account !!!", {
         position: "top-center",
         autoClose: 2000,
@@ -181,7 +182,7 @@ export default function Detail() {
     } else {
       const action = postBookingApi(
         arrBookingId?._id,
-        userLogin._id,
+        userInfo._id,
         name,
         phone,
         dateIn,
@@ -413,7 +414,7 @@ export default function Detail() {
                       <div className="check">
                         <div className="check-in w-50 me-3">
                           <p>
-                          🗓 Check In
+                            🗓 Check In
                           </p>
                           <input
                             id="dateIn"
@@ -426,7 +427,7 @@ export default function Detail() {
                         </div>
                         <div className="check-out  w-50">
                           <p>
-                          🗓 Check Out
+                            🗓 Check Out
                           </p>
                           <input
                             id="dateOut"

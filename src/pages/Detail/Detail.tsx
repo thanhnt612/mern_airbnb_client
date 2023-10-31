@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -12,10 +12,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { history } from '../../index';
+import { UserContext } from '../User/UserContext';
 
 
 export default function Detail() {
-  const { userLogin } = useSelector((state: RootState) => state.userReducer);
+  const { userInfo }: any = useContext(UserContext);
   const { arrBookingId } = useSelector((state: RootState) => state.bookingReducer);
   const dispatch: DispatchType = useDispatch();
   const params: any = useParams();
@@ -143,7 +144,7 @@ export default function Detail() {
     const dateIn = target.dateIn.value;
     const dateOut = target.dateOut.value;
     const guest = target.guest.value;
-    if (Object.keys(userLogin).length === 0) {
+    if (Object.keys(userInfo).length === 0) {
       toast.error('Please login your account !!!', {
         position: "top-center",
         autoClose: 2000,
@@ -157,7 +158,7 @@ export default function Detail() {
       });
     } else {
       const action = postBookingApi(
-        arrBookingId?._id, userLogin._id, name, phone, dateIn, dateOut, guest, totalPrice)
+        arrBookingId?._id, userInfo._id, name, phone, dateIn, dateOut, guest, totalPrice)
       dispatch(action);
     }
   }
