@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { getAuthorBlogApi, getBlogApi } from '../../redux/reducers/bookingReducer'
+import { useEffect, useState } from 'react'
+import { getBlogApi } from '../../redux/reducers/bookingReducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../redux/configStore';
 import { NavLink } from 'react-router-dom';
 import { LoadingPage } from '../../Components/Icon';
-import { UserContext } from '../User/UserContext';
 
 export const AllBlog = () => {
     const dispatch: DispatchType = useDispatch();

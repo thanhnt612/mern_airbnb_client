@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { DispatchType, RootState } from '../../redux/configStore';
+import { useDispatch } from 'react-redux';
+import { DispatchType } from '../../redux/configStore';
 import {  updateProfileApi } from '../../redux/reducers/userReducer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { ACCESS_TOKEN, configStorage, http } from '../../utils/config';
 
-
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }: any) => {

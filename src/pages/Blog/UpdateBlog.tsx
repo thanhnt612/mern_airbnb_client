@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { NavLink, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { http } from '../../utils/config';
 import { UserContext } from '../User/UserContext';
 import PhotoUpload from './PhotoUploadBlog';

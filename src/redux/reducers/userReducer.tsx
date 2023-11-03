@@ -1,11 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { UserLogin } from '../../pages/Login/Login';
 import { UserRegister } from '../../pages/Register/Register';
-import {
-    ACCESS_TOKEN,
-    configStorage,
-    http,
-} from "../../utils/config";
+import { http } from "../../utils/config";
 import { DispatchType } from '../configStore';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,36 +9,6 @@ import { history } from '../../index';
 export type EditProfile = {
     name: string,
 }
-
-export type Token = {
-    token: string,
-}
-
-export type StateManage = {
-    token?: Token
-}
-
-const initialState = {
-    token: configStorage.getStorageJson(ACCESS_TOKEN)
-        ? configStorage.getStorageJson(ACCESS_TOKEN)
-        : {},
-}
-
-const userReducer = createSlice({
-    name: 'userReducer',
-    initialState,
-    reducers: {
-        setTokenAction: (state: StateManage, action: PayloadAction<Token>) => {
-            const arrToken: Token = action.payload;
-            state.token = arrToken;
-        },
-    }
-});
-
-export const { setTokenAction } = userReducer.actions
-
-export default userReducer.reducer
-
 export const registerApi = (register: UserRegister) => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/register', register);
@@ -70,8 +35,6 @@ export const loginApi = (userLogin: UserLogin) => {
                 withCredentials: true,
             }
         );
-        console.log(result.status);
-        // http.defaults.headers.common['Authorization'] = `Bearer ${result.data}`;
         if (result.status === 200) {
             toast.success('Login Successfully !!!', {
                 position: "top-center",
@@ -109,7 +72,6 @@ export const loginApi = (userLogin: UserLogin) => {
                 theme: "colored",
             });
         }
-        configStorage.setCookieJson(ACCESS_TOKEN, result.data, 1)
     }
 }
 export const logoutApi = () => {

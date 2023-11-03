@@ -5,6 +5,7 @@ export const ACCESS_TOKEN = 'access_token';
 //Config Axios ========================================================================
 export const http = axios.create({
     baseURL: 'https://traveldndserver.cyclic.app'
+    // baseURL: 'http://localhost:8080/'
 });
 http.defaults.withCredentials = true
 

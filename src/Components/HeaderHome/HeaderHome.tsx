@@ -197,7 +197,7 @@ export default function HeaderHome() {
                     </li>
                     <li>
                       <NavLink className="dropdown-item" to="/place/list-rent">
-                        <i className="bi bi-house-check-fill"></i> Your apartment
+                        <i className="bi bi-house-check-fill"></i> My apartment
                       </NavLink>
                     </li>
                     <li>
@@ -207,7 +207,7 @@ export default function HeaderHome() {
                     </li>
                     <li>
                       <NavLink className="dropdown-item" to="/blog/list-blog">
-                        <i className="bi bi-file-earmark-post-fill"></i> Your Blog
+                        <i className="bi bi-file-earmark-post-fill"></i> My Blog
                       </NavLink>
                     </li>
                     <li>

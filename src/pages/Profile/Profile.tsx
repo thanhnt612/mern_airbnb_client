@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import  { useEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -130,12 +130,12 @@ export default function Profile() {
                                 </button>
                                 <ul className="dropdown-menu">
                                     <li>
-                                        <NavLink className="dropdown-item" to="/place/new">
+                                        <NavLink className="dropdown-item" to="/blog/new">
                                             <i className="bi bi-journal-plus"></i> New Blog
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink className="dropdown-item" to="/place/list-rent">
+                                        <NavLink className="dropdown-item" to="/blog/list-blog">
                                             <i className="bi bi-journal-text"></i> My Blog
                                         </NavLink>
                                     </li>

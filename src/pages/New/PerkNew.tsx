@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 
 export default function Perk({ selected, onChange }: any) {
     const handleChoose = (event: ChangeEvent<HTMLInputElement>) => {
