@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function FooterHome() {
   return (
-    <div className='footer'>
+    <div className='footer border-top'>
       <div className="container">
         <div className="list-footer py-5 row">
           <div className="footer-1 wow col-lg-4 col-md-12">

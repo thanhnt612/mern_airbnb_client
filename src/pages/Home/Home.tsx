@@ -16,12 +16,10 @@ export default function Home() {
   const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
   const { arrBlog } = useSelector((state: RootState) => state.bookingReducer);
   const [loading, setLoading] = useState(false)
-
   //Call Api
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBlogApi())
-    // dispatch(getProfileApi(token))
   }, [])
 
   useEffect(() => {
@@ -374,11 +372,13 @@ export default function Home() {
                     </NavLink>
                   </p>
                   <p className='fw-bold pt-2 text-truncate mb-0'>
-                    <NavLink to={`/blog/detail/${blog._id}`} className="text-decoration-none text-dark fw-700 ">{blog.title}</NavLink>
+                    <NavLink to={`/blog/detail/${blog._id}`} className="text-decoration-none text-dark fw-700 ">
+                      {blog.title}
+                    </NavLink>
                   </p>
                   <div className="w-50 my-3 border-danger border-3 border-bottom" />
                   <p className="text-truncate mb-2">
-                    {blog.article}
+                    {blog.summary}
                   </p>
                   <NavLink to={`/blog/detail/${blog._id}`} className="read-more text-decoration-none btn btn-danger">READ MORE &gt;</NavLink>
                 </div>
@@ -386,9 +386,9 @@ export default function Home() {
               </div>
             })}
             <div className="w-100 p-2 text-center py-4">
-              <button className="btn btn-danger">
+              <NavLink to={`/blog/all-blog/`} className="btn btn-danger">
                 View More
-              </button>
+              </NavLink>
             </div>
           </div>
         )}

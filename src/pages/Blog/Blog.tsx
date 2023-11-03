@@ -10,12 +10,12 @@ import { UserContext } from '../User/UserContext';
 
 export default function Blog() {
     const [title, setTitle] = useState('')
-    const [article, setArticle] = useState('')
+    const [summary, setSummary] = useState('')
+    const [mainArticle, setMainArticle] = useState('')
+    const [subArticle, setSubArticle] = useState('')
     const [addPhoto, setAddPhoto] = useState<null | any>([])
     const [loading, setLoading] = useState(false)
     const { userInfo }: any = useContext(UserContext);
-
-    console.log(userInfo._id);
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
@@ -24,7 +24,7 @@ export default function Blog() {
     }, [])
 
     const renderNewForm = () => {
-        if (Object.keys(userInfo).length === 0) {
+        if (!userInfo) {
             return (
                 <div className='text-center py-3'>
                     <h4>
@@ -40,25 +40,39 @@ export default function Blog() {
             return (
                 <div className="py-0 py-md-5" >
                     <form onSubmit={addNewBlog}>
-                        <p className='fw-bold mb-2 text-dark'>🔔Title</p>
+                        <p className='fw-bold mb-2 text-dark'>💡Title</p>
                         <input className='w-100 p-2 mb-3'
                             style={{ outline: "none" }}
                             type='text'
                             placeholder='Your title...'
                             value={title}
                             onChange={e => setTitle(e.target.value)} />
-                        <p className='fw-bold mb-2 text-dark'>Article</p>
+                        <p className='fw-bold mb-2 text-dark'>📰Summary</p>
                         <textarea className='w-100 p-2 mb-3'
                             style={{ outline: "none" }}
-                            rows={11}
-                            placeholder='Article...'
-                            value={article}
-                            onChange={e => setArticle(e.target.value)} />
+                            rows={5}
+                            placeholder='Summary...'
+                            value={summary}
+                            onChange={e => setSummary(e.target.value)} />
+                        <p className='fw-bold mb-2 text-dark'>📝Main Article</p>
+                        <textarea className='w-100 p-2 mb-3'
+                            style={{ outline: "none" }}
+                            rows={5}
+                            placeholder='Article main...'
+                            value={mainArticle}
+                            onChange={e => setMainArticle(e.target.value)} />
+                        <p className='fw-bold mb-2 text-dark'>📝Sub Article</p>
+                        <textarea className='w-100 p-2 mb-3'
+                            style={{ outline: "none" }}
+                            rows={5}
+                            placeholder='Sub Article...'
+                            value={subArticle}
+                            onChange={e => setSubArticle(e.target.value)} />
                         <PhotoUpload addPhoto={addPhoto} onChange={setAddPhoto} />
                         <div className='text-center'>
                             <button className='btn btn-danger'
                                 disabled={
-                                    !(title && article)
+                                    !(title && summary && mainArticle && subArticle)
                                 }>Make A New Blog ✔️
                             </button>
                         </div>
@@ -71,7 +85,7 @@ export default function Blog() {
     const addNewBlog = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         const result = await http.post('/blog', {
-            author: userInfo._id, title, article, addPhoto
+            author: userInfo?._id, title, summary, mainArticle, subArticle, addPhoto
         })
         if (result.data.status === 200) {
             toast.success('Successfully !!!', {

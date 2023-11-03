@@ -19,7 +19,7 @@ export default function List() {
     }
   }, [newPart]);
   return (
-    <div className="list-page">
+    <div className="list-page py-5">
       <div className="container">
         <div className="row">
           <div className="content col-md-12 col-lg-6 mb-3">

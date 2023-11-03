@@ -69,7 +69,7 @@ export default function Register() {
           <div className="signup-form">
             <div className='d-flex flex-column align-items-center'>
               <NavLink to="/">
-                <img src='../img/logonew2.jpg' className='d-block rounded border p-1 border-danger' width="120px" alt="" />
+                <img src='../img/logo.png' className='d-block rounded border p-1 border-danger' width="120px" alt="" />
               </NavLink>
             </div>
             <h2 className="form-title text-center">Sign up</h2>

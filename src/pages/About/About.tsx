@@ -2,24 +2,23 @@ import React from 'react'
 
 export const About = () => {
     return (
-        <div style={{ paddingTop: "100px" }}>
             <div className="about-page">
                 <div className="banner">
                     <img src="../../img/banner/about.jpg"
-                        className='w-100 object-fit-cover' style={{ height: "600px" }} alt="" />
+                        className='w-100 object-fit-cover' alt="" />
                 </div>
                 <div className="content container">
                     <div className='tittle text-center'>
                         <p className='py-3 mb-0'>⌛⌛⌛</p>
                         <h2>
-                            𝑾𝒆𝒍𝒄𝒐𝒎𝒆 𝒕𝒐 𝑻𝒓𝒂𝒗𝒆𝒍𝑫𝒏𝑫
+                        🌟 𝑾𝒆𝒍𝒄𝒐𝒎𝒆 𝒕𝒐 𝑻𝒓𝒂𝒗𝒆𝒍𝑫𝒏𝑫 🌟
                         </h2>
                     </div>
                     <p className='text-center py-3'>
                         We are a one-stop shop for all your hotel booking needs. We offer a wide selection of hotels to choose from, all at competitive prices. Our website is easy to use and our booking process is quick and secure.
                     </p>
                     <p className='fw-bold text-center'>
-                        Why Book with Us?
+                    ✨Why Book with Us?✨
                     </p>
                     <ul>
                         <li>
@@ -35,8 +34,8 @@ export const About = () => {
                             24/7 customer support: Our customer support team is available 24/7 to help you with any questions or problems you may have.
                         </li>
                     </ul>
-                    <div className="service d-flex align-items-center py-4">
-                        <div className="item col-3 p-3">
+                    <div className="service d-flex flex-wrap align-items-center py-4">
+                        <div className="item col-6 col-lg-3 p-3">
                             <div className="detail bg-danger text-light border-3 rounded-4 
                             text-center d-flex align-items-center flex-column p-3"
                                 style={{ cursor: "pointer" }}>
@@ -44,7 +43,7 @@ export const About = () => {
                                 <p>Features</p>
                             </div>
                         </div>
-                        <div className="item col-3 p-3">
+                        <div className="item col-6 col-lg-3 p-3">
                             <div className="detail bg-danger text-light border-3 rounded-4 
                             text-center d-flex align-items-center flex-column p-3"
                                 style={{ cursor: "pointer" }}>
@@ -52,7 +51,7 @@ export const About = () => {
                                 <p>Easily</p>
                             </div>
                         </div>
-                        <div className="item col-3 p-3">
+                        <div className="item col-6 col-lg-3 p-3">
                             <div className="detail bg-danger text-light border-3 rounded-4 
                             text-center d-flex align-items-center flex-column p-3"
                                 style={{ cursor: "pointer" }}>
@@ -60,7 +59,7 @@ export const About = () => {
                                 <p>Affordable</p>
                             </div>
                         </div>
-                        <div className="item col-3 p-3">
+                        <div className="item col-6 col-lg-3 p-3">
                             <div className="detail bg-danger text-light border-3 rounded-4 
                             text-center d-flex align-items-center flex-column p-3"
                                 style={{ cursor: "pointer" }}>
@@ -70,7 +69,7 @@ export const About = () => {
                         </div>
                     </div>
                     <p className='fw-bold text-center'>
-                        How to Book a Hotel Room
+                    ✨How to Book a Hotel Room✨
                     </p>
                     <ul>
                         <li>
@@ -82,11 +81,11 @@ export const About = () => {
                         </li>
                     </ul>
                     <p className='fw-bold text-center py-4'>
-                        We hope to see you soon at <span className='text-danger'>𝑻𝒓𝒂𝒗𝒆𝒍𝑫𝒏𝑫</span>
+                        We hope to see you soon at <span className='text-danger'>𝑻𝒓𝒂𝒗𝒆𝒍𝑫𝒏𝑫</span> 👋👋
                     </p>
                 </div>
-                <div className="introduce d-flex flex-wrap align-items-center justify-content-center container">
-                    <div className="col-4 p-2">
+                <div className="introduce d-flex flex-wrap align-items-center justify-content-center container pb-5">
+                    <div className="col-12 col-md-6 col-lg-4 p-2">
                         <div className='thumbnail position-relative'>
                             <img className='w-100 rounded-3'
                                 style={{ height: "250px" }}
@@ -97,7 +96,7 @@ export const About = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4 p-2">
+                    <div className="col-12 col-md-6 col-lg-4 p-2">
                         <div className='thumbnail position-relative'>
                             <img className='w-100 rounded-3'
                                 style={{ height: "250px" }}
@@ -108,7 +107,7 @@ export const About = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4 p-2">
+                    <div className="col-12 col-md-6 col-lg-4 p-2">
                         <div className='thumbnail position-relative'>
                             <img className='w-100 rounded-3'
                                 style={{ height: "250px" }}
@@ -119,7 +118,7 @@ export const About = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4 p-2">
+                    <div className="col-12 col-md-6 col-lg-4 p-2">
                         <div className='thumbnail position-relative'>
                             <img className='w-100 rounded-3'
                                 style={{ height: "250px" }}
@@ -130,7 +129,7 @@ export const About = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4 p-2">
+                    <div className="col-12 col-md-6 col-lg-4 p-2">
                         <div className='thumbnail position-relative'>
                             <img className='w-100 rounded-3'
                                 style={{ height: "250px" }}
@@ -141,7 +140,7 @@ export const About = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4 p-2">
+                    <div className="col-12 col-md-6 col-lg-4 p-2">
                         <div className='thumbnail position-relative'>
                             <img className='w-100 rounded-3'
                                 style={{ height: "250px" }}
@@ -154,6 +153,5 @@ export const About = () => {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }

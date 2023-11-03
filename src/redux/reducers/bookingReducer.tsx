@@ -3,6 +3,7 @@ import { DispatchType } from '../configStore';
 import { http } from '../../utils/config';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { history } from '../../index';
 
 export interface BookingModel {
     [x: string]: any;
@@ -30,10 +31,16 @@ export interface HistoryBookingModel {
 export interface BlogModel {
     _id: string;
     title: string;
-    article: string;
+    summary: string;
+    mainArticle: string;
+    subArticle: string;
     photos: string[];
     createdAt: string;
     updatedAt: string
+}
+export interface Avatar {
+    profile: string;
+    avatar: string
 }
 
 interface BookingState {
@@ -44,6 +51,8 @@ interface BookingState {
     arrLocation: BookingModel[] | null,
     arrBlog: BlogModel[],
     arrBlogDetail: BlogModel | null,
+    arrBlogAuthor: BlogModel[],
+    arrAvatar: Avatar | null | any
 }
 
 const initialState: BookingState = {
@@ -54,6 +63,8 @@ const initialState: BookingState = {
     arrLocation: null,
     arrBlog: [],
     arrBlogDetail: null,
+    arrBlogAuthor: [],
+    arrAvatar: []
 }
 
 const bookingReducer = createSlice({
@@ -94,6 +105,16 @@ const bookingReducer = createSlice({
                 const arrBlogDetail: BlogModel = action.payload;
                 state.arrBlogDetail = arrBlogDetail;
             },
+        setListBlogAuthorAction:
+            (state: BookingState, action: PayloadAction<BlogModel[]>) => {
+                const arrListBlog: BlogModel[] = action.payload;
+                state.arrBlogAuthor = arrListBlog;
+            },
+        setAvatarAction:
+            (state: BookingState, action: PayloadAction<Avatar>) => {
+                const arrAvatar = action.payload;
+                state.arrAvatar = arrAvatar;
+            },
     }
 });
 
@@ -104,7 +125,9 @@ export const {
     setHistoryAction,
     setLocationAction,
     setBlogAction,
-    setBlogDetailAction
+    setBlogDetailAction,
+    setListBlogAuthorAction,
+    setAvatarAction
 } = bookingReducer.actions
 export default bookingReducer.reducer
 
@@ -126,9 +149,9 @@ export const getBookingDetailApi = (id: number) => {
     }
 }
 
-export const getOwnerRoomApi = (id: number) => {
+export const getOwnerRoomApi = (owner: number) => {
     return async (dispatch: DispatchType) => {
-        const result: any = await http.get('/place/owner/' + id);
+        const result: any = await http.get('/place/owner/' + owner);
         let arrOwnerRoom: BookingModel[] = result.data.content;
         const action: PayloadAction<BookingModel[]> = setArrOwnerAction(arrOwnerRoom);
         dispatch(action)
@@ -197,6 +220,23 @@ export const getBlogDetailApi = (id: number) => {
         const result: any = await http.get('/blog/' + id);
         let arrBlogDetail: BlogModel = result.data.content;
         const action: PayloadAction<BlogModel> = setBlogDetailAction(arrBlogDetail);
+        dispatch(action)
+    }
+}
+
+export const getAuthorBlogApi = (author: number) => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.get('/blog/author/' + author);
+        let arrBlogAuthor: BlogModel[] = result.data.content;
+        const action: PayloadAction<BlogModel[]> = setListBlogAuthorAction(arrBlogAuthor);
+        dispatch(action)
+    }
+}
+export const getProfileAvatarApi = (profile: number) => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.get('/user/avatar/' + profile);
+        let arrProfile: Avatar = result.data.content;
+        const action: PayloadAction<Avatar> = setAvatarAction(arrProfile);
         dispatch(action)
     }
 }

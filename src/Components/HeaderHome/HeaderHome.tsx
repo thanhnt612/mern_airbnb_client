@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
-import { ACCESS_TOKEN, settings } from "../../utils/config";
 import {
   getBookingApi,
   getBookingLocationApi,
@@ -10,8 +9,7 @@ import {
 import { history } from "../../index";
 import useThemeSwitcher from "../hooks/useThemeSwitcher";
 import { UserContext } from "../../pages/User/UserContext";
-
-
+import { logoutApi } from "../../redux/reducers/userReducer";
 
 export default function HeaderHome() {
   const dispatch: DispatchType = useDispatch();
@@ -67,15 +65,9 @@ export default function HeaderHome() {
   };
   window.addEventListener("scroll", changeBackground);
   return (
-    <div
-      className={
-        navbar
-          ? "header-layout border-bottom border-danger border-1  px-1 px-md-2 px-lg-5 active-navbar"
-          : "header-layout  px-1 px-md-2 px-lg-5"
-      }
-    >
-      <div className="header-page flex-wrap py-1">
-        <div className="header-home order-0 col-6 col-md-3">
+    <div className="header-layout px-1 px-md-2 px-lg-5 bg-dark">
+      <div className="header-page flex-wrap">
+        <div className="header-home col-3">
           <NavLink to="/">
             <img
               src={imageBasePath}
@@ -85,7 +77,8 @@ export default function HeaderHome() {
             />
           </NavLink>
         </div>
-        <div className="header-search order-3 order-md-2 col-12 col-md-6 col-lg-3">
+        <div className="header-search col-3 col-md-6 col-lg-3 d-none d-md-block">
+          {/*search bar for ipad to desktop */}
           <form onSubmit={handleSubmit} className="w-100">
             <div className="form-fill border border-danger rounded-5 p-2 row align-items-center">
               <div className="location">
@@ -147,25 +140,25 @@ export default function HeaderHome() {
             )}
           </form>
         </div>
-        <div className="header-info order-2 order-md-3 col-6 col-md-3 
+        <div className="header-info col-7 col-md-3 
         d-flex align-items-center justify-content-end">
           <div className="center-info">
             <button
               onClick={() => setMode(mode === "light" ? "dark" : "light")}
               className={`btn border-1
             ${mode === "light"
-                  ? "bg-dark text-light border-light"
-                  : "bg-light text-dark"
+                  ? "bg-light text-dark border-dark"
+                  : "bg-dark text-light border-light"
                 }`}
             >
               {mode === "dark" ? (
-                <i className="bi bi-brightness-high"></i>
-              ) : (
                 <i className="bi bi-moon-stars"></i>
+              ) : (
+                <i className="bi bi-brightness-high"></i>
               )}
             </button>
           </div>
-          <div className="right-info bg-dark">
+          <div className="right-info bg-light">
             <li className="nav-item dropdown">
               <NavLink
                 className="nav-link"
@@ -176,12 +169,12 @@ export default function HeaderHome() {
               >
                 {userInfo
                   ? <>
-                    <p className="text-light m-0">
+                    <p className="text-dark border-dark m-0">
                       {userInfo.name}
                     </p>
                   </>
                   : <>
-                    <span className="text-light">
+                    <span className="text-dark">
                       <i className="bar fa-solid fa-bars"></i>
                       <i className="user fa-solid fa-user"></i>
                     </span>
@@ -221,7 +214,7 @@ export default function HeaderHome() {
                       <NavLink
                         className="dropdown-item"
                         onClick={() => {
-                          settings.eraseCookie(ACCESS_TOKEN);
+                          dispatch(logoutApi())
                           window.location.href = "/";
                         }}
                         to={""}
@@ -248,6 +241,78 @@ export default function HeaderHome() {
             </li>
             <div></div>
           </div>
+        </div>
+
+          {/* collapse search bar for mobile web */}
+        <div className="header-search col-2 col-md-6 col-lg-3 d-flex d-md-none ">
+          <button className="button-search-mobile btn bg-light text-dark d-block d-md-none"
+            data-bs-toggle="collapse"
+            data-bs-target="#searchBar">
+            <i className="bi bi-search"></i>
+          </button>
+        </div>
+        <div className="collapse w-100 d-md-none" id="searchBar">
+          <form onSubmit={handleSubmit} className="w-100 p-2 px-4">
+            <div className="form-fill border border-danger rounded-5 p-2 row align-items-center bg-light">
+              <div className="location">
+                <div className="destination d-flex">
+                  <input
+                    className="w-100 border-0"
+                    value={search}
+                    onChange={handleChange}
+                    placeholder="Search . . ."
+                    style={{ outline: "none", backgroundColor: "#f5f5f5!important" }}
+                  />
+                  {show && (
+                    <button
+                      className={isActive ? "btn p-0 visible" : "btn p-0"}
+                      onClick={() => {
+                        setSearch("");
+                        handleClick();
+                      }}
+                    >
+                      ❌
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+            {search?.length !== 0 && (
+              <div className="result-location rounded">
+                {address
+                  .filter((item) => {
+                    const searchTerm = search?.toString().toLowerCase();
+                    const location = item.address.toLowerCase();
+                    const province = item.address
+                      .substring(item.address.indexOf(",") + 1)
+                      .trim()
+                      .toLowerCase();
+                    return (
+                      searchTerm &&
+                      (location.startsWith(searchTerm) ||
+                        province.startsWith(searchTerm)) &&
+                      (location !== searchTerm || province !== searchTerm)
+                    );
+                  })
+                  .map((item, index) => (
+                    <button
+                      onClick={() => {
+                        onSearchRoom(item.address);
+                        handleClick();
+                      }}
+                      className={
+                        isActive
+                          ? "data-result p-2 invisible"
+                          : "data-result p-2 border border-danger"
+                      }
+                      key={index}
+                    >
+                      {item.address}
+                    </button>
+                  ))}
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </div>

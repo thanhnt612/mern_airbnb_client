@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Perk from './PerkUpdate';
 import PhotoUpload from './PhotoUploadUpdate';
-import { useDispatch, useSelector } from 'react-redux';
-import { DispatchType, RootState } from '../../redux/configStore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useParams } from 'react-router-dom';
 import { http } from '../../utils/config';
-import { getProfileApi } from '../../redux/reducers/userReducer';
+import { UserContext } from '../User/UserContext';
 
 export default function Update() {
-    const dispatch: DispatchType = useDispatch();
     const params = useParams();
     const id = params.id
     const [title, setTitle] = useState('')
@@ -22,11 +19,8 @@ export default function Update() {
     const [checkOut, setCheckOut] = useState('')
     const [maxGuest, setMaxGuest] = useState('')
     const [price, setPrice] = useState('')
-    const { token } = useSelector((state: RootState) => state.userReducer);
-    const { userProfile } = useSelector((state: RootState) => state.userReducer);
-    useEffect(() => {
-        dispatch(getProfileApi(token))
-    }, [])
+    const { userInfo }: any = useContext(UserContext);
+
     useEffect(() => {
         if (!id) {
             return;
@@ -48,7 +42,7 @@ export default function Update() {
     const updatePlace = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         const place = {
-            owner: userProfile._id, title, address,
+            owner: userInfo?._id, title, address,
             addPhoto, description, perk, checkIn,
             checkOut, maxGuest, price
         }

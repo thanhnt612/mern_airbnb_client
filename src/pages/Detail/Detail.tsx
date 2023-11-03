@@ -38,8 +38,6 @@ export default function Detail() {
   }, [params.id])
 
 
-
-
   //Set image when click show full screen------------------------------//
   const handleClick = (item: any, index: any) => {
     setCurrentIndex(index);
@@ -115,7 +113,7 @@ export default function Detail() {
   const checkIn: any = arrBookingId?.checkIn;
   const checkOut: any = arrBookingId?.checkOut;
   const price: any = arrBookingId?.price;
-  
+
   // Process data to dispatch----------------------------------------------------------------
   const handleChangeDate = (rangesByKey: RangeKeyDict) => {
     const changeDate: any = rangesByKey
@@ -144,7 +142,7 @@ export default function Detail() {
     const dateIn = target.dateIn.value;
     const dateOut = target.dateOut.value;
     const guest = target.guest.value;
-    if (Object.keys(userInfo).length === 0) {
+    if (!userInfo) {
       toast.error('Please login your account !!!', {
         position: "top-center",
         autoClose: 2000,
@@ -158,12 +156,12 @@ export default function Detail() {
       });
     } else {
       const action = postBookingApi(
-        arrBookingId?._id, userInfo._id, name, phone, dateIn, dateOut, guest, totalPrice)
+        arrBookingId?._id, userInfo?._id, name, phone, dateIn, dateOut, guest, totalPrice)
       dispatch(action);
     }
   }
   return (
-    <div className='detail-page'>
+    <div className='detail-page py-5'>
       <div className="container">
         <h3 className='py-3 border-bottom border-2'>🔔{arrBookingId?.title}</h3>
         <div className="title pt-2">
@@ -201,10 +199,10 @@ export default function Detail() {
         </div>
         {clickedImg && (
           <div className="overlay dismiss" onClick={handleClickModal}>
-              <img src={clickedImg} alt="bigger pic" />
-              <span className='close'>
-                <i className="dismiss bi bi-x-square-fill" onClick={handleClickModal}></i>
-              </span>
+            <img src={clickedImg} alt="bigger pic" />
+            <span className='close'>
+              <i className="dismiss bi bi-x-square-fill" onClick={handleClickModal}></i>
+            </span>
             <div onClick={handelRotationLeft} className="overlay-arrows_left">
               <i className="bi bi-arrow-left-circle-fill" style={{ cursor: 'pointer' }}></i>
             </div>

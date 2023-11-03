@@ -2,12 +2,14 @@ import React, { useState, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useFormik, FormikProps } from 'formik';
 import * as yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { DispatchType, RootState } from '../../redux/configStore';
+import { useDispatch } from 'react-redux';
+import { DispatchType } from '../../redux/configStore';
 import { loginApi } from '../../redux/reducers/userReducer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingIcon } from '../../Components/Icon';
+import { UserContext } from '../User/UserContext';
+
 
 export type UserLogin = {
   email: string,
@@ -16,6 +18,10 @@ export type UserLogin = {
 
 export default function Login() {
   const dispatch: DispatchType = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const { userInfo }: any = useContext(UserContext);
+
   const frm: FormikProps<UserLogin> = useFormik<UserLogin>({
     initialValues: {
       email: '',
@@ -34,15 +40,12 @@ export default function Login() {
       dispatch(loginApi(values))
     }
   });
-  const { userProfile } = useSelector((state: RootState) => state.userReducer);
-  const [showPassword, setShowPassword] = useState(false);
   const togglePassword = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setShowPassword(!showPassword)
   }
-  const [loading, setLoading] = useState(false)
   const handleLogin = () => {
-    if (Object.keys(userProfile).length === 0) {
+    if (!userInfo) {
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -59,7 +62,7 @@ export default function Login() {
             <div className="signin-form">
               <div className='d-flex flex-column align-items-center'>
                 <NavLink to="/">
-                  <img src='../img/logonew2.jpg' className='d-block rounded border p-1 border-danger' width="120px" alt="" />
+                  <img src='../img/logo.png' className='d-block rounded border p-1 border-danger' width="120px" alt="" />
                 </NavLink>
               </div>
               <h2 className="form-title text-center fw-bold">Log In</h2>
@@ -134,12 +137,12 @@ export default function Login() {
                   <a href="" className='text-decoration-none pt-2'>Forgot Password</a>
                   <div className='my-3 w-50 border-top border border-danger'>
                   </div>
-                  <div>
+                  {/* <div>
                     <button className='btn btn-light border-dark p-2 d-flex flex-row align-items-center'>
                       <img src="../../img/google.png" width="20px" height="20px" alt="" />
                       <span className='ms-1'>Login by Google</span>
                     </button>
-                  </div>
+                  </div> */}
                   <span className='pt-4'>Don't have an Account?</span>
                   <NavLink to='/user/register'>
                     Please register here <i className="bi bi-arrow-left-square-fill"></i>

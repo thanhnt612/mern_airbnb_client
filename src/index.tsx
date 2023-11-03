@@ -17,11 +17,9 @@ import Profile from './pages/Profile/Profile'
 import List from './pages/List/List';
 import Home_Mobile from './pages/Home/Home_Mobile';
 import Detail_Mobile from './pages/Detail/Detail_Mobile';
-import Profile_Mobile from './pages/Profile/Profile_Mobile';
 import List_Mobile from './pages/List/List_Mobile';
 import ResponsiveItem from './Components/ResponsiveItem/ResponsiveItem';
 import UserTemplate from './templates/UserTemplate';
-import { createBrowserHistory } from "history";
 import New from './pages/New/New';
 import ListRent from './pages/ListRent/ListRent';
 import Update from './pages/UpdateRoom/Update';
@@ -32,10 +30,11 @@ import { DetailBlog } from './pages/Blog/DetailBlog';
 import { About } from './pages/About/About';
 import { Edit } from './pages/Profile/Edit';
 import { UserContextProvider } from './pages/User/UserContext';
-
-
+import { ListBlog } from './pages/Blog/ListBlog';
+import { UpdateBlog } from './pages/Blog/UpdateBlog';
+import { AllBlog } from './pages/Blog/AllBlog';
+import { createBrowserHistory } from "history";
 export const history: any = createBrowserHistory();
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -56,7 +55,7 @@ root.render(
             <Route path='list' element={<ResponsiveItem component={List} mobileComponent={List_Mobile} />}>
               <Route path=':dest' element={<List />}></Route>
             </Route>
-            <Route path='profile' element={<ResponsiveItem component={Profile} mobileComponent={Profile_Mobile} />}>
+            <Route path='profile' element={<Profile />}>
             </Route>
             <Route path='edit' element={<Edit />}></Route>
             <Route path='*' element={<Navigate to="" />}></Route>
@@ -73,10 +72,11 @@ root.render(
 
           {/* Path: "/blog" */}
           <Route path='blog' element={<BlogTemplate />}>
-            <Route path='list-blog' element={<ListRent />}></Route>
+            <Route path='list-blog' element={<ListBlog />}></Route>
+            <Route path='all-blog' element={<AllBlog />}></Route>
             <Route path='new' element={<Blog />}></Route>
-            <Route path='update-blog' element={<Update />}>
-              <Route path=':id' element={<Update />}></Route>
+            <Route path='update-blog' element={<UpdateBlog />}>
+              <Route path=':id' element={<UpdateBlog />}></Route>
             </Route>
             <Route path='detail' element={<DetailBlog />}>
               <Route path=':id' element={<DetailBlog />}></Route>

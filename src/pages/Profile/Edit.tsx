@@ -2,13 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
-import { getProfileApi, updateProfileApi } from '../../redux/reducers/userReducer';
-import { useFormik, FormikProps } from 'formik';
-import * as yup from 'yup';
+import {  updateProfileApi } from '../../redux/reducers/userReducer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getBookingApi, getBookingProfileApi } from '../../redux/reducers/bookingReducer';
-import { LoadingPage } from '../../Components/Icon';
+import {  getBookingProfileApi } from '../../redux/reducers/bookingReducer';
 import { UserContext } from '../User/UserContext';
 
 

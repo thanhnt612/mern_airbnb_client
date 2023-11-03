@@ -32,7 +32,7 @@ export default function PhotoUpload({ addPhoto, onChange }: any) {
     }
     return (
         <>
-            <p className='fw-bold mb-2 text-dark'>📷Photo</p>
+            <p className='fw-bold mb-2 text-dark'>📷Photo (Maximum 3 photos)</p>
             <div className="d-flex flex-row flex-wrap mb-3">
                 {addPhoto.map((item: any, index: number) => {
                     return <div className='col-6 col-md-3 col-lg-2 p-1 position-relative' key={index}>

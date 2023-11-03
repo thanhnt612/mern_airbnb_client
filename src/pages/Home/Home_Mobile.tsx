@@ -200,7 +200,7 @@ export default function Home() {
             Many luxury hotels with nature are committed to sustainable practices, such as using renewable energy, reducing waste, and supporting local communities. You can feel good about staying at a hotel that is doing its part to protect the environment.
           </p>
           <div className='text-center w-100'>
-            <a href="" className='btn text-light bg-danger text-decoration-none'>Learn more</a>
+            <NavLink to="/about" className='btn text-light bg-danger text-decoration-none'>Learn more</NavLink>
           </div>
         </div>
         <div className="about-right col-lg-12 col-xl-6 p-4 d-flex justify-content-center">
@@ -322,16 +322,16 @@ export default function Home() {
                 </p>
                 <div className="w-50 my-2 border-danger border-3 border-bottom" />
                 <p className="text-truncate mb-1">
-                  {blog.article}
+                  {/* {blog.article} */}
                 </p>
                 <NavLink to={`/blog/detail/${blog._id}`} className="read-more text-decoration-none btn btn-danger">READ MORE &gt;</NavLink>
               </div>
             </div>
           })}
           <div className="w-100 p-2 text-center py-4">
-            <button className="btn btn-danger">
+            <NavLink to={`/blog/all-blog/`} className="btn btn-danger">
               View More
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>

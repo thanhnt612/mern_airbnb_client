@@ -1,26 +1,26 @@
 import { createContext, useEffect, useState } from 'react'
-import { http } from '../../utils/config';
-import { RootState } from '../../redux/configStore';
-import { useSelector } from 'react-redux';
-
+import { ACCESS_TOKEN, configStorage, http } from '../../utils/config';
 
 
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }: any) => {
     const [userInfo, setUserInfo] = useState(null);
-    const { token } = useSelector((state: RootState) => state.userReducer);
     useEffect(() => {
-        http.get('/user/profile',
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+        if (!userInfo) {
+            async function refreshToken() {
+                const refresh = await http.post('/user/refresh', {}, { withCredentials: true });
+                configStorage.setCookieJson(ACCESS_TOKEN, refresh.data, 1)
+                const result = await http.get('/user/profile', {
+                    headers: {
+                        Authorization: `Bearer ${refresh.data}`
+                    }
+                });
+                setUserInfo(result.data);
             }
-        ).then(({ data }) => {
-            setUserInfo(data);
-        });
-    }, [token]);
+            refreshToken();
+        }
+    }, [])
     return (
         <UserContext.Provider value={{ userInfo, setUserInfo }}>
             {children}

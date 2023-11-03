@@ -1,22 +1,38 @@
 import { ChangeEvent, useState } from 'react'
 import { http } from '../../utils/config';
 import { LoadingPage } from '../../Components/Icon';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
-export default function AvatarUpload({ addPhoto, onChange, avatar }: any) {
+export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) {
     const [loading, setLoading] = useState(false)
-    const uploadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const uploadPhoto = async (event: ChangeEvent<HTMLInputElement>) => {
         const files: any = event.target.files;
         const data = new FormData();
         for (let i = 0; i < files.length; i++) {
             data.append('avatar', files[i]);
         }
-        http.post('/user/upload', data, {
+        http.post('/user/uploadAvatar', data, {
             headers: { 'Content-type': 'multipart/form-data' }
-        }).then(response => {
-            const { data } = response;
-            const newObject = [...addPhoto, ...data.content];
-            onChange(newObject);
+        }).then(async response => {
+            const avatar = response.data.content;
+            onChange(avatar);
+            const result = await http.post('/user/avatar', { profile, avatar })
+            if (result.status === 200) {
+                toast.success('Change Avatar Success', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    onClose: () => window.location.href = "/profile"
+                });
+            }
         })
         if (addPhoto.length === 0) {
             setLoading(true);
@@ -29,35 +45,51 @@ export default function AvatarUpload({ addPhoto, onChange, avatar }: any) {
     }
     return (
         <>
-            <div className="mb-3">
-                {addPhoto.length === 0
+            <div className="mb-3 d-flex flex-column">
+                {url.length === 0
                     ?
-                    <img className='rounded-circle'
-                        src={`https://www.gravatar.com/avatar/${avatar}?d=identicon`}
-                        style={{ width: "220px", height: "200px" }} />
+                    <div className='col-12'>
+                        <img className='rounded-circle'
+                            src={`https://www.gravatar.com/avatar/${profile}?d=identicon`}
+                            style={{ width: "160px", height: "150px" }} />
+                    </div>
                     :
                     <>
-                        {addPhoto.map((item: any, index: number) => {
-                            return <div className='col-6 col-md-3 col-lg-2 p-1 position-relative' key={index}>
-                                <img className='rounded w-100' src={item}
-                                    alt="" style={{ width: "200px", height: "200px" }} />
-                            </div>
-                        })}
+                        {url.map((item: any, index: number) => {
+                            return (
+                                <div className='col-12' key={index}>
+                                    <img className='rounded-circle' src={item.avatar}
+                                        alt="" style={{ width: "190px", height: "180px" }} />
+                                </div>
+                            )
+                        })
+                        }
                     </>
                 }
-                <label className='p-1 mt-3 rounded-3 btn btn-secondary' style={{ cursor: "pointer" }}>
-                    {loading ? (
-                        <LoadingPage className={`loading-spinner bg-transparent`} />
-                    ) : (
-                        <>
-                            Upload Avatar
-                        </>
-                    )}
-                    <input type="file" className='d-none' multiple
-                        onChange={uploadPhoto}
-                    />
-                </label>
-            </div>
+            </div >
+            < label className='p-1 mt-3 rounded-3 btn btn-secondary' style={{ cursor: "pointer" }}>
+                {loading ? (
+                    <LoadingPage className={`loading-spinner bg-transparent`} />
+                ) : (
+                    <>
+                        Upload Avatar
+                    </>
+                )}
+                <input type="file" className='d-none' multiple
+                    onChange={uploadPhoto}
+                />
+            </label>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored" />
         </>
     )
 }

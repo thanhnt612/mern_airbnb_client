@@ -3,8 +3,8 @@ import { UserLogin } from '../../pages/Login/Login';
 import { UserRegister } from '../../pages/Register/Register';
 import {
     ACCESS_TOKEN,
+    configStorage,
     http,
-    settings,
 } from "../../utils/config";
 import { DispatchType } from '../configStore';
 import { toast } from 'react-toastify';
@@ -15,42 +15,32 @@ export type EditProfile = {
     name: string,
 }
 
-export type UserProfileResult = {
-    _id: string;
-    email: string,
-    name: string,
-    createdAt: string;
+export type Token = {
+    token: string,
 }
-type TokenResult = {
-    access_token: string;
-}
-export type UserState = {
-    userProfile?: UserProfileResult | null | undefined
-    token?: TokenResult | null | undefined
+
+export type StateManage = {
+    token?: Token
 }
 
 const initialState = {
-    userProfile: settings.getCookieJson(ACCESS_TOKEN)
-        ? settings.getCookieJson(ACCESS_TOKEN)
-        : {},
-    token: settings.getCookieJson(ACCESS_TOKEN)
-        ? settings.getCookieJson(ACCESS_TOKEN)
+    token: configStorage.getStorageJson(ACCESS_TOKEN)
+        ? configStorage.getStorageJson(ACCESS_TOKEN)
         : {},
 }
+
 const userReducer = createSlice({
     name: 'userReducer',
     initialState,
     reducers: {
-        setUserProfileAction: (state: UserState, action: PayloadAction<UserProfileResult>) => {
-            state.userProfile = action.payload;
-        },
-        setTokenAction: (state: UserState, action: PayloadAction<TokenResult>) => {
-            state.token = action.payload;
+        setTokenAction: (state: StateManage, action: PayloadAction<Token>) => {
+            const arrToken: Token = action.payload;
+            state.token = arrToken;
         },
     }
 });
 
-export const { setUserProfileAction, setTokenAction } = userReducer.actions
+export const { setTokenAction } = userReducer.actions
 
 export default userReducer.reducer
 
@@ -75,9 +65,14 @@ export const registerApi = (register: UserRegister) => {
 
 export const loginApi = (userLogin: UserLogin) => {
     return async (dispatch: DispatchType) => {
-        const result = await http.post('/user/login', userLogin);
-        const token = result.data.content.access_token
-        if (result.data.status === 200) {
+        const result = await http.post('/user/login', userLogin
+            , {
+                withCredentials: true,
+            }
+        );
+        console.log(result.status);
+        // http.defaults.headers.common['Authorization'] = `Bearer ${result.data}`;
+        if (result.status === 200) {
             toast.success('Login Successfully !!!', {
                 position: "top-center",
                 autoClose: 1000,
@@ -87,10 +82,10 @@ export const loginApi = (userLogin: UserLogin) => {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-                onClose: () => history.push('/')
+                onClose: () => window.location.href = "/"
             });
         }
-        if (result.data.status === 401) {
+        if (result.status === 401) {
             toast.error("Email is not existed", {
                 position: "top-center",
                 autoClose: 1000,
@@ -102,7 +97,7 @@ export const loginApi = (userLogin: UserLogin) => {
                 theme: "colored",
             });
         }
-        if (result.data.status === 402) {
+        if (result.status === 402) {
             toast.error("Email or password is wrong", {
                 position: "top-center",
                 autoClose: 1000,
@@ -114,23 +109,15 @@ export const loginApi = (userLogin: UserLogin) => {
                 theme: "colored",
             });
         }
-        dispatch(getProfileApi(token))
-        const action: PayloadAction<TokenResult> = setTokenAction(token);
-        dispatch(action);
-        settings.setCookieJson(ACCESS_TOKEN, token, 1);
+        configStorage.setCookieJson(ACCESS_TOKEN, result.data, 1)
     }
 }
-export const getProfileApi = (token: String) => {
+export const logoutApi = () => {
     return async (dispatch: DispatchType) => {
-        const result = await http.get('/user/profile', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        const action: PayloadAction<UserProfileResult> = setUserProfileAction(result.data);
-        dispatch(action);
+        const result = await http.post('/user/logout');
     }
 }
+
 export const updateProfileApi = (id: number, update: EditProfile) => {
     return async (dispatch: DispatchType) => {
         const result = await http.put('/user/update/' + id, update);
@@ -146,7 +133,6 @@ export const updateProfileApi = (id: number, update: EditProfile) => {
                 theme: "colored",
                 onClose: () => window.location.href = "/profile"
             });
-            settings.setCookieJson(ACCESS_TOKEN, result.data.content, 1);
         }
     };
 };

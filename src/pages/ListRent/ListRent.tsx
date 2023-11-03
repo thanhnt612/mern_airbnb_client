@@ -4,17 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../redux/configStore';
 import { NavLink } from 'react-router-dom';
 import { LoadingPage } from '../../Components/Icon';
-import useThemeSwitcher from '../../Components/hooks/useThemeSwitcher';
 import { UserContext } from '../User/UserContext';
 
 export default function ListRent() {
     const dispatch: DispatchType = useDispatch();
-  const { userInfo }: any = useContext(UserContext);
+    const { userInfo }: any = useContext(UserContext);
     const { arrOwnerRoom } = useSelector((state: RootState) => state.bookingReducer);
     const [loading, setLoading] = useState(false)
-    const [mode, setMode]: any = useThemeSwitcher();
     useEffect(() => {
-        dispatch(getOwnerRoomApi(userInfo._id))
+        dispatch(getOwnerRoomApi(userInfo?._id))
         if (arrOwnerRoom.length === 0) {
             setLoading(true);
             setTimeout(() => {
@@ -23,9 +21,9 @@ export default function ListRent() {
         } else {
             setLoading(false);
         }
-    }, [arrOwnerRoom.length])
+    }, [arrOwnerRoom.length, userInfo?._id])
     const renderListRoom = () => {
-        if (Object.keys(userInfo).length === 0) {
+        if (!userInfo) {
             return (
                 <div className='text-center py-3'>
                     <h4>
@@ -60,7 +58,8 @@ export default function ListRent() {
                         border-opacity-25" key={index}>
                             <div className="col-12 col-md-3 position-relative">
                                 <img src={item.photos[0]} alt="" className='object-fit-cover rounded w-100 h-100' />
-                                <NavLink className="d-block d-md-none m-2 position-absolute text-light btn btn-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0" to={`/place/update-room/${item._id}`}>
+                                <NavLink className="d-block d-md-none m-2 position-absolute text-light btn btn-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0" 
+                                to={`/place/update-room/${item._id}`}>
                                     ✏️
                                 </NavLink>
                             </div>
@@ -102,7 +101,7 @@ export default function ListRent() {
                 </span>
             </div>
             {loading ? (
-                <LoadingPage className={`loading-spinner dark bg-transparent`}/>
+                <LoadingPage className={`loading-spinner dark bg-transparent`} />
             ) : (
                 <>
                     {renderListRoom()}

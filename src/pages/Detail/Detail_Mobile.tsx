@@ -167,7 +167,7 @@ export default function Detail() {
     const dateIn = target.dateIn.value;
     const dateOut = target.dateOut.value;
     const guest = target.guest.value;
-    if (Object.keys(userInfo).length === 0) {
+    if (!userInfo) {
       toast.error("Please login your account !!!", {
         position: "top-center",
         autoClose: 2000,
@@ -182,7 +182,7 @@ export default function Detail() {
     } else {
       const action = postBookingApi(
         arrBookingId?._id,
-        userInfo._id,
+        userInfo?._id,
         name,
         phone,
         dateIn,

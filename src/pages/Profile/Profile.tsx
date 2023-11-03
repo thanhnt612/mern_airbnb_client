@@ -2,29 +2,27 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
-import { getProfileApi } from '../../redux/reducers/userReducer';
-import 'react-toastify/dist/ReactToastify.css';
-import { getBookingApi, getBookingProfileApi } from '../../redux/reducers/bookingReducer';
-import { LoadingPage } from '../../Components/Icon';
+import { getBookingApi, getBookingProfileApi, getProfileAvatarApi } from '../../redux/reducers/bookingReducer';
 import AvatarUpload from './AvatarUpload';
+import { UserContext } from '../User/UserContext';
+
 
 
 export default function Profile() {
     const dispatch: DispatchType = useDispatch();
     const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
     const { arrHistory } = useSelector((state: RootState) => state.bookingReducer);
-    const [loading, setLoading] = useState(false)
     const [addPhoto, setAddPhoto] = useState<null | any>([])
-    const { token } = useSelector((state: RootState) => state.userReducer);
-    const { userProfile } = useSelector((state: RootState) => state.userReducer);
+    const { userInfo }: any = useContext(UserContext);
+    const { arrAvatar } = useSelector((state: RootState) => state.bookingReducer);
     useEffect(() => {
         dispatch(getBookingApi())
-        dispatch(getProfileApi(token))
     }, [])
-    useEffect(() => {
-        dispatch(getBookingProfileApi(userProfile._id))
-    }, [userProfile._id]);
 
+    useEffect(() => {
+        dispatch(getBookingProfileApi(userInfo?._id))
+        dispatch(getProfileAvatarApi(userInfo?._id))
+    }, [userInfo?._id]);
     const renderHistoryBooking = () => {
         if (arrHistory.length === 0) {
             return (
@@ -51,7 +49,7 @@ export default function Profile() {
                         let checkOutBooking = new Date(checkOut.getTime() - (checkOut.getTimezoneOffset() * 60000))
                             .toISOString()
                             .split("T")[0];
-                        return <div className='col-4 p-2' key={index}>
+                        return <div className='col-12 col-md-6 col-lg-4 p-2' key={index}>
                             {arrBooking.map((prod: any, index: number) => {
                                 if (item.placeId === prod._id
                                     // && dateCurrent < checkOutBooking
@@ -91,26 +89,24 @@ export default function Profile() {
         <div className='profile-page container'>
             <div className="profile-info">
                 <div className="edit-profile mb-3 d-flex">
-                    <div className="col-3 p-3">
+                    <div className="col-6 col-md-4 col-lg-3 p-3">
                         <div className="avatar text-center">
                             <div className="update-avatar pt-3">
-                                <AvatarUpload addPhoto={addPhoto} onChange={setAddPhoto} avatar={userProfile._id} />
+                                <AvatarUpload addPhoto={addPhoto} url={arrAvatar} onChange={setAddPhoto} profile={userInfo?._id} />
                             </div>
                         </div>
                     </div>
-                    <div className="col-9 p-3">
+                    <div className="col-6 col-md-8 col-lg-9 p-3">
                         <div className="title m-0 me-2">
-                            <h3>{userProfile?.name}</h3>
+                            <h3>{userInfo?.name}</h3>
                         </div>
-                        <div className="d-flex">
-                            <div className='me-2'>
+                        <div className="d-flex flex-column flex-md-row">
+                            <div className='mb-2 me-2'>
                                 <NavLink className='rounded btn btn-secondary' to="/edit">
                                     <i className="bi bi-gear-wide"></i> Edit Profile
                                 </NavLink>
                             </div>
-                            <div className='me-2'>
-                            </div>
-                            <div className="dropdown me-2">
+                            <div className="dropdown mb-2 me-2">
                                 <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i className="bi bi-house-gear-fill"></i> Place
                                 </button>
@@ -153,13 +149,9 @@ export default function Profile() {
                 <div className='list-title text-center'>
                     <h4>History booking</h4>
                 </div>
-                {loading ? (
-                    <LoadingPage className={`loading-spinner bg-transparent mt-5`} />
-                ) : (
-                    <>
-                        {renderHistoryBooking()}
-                    </>
-                )}
+                <>
+                    {renderHistoryBooking()}
+                </>
             </div>
         </div>
     )

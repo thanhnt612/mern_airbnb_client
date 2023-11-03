@@ -1,18 +1,5 @@
-.active-navbar {
-  background-color: white;
-  transition: all 1s;
-}
 .header-layout {
-  position: fixed;
-  @include responsive("xs") {
-    position: inherit;
-  }
-  @include responsive("md") {
-    position: inherit;
-  }
-  @include responsive("lg") {
-    position: fixed;
-  }
+  position: sticky;
   top: 0;
   z-index: 999;
   width: 100%;
@@ -32,19 +19,10 @@
       display: flex;
       justify-content: center;
       @include responsive("xs") {
-        padding: 20px;
-        // width: 100%;
-      }
-      @include responsive("mdd") {
+        padding: 15px;
       }
       @include responsive("md") {
-        // width: 40%;
-      }
-      @include responsive("lg") {
-        // width: 35%;
-      }
-      @include responsive("xl") {
-        // width: 25%;
+        padding: 15px;
       }
       form {
         z-index: 2;
@@ -114,22 +92,6 @@
     }
     .header-info {
       z-index: 10;
-      @include responsive("lg") {
-        // width: 25%;
-      }
-      @include responsive("xl") {
-        // width: 15%;
-      }
-      .left-info {
-        margin: 0 10px;
-        @include responsive("md") {
-          font-size: $text-xs;
-          white-space: nowrap;
-        }
-        @include responsive("lg") {
-          font-size: $text-xl;
-        }
-      }
       .center-info {
         margin: 0 10px;
       }
@@ -167,6 +129,9 @@
           }
         }
       }
+    }
+    .search-bar {
+      @extend .header-search;
     }
   }
 }

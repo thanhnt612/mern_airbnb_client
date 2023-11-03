@@ -1,4 +1,17 @@
 .about-page {
+  .banner {
+    img {
+      @include responsive("xs") {
+        height: 250px;
+      }
+      @include responsive("md") {
+        height: 450px;
+      }
+      @include responsive("lg") {
+        height: 600px;
+      }
+    }
+  }
   .content {
     .service {
       .item {

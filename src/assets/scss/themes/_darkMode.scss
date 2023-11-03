@@ -1,18 +1,23 @@
 .dark {
   background-color: #1b1b1b;
   color: #f5f5f5;
-  .active-navbar {
-    background-color: #1b1b1b;
-    color: #f5f5f5;
-    transition: all 1s;
+  .header-layout {
+    background-color: #f5f5f5 !important;
+    transition: all 0.6s;
+  }
+  .header-search {
+    .button-search-mobile {
+      background-color: #1b1b1b !important;
+      color: #f5f5f5 !important;
+    }
   }
   .right-info {
-    background-color: #f5f5f5 !important;
+    background-color: #1b1b1b !important;
     p {
-      color: #1b1b1b !important;
+      color: #f5f5f5 !important;
     }
     span {
-      color: #1b1b1b !important;
+      color: #f5f5f5 !important;
     }
   }
   //HOME PAGE DARK-THEME
