@@ -10,7 +10,6 @@ import { history } from "../../index";
 import useThemeSwitcher from "../hooks/useThemeSwitcher";
 import { UserContext } from "../../pages/User/UserContext";
 import { logoutApi } from "../../redux/reducers/userReducer";
-import { ACCESS_TOKEN, configStorage } from "../../utils/config";
 
 export default function HeaderHome() {
   const dispatch: DispatchType = useDispatch();
@@ -216,7 +215,6 @@ export default function HeaderHome() {
                         className="dropdown-item"
                         onClick={() => {
                           dispatch(logoutApi())
-                          configStorage.eraseCookie(ACCESS_TOKEN)
                           window.location.href = "/";
                         }}
                         to={""}
