@@ -10,6 +10,7 @@ import { history } from "../../index";
 import useThemeSwitcher from "../hooks/useThemeSwitcher";
 import { UserContext } from "../../pages/User/UserContext";
 import { logoutApi } from "../../redux/reducers/userReducer";
+import { configStorage } from "../../utils/config";
 
 export default function HeaderHome() {
   const dispatch: DispatchType = useDispatch();

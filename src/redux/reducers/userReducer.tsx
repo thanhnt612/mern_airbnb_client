@@ -1,6 +1,6 @@
 import { UserLogin } from '../../pages/Login/Login';
 import { UserRegister } from '../../pages/Register/Register';
-import { http } from "../../utils/config";
+import { ACCESS_TOKEN, configStorage, http } from "../../utils/config";
 import { DispatchType } from '../configStore';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,6 +9,8 @@ import { history } from '../../index';
 export type EditProfile = {
     name: string,
 }
+
+
 export const registerApi = (register: UserRegister) => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/register', register);
@@ -35,7 +37,7 @@ export const loginApi = (userLogin: UserLogin) => {
                 withCredentials: true,
             }
         );
-        if (result.status === 200) {
+        if (result.data.status === 200) {
             toast.success('Login Successfully !!!', {
                 position: "top-center",
                 autoClose: 1000,
@@ -48,7 +50,7 @@ export const loginApi = (userLogin: UserLogin) => {
                 onClose: () => window.location.href = "/"
             });
         }
-        if (result.status === 401) {
+        if (result.data.status === 401) {
             toast.error("Email is not existed", {
                 position: "top-center",
                 autoClose: 1000,
@@ -60,7 +62,7 @@ export const loginApi = (userLogin: UserLogin) => {
                 theme: "colored",
             });
         }
-        if (result.status === 402) {
+        if (result.data.status === 402) {
             toast.error("Email or password is wrong", {
                 position: "top-center",
                 autoClose: 1000,
@@ -72,6 +74,7 @@ export const loginApi = (userLogin: UserLogin) => {
                 theme: "colored",
             });
         }
+        configStorage.setCookieJson(ACCESS_TOKEN, result.data.accessToken, 1)
     }
 }
 export const logoutApi = () => {

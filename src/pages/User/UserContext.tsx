@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
-import { http } from '../../utils/config';
-
+import { ACCESS_TOKEN, configStorage, http } from '../../utils/config';
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }: any) => {
@@ -9,6 +8,7 @@ export const UserContextProvider = ({ children }: any) => {
         if (!userInfo) {
             async function refreshToken() {
                 const refresh = await http.post('/user/refresh', {}, { withCredentials: true });
+                configStorage.setCookieJson(ACCESS_TOKEN, refresh.data, 1)
                 const result = await http.get('/user/profile', {
                     headers: {
                         Authorization: `Bearer ${refresh.data}`

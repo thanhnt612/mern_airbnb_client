@@ -1,11 +1,12 @@
 import axios from 'axios';
-
+import { history } from '../index';
+export const ACCESS_TOKEN = "accessToken"
 //Config Axios ========================================================================
 export const http = axios.create({
-    // Url for Project:
+    // Environment for Project:
     baseURL: 'https://traveldndserver.cyclic.app'
-    
-    // Url for Dev:
+
+    // Environment for Dev:
     // baseURL: 'http://localhost:8080/'
 });
 http.defaults.withCredentials = true
@@ -14,8 +15,11 @@ http.defaults.withCredentials = true
 http.interceptors.response.use((response) => {
     return response
 }, async (error) => {
-    console.log(error);
-    return error;
+    if (error.response?.status === 401 || error.response?.status === 404 || error.response?.status === 406) {
+        history.push('/');
+    }
+    return Promise.reject(error);
+
 })
 
 //Store Data ========================================================================
