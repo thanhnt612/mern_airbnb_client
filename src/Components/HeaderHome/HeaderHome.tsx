@@ -10,6 +10,7 @@ import { history } from "../../index";
 import useThemeSwitcher from "../hooks/useThemeSwitcher";
 import { UserContext } from "../../pages/User/UserContext";
 import { logoutApi } from "../../redux/reducers/userReducer";
+import { ACCESS_TOKEN, configStorage } from "../../utils/config";
 
 export default function HeaderHome() {
   const dispatch: DispatchType = useDispatch();
@@ -215,6 +216,7 @@ export default function HeaderHome() {
                         className="dropdown-item"
                         onClick={() => {
                           dispatch(logoutApi())
+                          configStorage.eraseCookie(ACCESS_TOKEN)
                           window.location.href = "/";
                         }}
                         to={""}
@@ -243,7 +245,7 @@ export default function HeaderHome() {
           </div>
         </div>
 
-          {/* collapse search bar for mobile web */}
+        {/* collapse search bar for mobile web */}
         <div className="header-search col-2 col-md-6 col-lg-3 d-flex d-md-none ">
           <button className="button-search-mobile btn bg-light text-dark d-block d-md-none"
             data-bs-toggle="collapse"
