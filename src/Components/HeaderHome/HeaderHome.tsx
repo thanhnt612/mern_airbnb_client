@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
 import {
@@ -14,6 +14,7 @@ import { configStorage } from "../../utils/config";
 
 export default function HeaderHome() {
   const dispatch: DispatchType = useDispatch();
+  const navigate = useNavigate();
   const { userInfo }: any = useContext(UserContext);
   const [isActive, setIsActive] = useState(false);
   const [show, setShow] = useState(false);
@@ -216,7 +217,6 @@ export default function HeaderHome() {
                         className="dropdown-item"
                         onClick={() => {
                           dispatch(logoutApi())
-                          window.location.href = "/";
                         }}
                         to={""}
                       >

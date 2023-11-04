@@ -10,7 +10,6 @@ export type EditProfile = {
     name: string,
 }
 
-
 export const registerApi = (register: UserRegister) => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/register', register);
@@ -75,11 +74,14 @@ export const loginApi = (userLogin: UserLogin) => {
             });
         }
         configStorage.setCookieJson(ACCESS_TOKEN, result.data.accessToken, 1)
+        configStorage.setStorageJson('status', true)
     }
 }
 export const logoutApi = () => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/logout');
+        configStorage.setStorageJson('status', false)
+        window.location.href = "/user/login";
     }
 }
 

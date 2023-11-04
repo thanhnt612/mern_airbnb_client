@@ -5,7 +5,8 @@ export const UserContext = createContext({});
 export const UserContextProvider = ({ children }: any) => {
     const [userInfo, setUserInfo] = useState(null);
     useEffect(() => {
-        if (!userInfo) {
+        const statusLogout = configStorage.getStorageJson('status')
+        if (!userInfo && statusLogout) {
             async function refreshToken() {
                 const refresh = await http.post('/user/refresh', {}, { withCredentials: true });
                 configStorage.setCookieJson(ACCESS_TOKEN, refresh.data, 1)
@@ -19,6 +20,7 @@ export const UserContextProvider = ({ children }: any) => {
             refreshToken();
         }
     }, [])
+
     return (
         <UserContext.Provider value={{ userInfo, setUserInfo }}>
             {children}

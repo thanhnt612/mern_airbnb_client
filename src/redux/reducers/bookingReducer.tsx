@@ -3,7 +3,6 @@ import { DispatchType } from '../configStore';
 import { http } from '../../utils/config';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { history } from '../../index';
 
 export interface BookingModel {
     [x: string]: any;
