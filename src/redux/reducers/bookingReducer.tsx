@@ -134,7 +134,7 @@ export default bookingReducer.reducer
 export const getBookingApi = () => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place');
-        let arrBooking: BookingModel[] = result.data.data.content;
+        let arrBooking: BookingModel[] = result.data.content;
         const action: PayloadAction<BookingModel[]> = setArrAction(arrBooking);
         dispatch(action)
     }

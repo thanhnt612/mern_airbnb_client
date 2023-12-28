@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
 import {
@@ -10,11 +10,10 @@ import { history } from "../../index";
 import useThemeSwitcher from "../hooks/useThemeSwitcher";
 import { UserContext } from "../../pages/User/UserContext";
 import { logoutApi } from "../../redux/reducers/userReducer";
-import { configStorage } from "../../utils/config";
+
 
 export default function HeaderHome() {
   const dispatch: DispatchType = useDispatch();
-  const navigate = useNavigate();
   const { userInfo }: any = useContext(UserContext);
   const [isActive, setIsActive] = useState(false);
   const [show, setShow] = useState(false);

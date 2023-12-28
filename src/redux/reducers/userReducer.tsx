@@ -26,6 +26,18 @@ export const registerApi = (register: UserRegister) => {
                 onClose: () => history.push('/user/login')
             });
         }
+        if (result.data.status === 400) {
+            toast.error(result.data.message, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
     };
 };
 

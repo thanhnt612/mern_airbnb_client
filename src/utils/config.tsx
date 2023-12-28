@@ -3,10 +3,7 @@ import { history } from '../index';
 export const ACCESS_TOKEN = "accessToken"
 //Config Axios ========================================================================
 export const http = axios.create({
-    // Environment for Project:
     baseURL: 'https://traveldndserver.cyclic.app'
-
-    // Environment for Dev:
     // baseURL: 'http://localhost:8080/'
 });
 http.defaults.withCredentials = true
