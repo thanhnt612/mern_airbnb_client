@@ -204,34 +204,34 @@
                   align-items: center;
                   .button {
                     margin-right: 10px;
-                    a {
-                      font-size: $text-xl;
-                      color: $text-c1-light;
-                      background: $bg-header-main;
-                      text-align: center;
-                      position: relative;
-                      transition: all 0.7s;
-                      &::after {
-                        position: absolute;
-                        content: ">>";
-                        transition: all 0.5s;
-                        opacity: 0;
-                        top: 7px;
-                        right: -50px;
-                      }
-                      &:hover {
-                        padding-right: 40px;
-                        padding-left: 10px;
+                      a {
+                        font-size: $text-xl;
+                        color: $text-c1-light;
+                        text-align: center;
+                        position: relative;
+                        transition: all 0.7s;
+                        text-decoration: none;
                         &::after {
-                          opacity: 1;
-                          right: 10px;
+                          position: absolute;
+                          content: ">>";
+                          transition: all 0.5s;
+                          opacity: 0;
+                          top: 1px;
+                          right: -50px;
+                        }
+                        &:hover {
+                          padding-right: 40px;
+                          padding-left: 10px;
+                          &::after {
+                            opacity: 1;
+                            right: 10px;
+                          }
+                        }
+                        span {
+                          position: relative;
+                          z-index: 2;
                         }
                       }
-                      span {
-                        position: relative;
-                        z-index: 2;
-                      }
-                    }
                   }
                   .price {
                     a {

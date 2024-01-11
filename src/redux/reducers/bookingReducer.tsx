@@ -4,7 +4,7 @@ import { http } from '../../utils/config';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export interface BookingModel {
+export interface PlaceModel {
     [x: string]: any;
     id: string;
     title: string;
@@ -16,9 +16,10 @@ export interface BookingModel {
     checkOut: string;
     maxGuest: string;
     price: string
+    available: boolean
 }
 export interface HistoryBookingModel {
-    placeId: string,
+    placeId: object,
     guestId: string,
     name: string,
     phone: string,
@@ -37,25 +38,21 @@ export interface BlogModel {
     createdAt: string;
     updatedAt: string
 }
-export interface Avatar {
-    profile: string;
-    avatar: string
-}
 
 interface BookingState {
-    arrBooking: BookingModel[],
-    arrOwnerRoom: BookingModel[],
+    arrPlace: PlaceModel[],
+    arrOwnerRoom: PlaceModel[],
     arrHistory: HistoryBookingModel[],
-    arrBookingId: BookingModel | null,
-    arrLocation: BookingModel[] | null,
+    arrBookingId: PlaceModel | null,
+    arrLocation: PlaceModel[] | null,
     arrBlog: BlogModel[],
     arrBlogDetail: BlogModel | null,
     arrBlogAuthor: BlogModel[],
-    arrAvatar: Avatar | null | any
+    arrBookingDashboard: HistoryBookingModel[]
 }
 
 const initialState: BookingState = {
-    arrBooking: [],
+    arrPlace: [],
     arrOwnerRoom: [],
     arrBookingId: null,
     arrHistory: [],
@@ -63,7 +60,7 @@ const initialState: BookingState = {
     arrBlog: [],
     arrBlogDetail: null,
     arrBlogAuthor: [],
-    arrAvatar: []
+    arrBookingDashboard: []
 }
 
 const bookingReducer = createSlice({
@@ -71,18 +68,18 @@ const bookingReducer = createSlice({
     initialState,
     reducers: {
         setArrAction:
-            (state: BookingState, action: PayloadAction<BookingModel[]>) => {
-                const arrBookingList: BookingModel[] = action.payload;
-                state.arrBooking = arrBookingList;
+            (state: BookingState, action: PayloadAction<PlaceModel[]>) => {
+                const arrBookingList: PlaceModel[] = action.payload;
+                state.arrPlace = arrBookingList;
             },
         setArrIdAction:
-            (state: BookingState, action: PayloadAction<BookingModel>) => {
-                const arrBookingList: BookingModel = action.payload;
+            (state: BookingState, action: PayloadAction<PlaceModel>) => {
+                const arrBookingList: PlaceModel = action.payload;
                 state.arrBookingId = arrBookingList;
             },
         setArrOwnerAction:
-            (state: BookingState, action: PayloadAction<BookingModel[]>) => {
-                const arrOwnerRoomList: BookingModel[] = action.payload;
+            (state: BookingState, action: PayloadAction<PlaceModel[]>) => {
+                const arrOwnerRoomList: PlaceModel[] = action.payload;
                 state.arrOwnerRoom = arrOwnerRoomList;
             },
         setHistoryAction:
@@ -90,8 +87,8 @@ const bookingReducer = createSlice({
                 state.arrHistory = action.payload;
             },
         setLocationAction:
-            (state: BookingState, action: PayloadAction<BookingModel[]>) => {
-                const arrLocationList: BookingModel[] = action.payload;
+            (state: BookingState, action: PayloadAction<PlaceModel[]>) => {
+                const arrLocationList: PlaceModel[] = action.payload;
                 state.arrLocation = arrLocationList;
             },
         setBlogAction:
@@ -109,10 +106,9 @@ const bookingReducer = createSlice({
                 const arrListBlog: BlogModel[] = action.payload;
                 state.arrBlogAuthor = arrListBlog;
             },
-        setAvatarAction:
-            (state: BookingState, action: PayloadAction<Avatar>) => {
-                const arrAvatar = action.payload;
-                state.arrAvatar = arrAvatar;
+        setBookingDashboard:
+            (state: BookingState, action: PayloadAction<HistoryBookingModel[]>) => {
+                state.arrBookingDashboard = action.payload;
             },
     }
 });
@@ -126,7 +122,7 @@ export const {
     setBlogAction,
     setBlogDetailAction,
     setListBlogAuthorAction,
-    setAvatarAction
+    setBookingDashboard
 } = bookingReducer.actions
 export default bookingReducer.reducer
 
@@ -134,16 +130,16 @@ export default bookingReducer.reducer
 export const getBookingApi = () => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place');
-        let arrBooking: BookingModel[] = result.data.content;
-        const action: PayloadAction<BookingModel[]> = setArrAction(arrBooking);
+        let arrPlace: PlaceModel[] = result.data.content;
+        const action: PayloadAction<PlaceModel[]> = setArrAction(arrPlace);
         dispatch(action)
     }
 }
 export const getBookingDetailApi = (id: number) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/' + id);
-        let arrBookingId: BookingModel = result.data.content;
-        const action: PayloadAction<BookingModel> = setArrIdAction(arrBookingId);
+        let arrBookingId: PlaceModel = result.data.content;
+        const action: PayloadAction<PlaceModel> = setArrIdAction(arrBookingId);
         dispatch(action)
     }
 }
@@ -151,13 +147,13 @@ export const getBookingDetailApi = (id: number) => {
 export const getOwnerRoomApi = (owner: number) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/owner/' + owner);
-        let arrOwnerRoom: BookingModel[] = result.data.content;
-        const action: PayloadAction<BookingModel[]> = setArrOwnerAction(arrOwnerRoom);
+        let arrOwnerRoom: PlaceModel[] = result.data.content;
+        const action: PayloadAction<PlaceModel[]> = setArrOwnerAction(arrOwnerRoom);
         dispatch(action)
     }
 }
 export const postBookingApi = (
-    placeId: string,
+    placeId: object,
     guestId: string,
     name: string,
     phone: string,
@@ -199,8 +195,8 @@ export const getBookingProfileApi = (guestId: number) => {
 export const getBookingLocationApi = (destination: string) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/dest/' + destination);
-        let arrBookingLocation: BookingModel[] = result.data.content;
-        const action: PayloadAction<BookingModel[]> = setLocationAction(arrBookingLocation);
+        let arrBookingLocation: PlaceModel[] = result.data.content;
+        const action: PayloadAction<PlaceModel[]> = setLocationAction(arrBookingLocation);
         dispatch(action)
     }
 }
@@ -231,11 +227,24 @@ export const getAuthorBlogApi = (author: number) => {
         dispatch(action)
     }
 }
-export const getProfileAvatarApi = (profile: number) => {
+
+export const getBookingListToDashboard = () => {
     return async (dispatch: DispatchType) => {
-        const result: any = await http.get('/user/avatar/' + profile);
-        let arrProfile: Avatar = result.data.content;
-        const action: PayloadAction<Avatar> = setAvatarAction(arrProfile);
+        const result: any = await http.get('/dashboard/booking')
+        let arrHistoryBooking: HistoryBookingModel[] = result.data.content;
+        const action: PayloadAction<HistoryBookingModel[]> = setBookingDashboard(arrHistoryBooking);
         dispatch(action)
     }
 }
+export const checkStatusRoom = () => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.get('/place/check')
+        console.log(result);
+    }
+}
+// export const changeStatusRoom = (placeId: string) => {
+//     console.log(placeId);
+//     return async (dispatch: DispatchType) => {
+//         const result: any = await http.post('/booking/status/'+ placeId)
+//     }
+// }

@@ -1,10 +1,9 @@
 import { ChangeEvent, useState } from 'react'
-import { http } from '../../utils/config';
+import {  http } from '../../utils/config';
 import { LoadingPage } from '../../Components/Icon';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-
 
 export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) {
     const [loading, setLoading] = useState(false)
@@ -46,7 +45,7 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
     return (
         <>
             <div className="mb-3 d-flex flex-column">
-                {url.length === 0
+                {!url
                     ?
                     <div className='col-12'>
                         <img className='rounded-circle'
@@ -55,15 +54,10 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
                     </div>
                     :
                     <>
-                        {url.map((item: any, index: number) => {
-                            return (
-                                <div className='col-12' key={index}>
-                                    <img className='rounded-circle' src={item.avatar}
-                                        alt="" style={{ width: "190px", height: "180px" }} />
-                                </div>
-                            )
-                        })
-                        }
+                        <div className='col-12'>
+                            <img className='rounded-circle' src={url}
+                                alt="" style={{ width: "190px", height: "180px" }} />
+                        </div>
                     </>
                 }
             </div >

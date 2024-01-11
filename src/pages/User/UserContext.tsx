@@ -1,15 +1,14 @@
 import { createContext, useEffect, useState } from 'react'
-import { ACCESS_TOKEN, configStorage, http } from '../../utils/config';
+import { http } from '../../utils/config';
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }: any) => {
-    const [userInfo, setUserInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState();
     useEffect(() => {
-        const statusLogout = configStorage.getStorageJson('status')
-        if (!userInfo && statusLogout) {
+        if (!userInfo) {
             async function refreshToken() {
                 const refresh = await http.post('/user/refresh', {}, { withCredentials: true });
-                configStorage.setCookieJson(ACCESS_TOKEN, refresh.data, 1)
+                http.defaults.headers.common['Authorization'] = `Bearer ${refresh.data}`;
                 const result = await http.get('/user/profile', {
                     headers: {
                         Authorization: `Bearer ${refresh.data}`
@@ -19,8 +18,7 @@ export const UserContextProvider = ({ children }: any) => {
             }
             refreshToken();
         }
-    }, [])
-
+    }, [userInfo])
     return (
         <UserContext.Provider value={{ userInfo, setUserInfo }}>
             {children}

@@ -34,6 +34,7 @@ import { ListBlog } from './pages/Blog/ListBlog';
 import { UpdateBlog } from './pages/Blog/UpdateBlog';
 import { AllBlog } from './pages/Blog/AllBlog';
 import { createBrowserHistory } from "history";
+import DashBoard from './pages/DashBoard/DashBoard';
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -88,6 +89,9 @@ root.render(
             <Route path="login" element={<Login />}></Route>
             <Route path="register" element={<Register />}></Route>
             <Route path='*' element={<Navigate to="" />}></Route>
+          </Route>
+          <Route path='dashboard' element={<DashBoard />}>
+
           </Route>
         </Routes>
       </HistoryRouter>

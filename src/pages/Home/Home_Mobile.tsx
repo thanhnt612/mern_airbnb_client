@@ -14,18 +14,18 @@ export default function Home() {
   const dispatch: DispatchType = useDispatch();
   const content = useRef(null);
   const [loading, setLoading] = useState(false)
-  const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
+  const { arrPlace } = useSelector((state: RootState) => state.bookingReducer);
   const { arrBlog } = useSelector((state: RootState) => state.bookingReducer);
 
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBlogApi())
-    if (arrBooking.length === 0) {
+    if (arrPlace.length === 0) {
       setLoading(true);
     } else {
       setLoading(false);
     }
-  }, [arrBooking.length])
+  }, [arrPlace.length])
 
   const onList = async (event: any) => {
     await dispatch(getBookingLocationApi(event));
@@ -226,7 +226,7 @@ export default function Home() {
                     showDots={false}
                     responsive={responsive}
                   >
-                    {arrBooking.map((room, index) => {
+                    {arrPlace.map((room, index) => {
                       return <div key={index}>
                         <div className="room-body rounded d-flex flex-column mb-4 wow">
                           <div className="thumbnail col-12">

@@ -1,28 +1,21 @@
-import  { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
-import { getBookingApi, getBookingProfileApi, getProfileAvatarApi } from '../../redux/reducers/bookingReducer';
+import { getBookingProfileApi } from '../../redux/reducers/bookingReducer';
 import AvatarUpload from './AvatarUpload';
 import { UserContext } from '../User/UserContext';
 
-
-
 export default function Profile() {
     const dispatch: DispatchType = useDispatch();
-    const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
-    const { arrHistory } = useSelector((state: RootState) => state.bookingReducer);
-    const [addPhoto, setAddPhoto] = useState<null | any>([])
     const { userInfo }: any = useContext(UserContext);
-    const { arrAvatar } = useSelector((state: RootState) => state.bookingReducer);
-    useEffect(() => {
-        dispatch(getBookingApi())
-    }, [])
+    const [addPhoto, setAddPhoto] = useState<null | any>([])
+    const { arrHistory } = useSelector((state: RootState) => state.bookingReducer);
 
     useEffect(() => {
         dispatch(getBookingProfileApi(userInfo?._id))
-        dispatch(getProfileAvatarApi(userInfo?._id))
     }, [userInfo?._id]);
+
     const renderHistoryBooking = () => {
         if (arrHistory.length === 0) {
             return (
@@ -37,32 +30,28 @@ export default function Profile() {
             )
         } else {
             return (
-                <div className='d-flex flex-row flex-wrap'>
-                    {arrHistory.map((item: any, index: number) => {
-                        //Current Date
-                        let newDate = new Date();
-                        let dateCurrent = new Date(newDate.getTime() - (newDate.getTimezoneOffset() * 60000))
-                            .toISOString()
-                            .split("T")[0];
-                        //Checkout Date
-                        let checkOut = new Date(item.checkOut);
-                        let checkOutBooking = new Date(checkOut.getTime() - (checkOut.getTimezoneOffset() * 60000))
-                            .toISOString()
-                            .split("T")[0];
-                        return <div className='col-12 col-md-6 col-lg-4 p-2' key={index}>
-                            {arrBooking.map((prod: any, index: number) => {
-                                if (item.placeId === prod._id
-                                    // && dateCurrent < checkOutBooking
-                                ) {
-                                    return <div className="list-choose p-0 rounded mb-4 position-relative" key={index}>
+                <>
+                    <div className='border border-danger border-4 border-bottom my-5'></div>
+                    <div className='list-title text-center'>
+                        <h4>Booking</h4>
+                    </div>
+                    <div className='d-flex flex-row flex-wrap'>
+                        {arrHistory.map((item: any, index: number) => {
+                            //Current Date
+                            let dateCurrent = new Date().toISOString()
+                            //Checkout Date
+                            let checkOutBooking = item.checkOut;
+                            if (dateCurrent < checkOutBooking) {
+                                return <div className='col-12 col-md-6 col-lg-4 p-2' key={index}>
+                                    <div className="list-choose p-0 rounded mb-4 position-relative" key={index}>
                                         <div className="thumbnail">
-                                            <img src={prod.photos[0]}
+                                            <img src={item.placeId.photos[0]}
                                                 className='w-100 rounded' alt="" />
                                         </div>
                                         <div className="detail d-flex flex-column justify-content-center p-3 position-absolute bottom-0 text-light">
                                             <div className="info">
-                                                <h5 className=''>📌{prod.address}</h5>
-                                                <p className="mb-2 fw-bold">🔔{prod.title}</p>
+                                                <h5 className=''>📌{item.placeId.address}</h5>
+                                                <p className="mb-2 fw-bold">🔔{item.placeId.title}</p>
                                                 <p className="mb-2">
                                                     Guest: <span className='fw-bold'>{item.numberOfGuest}</span>
                                                 </p>
@@ -76,15 +65,57 @@ export default function Profile() {
                                             </div>
                                         </div>
                                     </div>
-                                }
-                            })
+                                </div>;
+                            } else {
+                                // console.log(item._id);
+                                // dispatch(changeStatusRoom(item._id))
+                                //Check out is outdate =>>> ACTION change stautus available:true
                             }
-                        </div>
-                    })}
-                </div>
+                        })}
+                    </div>
+                    <div className='border border-danger border-4 border-bottom my-5'></div>
+                    <div className='list-title text-center'>
+                        <h4>History</h4>
+                    </div>
+                    <div className='d-flex flex-row flex-wrap'>
+                        {arrHistory.map((item: any, index: number) => {
+                            //Current Date
+                            const dateCurrent = new Date().toISOString()
+                            //Checkout Date
+                            const checkOutBooking = item.checkOut;
+                            if (dateCurrent > checkOutBooking) {
+                                return <div className='col-12 col-md-6 col-lg-4 p-2' key={index}>
+                                    <div className="list-choose p-0 rounded mb-4 position-relative" key={index}>
+                                        <div className="thumbnail">
+                                            <img src={item.placeId.photos[0]}
+                                                className='w-100 rounded' alt="" />
+                                        </div>
+                                        <div className="detail d-flex flex-column justify-content-center p-3 position-absolute bottom-0 text-light">
+                                            <div className="info">
+                                                <h5 className=''>📌{item.placeId.address}</h5>
+                                                <p className="mb-2 fw-bold">🔔{item.placeId.title}</p>
+                                                <p className="mb-2">
+                                                    Guest: <span className='fw-bold'>{item.numberOfGuest}</span>
+                                                </p>
+                                            </div>
+                                            <div className="time">
+                                                <p className="mb-2">Check In: <span className='fw-bold'> {(new Date(item.checkIn)).toLocaleDateString()}</span></p>
+                                                <p className="mb-2">Check Out: <span className='fw-bold'> {(new Date(item.checkOut)).toLocaleDateString()}</span></p>
+                                            </div>
+                                            <div>
+                                                <p className="mb-2">Total: <span className='fw-bold'>💲{item.price}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        })}
+                    </div>
+                </>
             )
         }
     }
+
     return (
         <div className='profile-page container'>
             <div className="profile-info">
@@ -92,7 +123,7 @@ export default function Profile() {
                     <div className="col-6 col-md-4 col-lg-3 p-3">
                         <div className="avatar text-center">
                             <div className="update-avatar pt-3">
-                                <AvatarUpload addPhoto={addPhoto} url={arrAvatar} onChange={setAddPhoto} profile={userInfo?._id} />
+                                <AvatarUpload addPhoto={addPhoto} url={userInfo?.avatar} onChange={setAddPhoto} profile={userInfo?._id} />
                             </div>
                         </div>
                     </div>
@@ -145,10 +176,7 @@ export default function Profile() {
                     </div>
                 </div>
             </div>
-            <div className="booking-info ">
-                <div className='list-title text-center'>
-                    <h4>History booking</h4>
-                </div>
+            <div className="booking-info">
                 <>
                     {renderHistoryBooking()}
                 </>

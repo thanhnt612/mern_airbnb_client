@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { getBlogApi, getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
+import { checkStatusRoom, getBlogApi, getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
 import { history } from '../../index';
 import { LoadingPage } from '../../Components/Icon';
 import ReactPlayer from 'react-player';
@@ -13,22 +13,23 @@ import ReactPlayer from 'react-player';
 export default function Home() {
   const dispatch: DispatchType = useDispatch();
   const content = useRef(null);
-  const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
+  const { arrPlace } = useSelector((state: RootState) => state.bookingReducer);
   const { arrBlog } = useSelector((state: RootState) => state.bookingReducer);
   const [loading, setLoading] = useState(false)
   //Call Api
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBlogApi())
+    dispatch(checkStatusRoom())
   }, [])
 
   useEffect(() => {
-    if (arrBooking.length === 0 || arrBlog.length === 0) {
+    if (arrPlace.length === 0 || arrBlog.length === 0) {
       setLoading(true);
     } else {
       setLoading(false);
     }
-  }, [arrBooking.length, arrBlog.length])
+  }, [arrPlace.length, arrBlog.length])
 
   const onList = async (event: any) => {
     await dispatch(getBookingLocationApi(event));
@@ -270,7 +271,7 @@ export default function Home() {
                     responsive={responsive}
                     arrows={false}
                   >
-                    {arrBooking.map((room, index) => {
+                    {arrPlace.map((room, index) => {
                       return <div className='p-3' key={index}>
                         <div className="room-body rounded-3 mb-5 d-flex flex-column bg-light wow">
                           <div className="thumbnail  col-12">
@@ -288,15 +289,34 @@ export default function Home() {
                           </div>
                           <div className="detail rounded-bottom col-12 p-3 shadow">
                             <div className="info">
+                              <p className='text-truncate mb-1'>
+                                {room.available
+                                  ?
+                                  <span className='text-success'>Availability</span>
+                                  :
+                                  <span className='text-danger'>Fully - Booked</span>
+                                }
+                              </p>
                               <h5 className='text-truncate'>🏩{room.address}</h5>
                               <p className='text-truncate mb-1'>🔔{room.title}</p>
                               <p><span className='fw-bold'>💲{room.price}</span> - night</p>
                             </div>
                             <div className="view-more">
-                              <div className="button">
-                                <NavLink to={`/detail/${room._id}`} className="btn">
-                                  Book Now
-                                </NavLink>
+                              <div className='button'>
+                                {room.available
+                                  ?
+                                  <button className="btn btn-success">
+                                    <NavLink to={`/detail/${room._id}`} >
+                                      Book Now
+                                    </NavLink>
+                                  </button>
+                                  :
+                                  <button className="btn btn-danger" disabled={true}>
+                                    <NavLink to={`/detail/${room._id}`}  >
+                                      Fully - Booked
+                                    </NavLink>
+                                  </button>
+                                }
                               </div>
                             </div>
                           </div>
@@ -352,7 +372,7 @@ export default function Home() {
             {arrBlog.filter((item, index) => index < 3).map((blog, index) => {
               let date = new Date(blog.createdAt).toLocaleDateString('en-GB');
               return <div className='item col-12 col-md-4 p-2' key={index}>
-                <div className="thumbnail position-relative">
+                <div className="thumbnail position-relative shadow">
                   <div className="picture">
                     <NavLink to={`/blog/detail/${blog._id}`}>
                       <img src={blog.photos[0]} className="w-100" />

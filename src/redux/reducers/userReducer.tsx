@@ -1,15 +1,63 @@
 import { UserLogin } from '../../pages/Login/Login';
 import { UserRegister } from '../../pages/Register/Register';
-import { ACCESS_TOKEN, configStorage, http } from "../../utils/config";
+import { http } from "../../utils/config";
 import { DispatchType } from '../configStore';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { history } from '../../index';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export type EditProfile = {
     name: string,
 }
+export interface UserModel {
+    id: string,
+    email: string,
+    name: string,
+    isAdmin: boolean,
+    verify: boolean,
+    avatar: string
+}
 
+export interface ProfileModel {
+    _id: string,
+    email: string,
+    name: string,
+    avatar: string,
+}
+
+interface UserState {
+    arrUser: UserModel[],
+    arrProfile: ProfileModel | null
+}
+
+const initialState: UserState = {
+    arrUser: [],
+    arrProfile: null
+}
+
+const userReducer = createSlice({
+    name: 'userReducer',
+    initialState,
+    reducers: {
+        setArrUserList:
+            (state: UserState, action: PayloadAction<UserModel[]>) => {
+                const arrUserList: UserModel[] = action.payload;
+                state.arrUser = arrUserList;
+            },
+        setProfileUser:
+            (state: UserState, action: PayloadAction<ProfileModel>) => {
+                const profileUser: ProfileModel = action.payload;
+                state.arrProfile = profileUser;
+            },
+
+    }
+})
+export const {
+    setArrUserList,
+    setProfileUser
+} = userReducer.actions
+export default userReducer.reducer
 export const registerApi = (register: UserRegister) => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/register', register);
@@ -85,14 +133,11 @@ export const loginApi = (userLogin: UserLogin) => {
                 theme: "colored",
             });
         }
-        configStorage.setCookieJson(ACCESS_TOKEN, result.data.accessToken, 1)
-        configStorage.setStorageJson('status', true)
     }
 }
 export const logoutApi = () => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/logout');
-        configStorage.setStorageJson('status', false)
         window.location.href = "/user/login";
     }
 }
@@ -115,3 +160,25 @@ export const updateProfileApi = (id: number, update: EditProfile) => {
         }
     };
 };
+
+export const getListUser = () => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.get('/dashboard/user');
+        let arrUser: UserModel[] = result.data.content;
+        const action: PayloadAction<UserModel[]> = setArrUserList(arrUser);
+        dispatch(action)
+    }
+}
+
+// export const getProfileUser = () => {
+//     return async (dispatch: DispatchType) => {
+// const refresh = await http.post('/user/refresh', {}, { withCredentials: true });
+// http.defaults.headers.common['Authorization'] = `Bearer ${refresh.data}`;
+// const result: any = await http.get('/user/profile', {
+//     headers: {
+//         Authorization: `Bearer ${refresh.data}`
+//     }
+// })
+// const result: any = await http.get('/user/profile')
+//     }
+// }

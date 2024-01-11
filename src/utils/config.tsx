@@ -1,25 +1,27 @@
 import axios from 'axios';
 import { history } from '../index';
-export const ACCESS_TOKEN = "accessToken"
-//Config Axios ========================================================================
+
+//Config Axios 
 export const http = axios.create({
-    baseURL: 'https://traveldndserver.cyclic.app'
-    // baseURL: 'http://localhost:8080/'
+    // baseURL: 'https://traveldndserver.cyclic.app'
+    baseURL: 'http://localhost:8080/'
 });
 http.defaults.withCredentials = true
 
-//Configure Response
+// Configure Response
 http.interceptors.response.use((response) => {
     return response
 }, async (error) => {
-    if (error.response?.status === 401 || error.response?.status === 404) {
+    console.log(error);
+    if (error.response?.status === 401 ||
+        error.response?.status === 404 ||
+        error.response?.status === 406
+    ) {
         history.push('/');
     }
-    return Promise.reject(error);
-
 })
 
-//Store Data ========================================================================
+//Store Data 
 export const configStorage = {
     setStorageJson: (name: string, data: any): void => {
         data = JSON.stringify(data);

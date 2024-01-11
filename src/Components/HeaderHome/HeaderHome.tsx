@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "../../redux/configStore";
 import {
@@ -17,11 +17,11 @@ export default function HeaderHome() {
   const { userInfo }: any = useContext(UserContext);
   const [isActive, setIsActive] = useState(false);
   const [show, setShow] = useState(false);
-  const { arrBooking } = useSelector((state: RootState) => state.bookingReducer);
+  const { arrPlace } = useSelector((state: RootState) => state.bookingReducer);
   const [search, setSearch] = useState("");
-  const address = arrBooking.filter(
+  const address = arrPlace.filter(
     (ele, ind) =>
-      ind === arrBooking.findIndex((elem) => elem.address === ele.address)
+      ind === arrPlace.findIndex((elem) => elem.address === ele.address)
   );
   useEffect(() => {
     dispatch(getBookingApi());
@@ -161,12 +161,9 @@ export default function HeaderHome() {
           </div>
           <div className="right-info bg-light">
             <li className="nav-item dropdown">
-              <NavLink
-                className="nav-link"
-                to=""
+              <a className="nav-link"
                 role="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
               >
                 {userInfo
                   ? <>
@@ -181,15 +178,24 @@ export default function HeaderHome() {
                     </span>
                   </>
                 }
-              </NavLink>
+              </a>
               <ul className="dropdown-menu list-info">
                 {userInfo?.name
                   ?
                   <>
                     <li>
-                      <a className="dropdown-item" href="/profile">
+                      <Link className="dropdown-item" to="/profile">
                         <i className="bi bi-person-check"></i> Profile: {userInfo.name}
-                      </a>
+                      </Link>
+                    </li>
+                    <li>
+                      {userInfo?.isAdmin
+                        ?
+                        <Link className="dropdown-item" to="/dashboard">
+                          <i className="bi bi-bar-chart-line"></i> Dashboard
+                        </Link>
+                        : ""
+                      }
                     </li>
                     <li>
                       <NavLink className="dropdown-item" to="/place/new">
@@ -239,7 +245,6 @@ export default function HeaderHome() {
                 }
               </ul>
             </li>
-            <div></div>
           </div>
         </div>
 
