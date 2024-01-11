@@ -12,13 +12,12 @@ http.defaults.withCredentials = true
 http.interceptors.response.use((response) => {
     return response
 }, async (error) => {
-    console.log(error);
-    if (error.response?.status === 401 ||
-        error.response?.status === 404 ||
-        error.response?.status === 406
-    ) {
-        history.push('/');
-    }
+    // if (error.response?.status === 401 ||
+    //     error.response?.status === 404 ||
+    //     error.response?.status === 406
+    // ) {
+    //     history.push('/');
+    // }
 })
 
 //Store Data 
