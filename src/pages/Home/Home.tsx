@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBlogApi())
-    // dispatch(checkStatusRoom())
+    dispatch(checkStatusRoom())
   }, [])
 
   useEffect(() => {

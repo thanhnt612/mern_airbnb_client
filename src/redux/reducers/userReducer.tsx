@@ -170,15 +170,3 @@ export const getListUser = () => {
     }
 }
 
-// export const getProfileUser = () => {
-//     return async (dispatch: DispatchType) => {
-// const refresh = await http.post('/user/refresh', {}, { withCredentials: true });
-// http.defaults.headers.common['Authorization'] = `Bearer ${refresh.data}`;
-// const result: any = await http.get('/user/profile', {
-//     headers: {
-//         Authorization: `Bearer ${refresh.data}`
-//     }
-// })
-// const result: any = await http.get('/user/profile')
-//     }
-// }

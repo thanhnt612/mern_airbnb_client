@@ -239,12 +239,5 @@ export const getBookingListToDashboard = () => {
 export const checkStatusRoom = () => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/check')
-        console.log(result);
     }
 }
-// export const changeStatusRoom = (placeId: string) => {
-//     console.log(placeId);
-//     return async (dispatch: DispatchType) => {
-//         const result: any = await http.post('/booking/status/'+ placeId)
-//     }
-// }
