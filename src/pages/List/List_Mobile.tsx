@@ -18,7 +18,7 @@ export default function List() {
   }, [newPart]);
   return (
     <div className='list-page-mobile'>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="content col-12">
             <div className="tittle pt-3 text-center" >
@@ -26,67 +26,87 @@ export default function List() {
                 Have <span className='fw-bold text-danger'>{arrLocation?.length}</span> selected accommodation
               </p>
               <h5 className='text-center'>
-                Selected accommodation in <br/>
+                Selected accommodation in <br />
                 <span className="text-danger">{arrLocation?.[0].address}</span>
               </h5>
             </div>
-            {arrLocation?.map((location: any, index: number) => {
-              return <div className={`list-choose item-${index} d-flex flex-wrap bg-light border border-2 
-                            border-success border-opacity-25 rounded wow`} key={index}>
-                <div className="thumbnail d-flex align-items-center p-2 col-12 col-md-5">
-                  <img src={location.photos[0]}
-                    className='w-100 rounded' alt="" />
-                </div>
-                <div className="detail d-flex flex-column justify-content-center p-3 col-12 col-md-7">
-                  <div className="info">
-                    <h5 className='m-0 text-truncate'>🏩{location.title}</h5>
-                    <div className="d-flex flex-row flex-nowrap text-truncate py-2">
-                      <span className='fw-bold me-2'>⚙️Service:</span>
-                      {location?.perks.map((perk: any, index: number) => {
-                        return (<div className='col-2 col-md-2 d-flex flex-row' key={index}>
-                          {perk === 'wifi' ?
-                            (<>
-                              <i className="me-1 bi bi-wifi"></i> <span>Wifi</span>
-                            </>)
-                            : ""}
-                          {perk === 'tv' ?
-                            (<>
-                              <i className="me-1 bi bi-tv"></i> <span>TV</span>
-                            </>)
-                            : ""}
-                          {perk === 'pet' ?
-                            (<>
-                              <i className="me-1 bi bi-piggy-bank"></i> <span>Pets</span>
-                            </>)
-                            : ""}
-                          {perk === 'park' ?
-                            (<>
-                              <i className="me-1 bi bi-p-circle"></i> <span>Park</span>
-                            </>)
-                            : ""}
-                          {perk === 'entrance' ?
-                            (<>
-                              <i className="me-1 bi bi-signpost-split"></i> <span>Entry</span>
-                            </>)
-                            : ""}
-                        </div>)
-                      })}
+            <div className='d-flex flex-wrap'>
+              {arrLocation?.map((location: any, index: number) => {
+                return <div className={`list-choose item-${index} col-6 p-2 wow`} key={index}>
+                  <div className='border border-2 
+                            border-success border-opacity-25 rounded d-flex flex-wrap bg-light'>
+                    <div className="thumbnail d-flex align-items-center p-2 col-12 col-md-5">
+                      <img src={location.photos[0]}
+                        className='w-100 rounded' alt="" />
                     </div>
-                    <p className='mb-2'>#️⃣Max guest: <span className='fw-bold'>{location.maxGuest}</span></p>
-                    <p className='m-0'><span className='fw-bold'>💲{location.price}</span> / night </p>
-                  </div>
-                  <div className="view-more">
-                    <div className="button">
-                      <NavLink to={`/detail/${location._id}`} className="btn">
-                        <span>
-                          View
-                        </span>
-                      </NavLink>
+                    <div className="detail d-flex flex-column justify-content-center p-3 col-12 col-md-7">
+                      <div className="info">
+                        <p className='text-truncate fw-bold mb-1'>
+                          {location.available
+                            ?
+                            <span className='text-success'>Availability</span>
+                            :
+                            <span className='text-danger'>Fully - Booked</span>
+                          }
+                        </p>
+                        <h5 className='m-0 text-truncate'>🏩{location.title}</h5>
+                        <div className="d-flex flex-row flex-nowrap text-truncate py-2">
+                          {location?.perks.map((perk: any, index: number) => {
+                            return (<div className='col-2 col-md-2 d-flex flex-row' key={index}>
+                              {perk === 'wifi' ?
+                                (<>
+                                  <i className="me-1 bi bi-wifi"></i> <span>Wifi</span>
+                                </>)
+                                : ""}
+                              {perk === 'tv' ?
+                                (<>
+                                  <i className="me-1 bi bi-tv"></i> <span>TV</span>
+                                </>)
+                                : ""}
+                              {perk === 'pet' ?
+                                (<>
+                                  <i className="me-1 bi bi-piggy-bank"></i> <span>Pets</span>
+                                </>)
+                                : ""}
+                              {perk === 'park' ?
+                                (<>
+                                  <i className="me-1 bi bi-p-circle"></i> <span>Park</span>
+                                </>)
+                                : ""}
+                              {perk === 'entrance' ?
+                                (<>
+                                  <i className="me-1 bi bi-signpost-split"></i> <span>Entry</span>
+                                </>)
+                                : ""}
+                            </div>)
+                          })}
+                        </div>
+                        <p className='mb-2'>#️⃣Max guest: <span className='fw-bold'>{location.maxGuest}</span></p>
+                        <p className='m-0'><span className='fw-bold'>💲{location.price}</span> / night </p>
+                      </div>
+                      <div className="view-more">
+                        <div className="button">
+                          {location.available
+                            ?
+                            <button className="btn btn-success">
+                              <NavLink to={`/detail/${location._id}`} >
+                                Book Now
+                              </NavLink>
+                            </button>
+                            :
+                            <button className="btn btn-danger" disabled={true}>
+                              <NavLink to={`/detail/${location._id}`}  >
+                                Fully - Booked
+                              </NavLink>
+                            </button>
+                          }
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            })}
+              })}
+            </div>
           </div>
           {arrLocation?.[0].address.includes("Ho Chi Minh") ? (
             <div className="wow map col-12 d-flex d-flex">

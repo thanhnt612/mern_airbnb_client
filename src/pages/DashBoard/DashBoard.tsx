@@ -72,15 +72,15 @@ export default function DashBoard() {
                   </a>
                 </li>
                 <li>
-                  <NavLink
+                  <a
                     className="dropdown-item"
                     onClick={() => {
                       dispatch(logoutApi())
                     }}
-                    to={""}
+                    style={{ cursor: "pointer" }}
                   >
                     <i className="bi bi-box-arrow-left"></i> Log Out
-                  </NavLink>
+                  </a>
                 </li>
               </>
               :
@@ -101,14 +101,14 @@ export default function DashBoard() {
         </li>
       </header>
       <div className="d-flex align-items-start">
-        <div className="col-1 nav flex-column nav-pills bg-secondary " id="v-pills-tab"
-          style={{ height: "1080px" }}>
+        <div className="col-2 col-lg-1 nav flex-column nav-pills bg-secondary " id="v-pills-tab"
+          style={{ height: "880px" }}>
           <button className="nav-link text-light active" data-bs-toggle="pill" data-bs-target="#v-user">User</button>
           <button className="nav-link text-light" data-bs-toggle="pill" data-bs-target="#v-place">Place</button>
           <button className="nav-link text-light" data-bs-toggle="pill" data-bs-target="#v-booking">Booking</button>
           <button className="nav-link text-light" data-bs-toggle="pill" data-bs-target="#v-blog">Blog</button>
         </div>
-        <div className="col-11 tab-content">
+        <div className="col-10 col-lg-11 tab-content">
           <div className="tab-pane fade show active" id="v-user">
             <UserData data={arrUser} PageSize={11} />
           </div>

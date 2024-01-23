@@ -134,7 +134,7 @@ export default function Login() {
                     draggable
                     pauseOnHover
                     theme="colored" />
-                  <a href="" className='text-decoration-none pt-2'>Forgot Password</a>
+                  <NavLink to="/user/forgot-password" className='text-decoration-none pt-2'>Forgot Password</NavLink>
                   <div className='my-3 w-50 border-top border border-danger'>
                   </div>
                   {/* <div>

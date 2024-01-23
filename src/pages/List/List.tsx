@@ -53,18 +53,22 @@ export default function List() {
                   </div>
                   <div className="detail col-8 p-2">
                     <div className="info">
+                      <p className='text-truncate fw-bold mb-1'>
+                        {location.available
+                          ?
+                          <span className='text-success'>Availability</span>
+                          :
+                          <span className='text-danger'>Fully - Booked</span>
+                        }
+                      </p>
                       <p className="fw-bold m-0 text-truncate">
                         🏩{location.title}
                       </p>
                       <div className="d-flex flex-row flex-wrap py-2">
-                        <span className="fw-bold me-2 ">⚙️Service:</span>
                         {location?.perks.map((perk: any, index: number) => {
                           return (
                             <>
-                              <div
-                                className="col-2 d-flex flex-row"
-                                key={index}
-                              >
+                              <div className="col-2 d-flex flex-row" key={index}>
                                 {perk === "wifi" ? (
                                   <>
                                     <i className="me-1 bi bi-wifi"></i>{" "}
@@ -121,9 +125,20 @@ export default function List() {
                     </div>
                     <div className="view-more">
                       <div className="button">
-                        <NavLink to={`/detail/${location._id}`} className="btn">
-                          <span>View</span>
-                        </NavLink>
+                        {location.available
+                                  ?
+                                  <button className="btn btn-success">
+                                    <NavLink to={`/detail/${location._id}`} >
+                                      Book Now
+                                    </NavLink>
+                                  </button>
+                                  :
+                                  <button className="btn btn-danger" disabled={true}>
+                                    <NavLink to={`/detail/${location._id}`}  >
+                                      Fully - Booked
+                                    </NavLink>
+                                  </button>
+                                }
                       </div>
                     </div>
                   </div>

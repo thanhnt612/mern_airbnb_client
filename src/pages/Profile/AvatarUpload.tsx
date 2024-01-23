@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react'
-import {  http } from '../../utils/config';
+import { http } from '../../utils/config';
 import { LoadingPage } from '../../Components/Icon';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -48,25 +48,25 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
                 {!url
                     ?
                     <div className='col-12'>
-                        <img className='rounded-circle'
+                        <img className='rounded-circle border border-4 p-1'
                             src={`https://www.gravatar.com/avatar/${profile}?d=identicon`}
                             style={{ width: "160px", height: "150px" }} />
                     </div>
                     :
                     <>
                         <div className='col-12'>
-                            <img className='rounded-circle' src={url}
+                            <img className='rounded-circle border border-4 p-1' src={url}
                                 alt="" style={{ width: "190px", height: "180px" }} />
                         </div>
                     </>
                 }
             </div >
-            < label className='p-1 mt-3 rounded-3 btn btn-secondary' style={{ cursor: "pointer" }}>
+            < label className='p-2 mt-3 rounded-3 btn btn-secondary' style={{ cursor: "pointer" }}>
                 {loading ? (
                     <LoadingPage className={`loading-spinner bg-transparent`} />
                 ) : (
                     <>
-                        Upload Avatar
+                        <i className="bi bi-image"></i> Change
                     </>
                 )}
                 <input type="file" className='d-none' multiple

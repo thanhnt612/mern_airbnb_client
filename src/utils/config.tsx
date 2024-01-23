@@ -12,10 +12,11 @@ http.defaults.withCredentials = true
 http.interceptors.response.use((response) => {
     return response
 }, async (error) => {
-    console.log(error.response?.status, `Error: `, error.response?.data.message);
+    const resetPassword = configStorage.getStorageJson('reset')
     if (error.response?.status === 401 ||
         error.response?.status === 404 ||
-        error.response?.status === 406) {
+        (error.response?.status === 406 && resetPassword)
+    ) {
         history.push('/');
     }
 })

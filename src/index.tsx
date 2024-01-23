@@ -35,6 +35,8 @@ import { UpdateBlog } from './pages/Blog/UpdateBlog';
 import { AllBlog } from './pages/Blog/AllBlog';
 import { createBrowserHistory } from "history";
 import DashBoard from './pages/DashBoard/DashBoard';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import ResetPassword from './pages/ResetPassword.jsx/ResetPassword';
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -88,6 +90,8 @@ root.render(
           <Route path='user' element={<UserTemplate />}>
             <Route path="login" element={<Login />}></Route>
             <Route path="register" element={<Register />}></Route>
+            <Route path="forgot-password" element={<ForgotPassword />}></Route>
+            <Route path="reset-password" element={<ResetPassword />}></Route>
             <Route path='*' element={<Navigate to="" />}></Route>
           </Route>
           <Route path='dashboard' element={<DashBoard />}>

@@ -66,10 +66,6 @@ export default function Profile() {
                                         </div>
                                     </div>
                                 </div>;
-                            } else {
-                                // console.log(item._id);
-                                // dispatch(changeStatusRoom(item._id))
-                                //Check out is outdate =>>> ACTION change stautus available:true
                             }
                         })}
                     </div>
@@ -119,8 +115,8 @@ export default function Profile() {
     return (
         <div className='profile-page container'>
             <div className="profile-info">
-                <div className="edit-profile mb-3 d-flex">
-                    <div className="col-6 col-md-4 col-lg-3 p-3">
+                <div className="edit-profile d-flex">
+                    <div className="col-6 col-md-4 col-lg-3">
                         <div className="avatar text-center">
                             <div className="update-avatar pt-3">
                                 <AvatarUpload addPhoto={addPhoto} url={userInfo?.avatar} onChange={setAddPhoto} profile={userInfo?._id} />

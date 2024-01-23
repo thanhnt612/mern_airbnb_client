@@ -1,7 +1,11 @@
 import { useMemo, useState } from 'react'
 import Pagination from '../../Components/pagination/pagination';
+import { deleteBooking } from '../../redux/reducers/bookingReducer';
+import { DispatchType } from '../../redux/configStore';
+import { useDispatch } from 'react-redux';
 
 const BookingData = ({ data, PageSize }: any) => {
+    const dispatch: DispatchType = useDispatch();
     const [current, setCurrent] = useState(1);
     const currentTableData = useMemo(() => {
         const firstPageIndex = (current - 1) * PageSize;
@@ -57,11 +61,13 @@ const BookingData = ({ data, PageSize }: any) => {
                                         <span className='text-success'>Staying</span>
                                     }
                                 </td>
-                                <td className='d-flex flex-row'>
+                                <td>
                                     <button className='btn btn-warning me-2'>
                                         Edit
                                     </button>
-                                    <button className='btn btn-danger'>
+                                    <button className='btn btn-danger'
+                                        onClick={() => dispatch(deleteBooking(booking._id, booking.placeId._id))}
+                                    >
                                         Remove
                                     </button>
                                 </td>

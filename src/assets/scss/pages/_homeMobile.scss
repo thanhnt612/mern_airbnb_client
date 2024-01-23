@@ -162,17 +162,17 @@
                     a {
                       font-size: $text-xl;
                       color: $text-c1-light;
-                      background: $bg-header-main;
                       text-align: center;
                       position: relative;
                       transition: all 0.7s;
+                      text-decoration: none;
                       &::after {
                         position: absolute;
-                        content: "🏨";
+                        content: ">>";
                         transition: all 0.5s;
                         opacity: 0;
-                        top: 7px;
-                        right: -20px;
+                        top: 1px;
+                        right: -50px;
                       }
                       &:hover {
                         padding-right: 40px;

@@ -178,16 +178,6 @@ export default function Detail() {
               </li>
             </ul>
           </div>
-          <div className="share">
-            <ul>
-              <li>
-                ↪️<span>Share</span>
-              </li>
-              <li>
-                ❤️️<span>Save</span>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className="image">
           {arrBookingId ? arrBookingId.photos.map((pic: any, index: number) => {

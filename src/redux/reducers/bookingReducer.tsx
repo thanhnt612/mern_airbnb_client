@@ -135,7 +135,7 @@ export const getBookingApi = () => {
         dispatch(action)
     }
 }
-export const getBookingDetailApi = (id: number) => {
+export const getBookingDetailApi = (id: string) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/' + id);
         let arrBookingId: PlaceModel = result.data.content;
@@ -144,7 +144,7 @@ export const getBookingDetailApi = (id: number) => {
     }
 }
 
-export const getOwnerRoomApi = (owner: number) => {
+export const getOwnerRoomApi = (owner: string) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/owner/' + owner);
         let arrOwnerRoom: PlaceModel[] = result.data.content;
@@ -182,7 +182,7 @@ export const postBookingApi = (
         }
     };
 };
-export const getBookingProfileApi = (guestId: number) => {
+export const getBookingProfileApi = (guestId: string) => {
     return async (dispatch: DispatchType) => {
         const result = await http.get('/booking/' + guestId);
         let bookingHistory: HistoryBookingModel[] = result.data.content;
@@ -195,6 +195,7 @@ export const getBookingProfileApi = (guestId: number) => {
 export const getBookingLocationApi = (destination: string) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/dest/' + destination);
+        console.log(result);
         let arrBookingLocation: PlaceModel[] = result.data.content;
         const action: PayloadAction<PlaceModel[]> = setLocationAction(arrBookingLocation);
         dispatch(action)
@@ -210,7 +211,7 @@ export const getBlogApi = () => {
     }
 }
 
-export const getBlogDetailApi = (id: number) => {
+export const getBlogDetailApi = (id: string) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/blog/' + id);
         let arrBlogDetail: BlogModel = result.data.content;
@@ -219,7 +220,7 @@ export const getBlogDetailApi = (id: number) => {
     }
 }
 
-export const getAuthorBlogApi = (author: number) => {
+export const getAuthorBlogApi = (author: string) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/blog/author/' + author);
         let arrBlogAuthor: BlogModel[] = result.data.content;
@@ -239,5 +240,15 @@ export const getBookingListToDashboard = () => {
 export const checkStatusRoom = () => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/check')
+    }
+}
+
+export const deleteBooking = (id: string, place: object) => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.post('/booking/delete/' + id, { place })
+        if (result.data.status === 200) {
+            alert(result.data.content)
+            window.location.href = "/dashboard"
+        }
     }
 }

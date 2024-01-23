@@ -62,7 +62,7 @@ export const registerApi = (register: UserRegister) => {
     return async (dispatch: DispatchType) => {
         const result = await http.post('/user/register', register);
         if (result.data.status === 200) {
-            toast.success('Sign Up Successfully !!!', {
+            toast.success(result.data.message, {
                 position: "top-center",
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -170,3 +170,73 @@ export const getListUser = () => {
     }
 }
 
+export const deleteUser = (id: string) => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.delete('/user/delete/' + id);
+        if (result.data.status === 200) {
+            alert(result.data.message)
+            window.location.href = "/dashboard"
+        }
+    }
+}
+
+export const verifyAccount = (id: string, user: object) => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.post('/user/verify/' + id, { user })
+        if (result.data.status === 200) {
+            alert(result.data.message)
+            window.location.href = "/dashboard"
+        }
+    }
+}
+
+export const forgotPassword = (email: string) => {
+    return async (dispatch: DispatchType) => {
+        const result: any = await http.post('/user/forgot-password/', { email })
+        if (result.data.status === 200) {
+            toast.success(result.data.message, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return true
+        }
+        if (result.data.status === 401) {
+            toast.error(result.data.message, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return false
+        }
+    }
+}
+
+export const resetPassword = (token: string, password: string) => {
+    return async (dispatch: DispatchType) => {
+        console.log(token, password);
+        const result: any = await http.post('/user/reset-password/', { token, password })
+        if (result.data.status === 200) {
+            toast.success(result.data.message, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
+}

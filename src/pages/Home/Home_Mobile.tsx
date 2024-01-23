@@ -1,11 +1,11 @@
-import  { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { DispatchType, RootState } from '../../redux/configStore';
 import { history } from '../../index';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { getBlogApi, getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
+import { checkStatusRoom, getBlogApi, getBookingApi, getBookingLocationApi } from '../../redux/reducers/bookingReducer';
 import { LoadingPageMobile } from '../../Components/Icon';
 import ReactPlayer from 'react-player';
 
@@ -20,6 +20,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getBookingApi())
     dispatch(getBlogApi())
+    dispatch(checkStatusRoom())
     if (arrPlace.length === 0) {
       setLoading(true);
     } else {
@@ -235,17 +236,34 @@ export default function Home() {
                           </div>
                           <div className="detail bg-light rounded-bottom col-12 p-2 py-2 shadow">
                             <div className="info">
+                              <p className='text-truncate mb-1'>
+                                {room.available
+                                  ?
+                                  <span className='text-success'>Availability</span>
+                                  :
+                                  <span className='text-danger'>Fully - Booked</span>
+                                }
+                              </p>
                               <h5 className='text-truncate'>🏩{room.address}</h5>
                               <p className='mb-1 text-truncate'>🔔{room.title}</p>
                               <p className='mb-1'><span className='fw-bold'>💲{room.price}</span> - night</p>
                             </div>
                             <div className="view-more text-end">
                               <div className="button">
-                                <NavLink to={`/detail/${room._id}`} className="btn">
-                                  <span>
-                                    View
-                                  </span>
-                                </NavLink>
+                                {room.available
+                                  ?
+                                  <button className="btn btn-success">
+                                    <NavLink to={`/detail/${room._id}`} >
+                                      Book Now
+                                    </NavLink>
+                                  </button>
+                                  :
+                                  <button className="btn btn-danger" disabled={true}>
+                                    <NavLink to={`/detail/${room._id}`}  >
+                                      Fully - Booked
+                                    </NavLink>
+                                  </button>
+                                }
                               </div>
                             </div>
                           </div>

@@ -1,7 +1,11 @@
 import { useMemo, useState } from 'react'
 import Pagination from '../../Components/pagination/pagination';
+import { DispatchType } from '../../redux/configStore';
+import { useDispatch } from 'react-redux';
+import { deleteUser } from '../../redux/reducers/userReducer';
 
 const UserData = ({ data, PageSize }: any) => {
+  const dispatch: DispatchType = useDispatch();
   const [current, setCurrent] = useState(1);
   const currentTableData = useMemo(() => {
     const firstPageIndex = (current - 1) * PageSize;
@@ -37,9 +41,11 @@ const UserData = ({ data, PageSize }: any) => {
                 </td>
                 <td>
                   <button className='btn btn-warning me-2'>
-                    Edit
+                    Role
                   </button>
-                  <button className='btn btn-danger'>
+                  <button className='btn btn-danger'
+                    onClick={() => dispatch(deleteUser(user._id))}
+                  >
                     Remove
                   </button>
                 </td>
