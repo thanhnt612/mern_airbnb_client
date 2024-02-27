@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) {
-    const [urlImage, setUrlImage] = useState(url)
     const [loading, setLoading] = useState(false)
     const uploadPhoto = async (event: ChangeEvent<HTMLInputElement>) => {
         const files: any = event.target.files;
@@ -18,7 +17,6 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
             headers: { 'Content-type': 'multipart/form-data' },
         }).then(async response => {
             const avatar = response.data.content;
-            setUrlImage(response.data.content)
             onChange(avatar);
             const result = await http.post('/user/avatar', { profile, avatar })
             if (result.status === 200) {
@@ -31,6 +29,7 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
+                    onClose: () => window.location.href = "/profile"
                 });
             }
         })
@@ -46,7 +45,7 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
     return (
         <>
             <div className="mb-3 d-flex flex-column">
-                {!urlImage
+                {!url
                     ?
                     <div className='col-12'>
                         <img className='rounded-circle border border-4 p-1'
@@ -56,7 +55,7 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
                     :
                     <>
                         <div className='col-12'>
-                            <img className='rounded-circle border border-4 p-1' src={urlImage}
+                            <img className='rounded-circle border border-4 p-1' src={url}
                                 alt="" style={{ width: "190px", height: "180px" }} />
                         </div>
                     </>

@@ -4,7 +4,6 @@ import { history } from '../index';
 //Config Axios 
 export const http = axios.create({
     baseURL: 'https://traveldndserver.cyclic.app',
-    // baseURL: 'http://localhost:8080/'
 });
 http.defaults.withCredentials = true
 

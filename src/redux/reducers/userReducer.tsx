@@ -185,7 +185,6 @@ export const verifyAccount = (id: string, user: object) => {
         const result: any = await http.post('/user/verify/' + id, { user })
         if (result.data.status === 200) {
             alert(result.data.message)
-            window.location.href = "/dashboard"
         }
     }
 }
