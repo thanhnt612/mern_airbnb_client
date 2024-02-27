@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) {
+    const [urlImage, setUrlImage] = useState(url)
     const [loading, setLoading] = useState(false)
     const uploadPhoto = async (event: ChangeEvent<HTMLInputElement>) => {
         const files: any = event.target.files;
@@ -13,10 +14,11 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
         for (let i = 0; i < files.length; i++) {
             data.append('avatar', files[i]);
         }
-        http.post('/user/uploadAvatar', data, {
-            headers: { 'Content-type': 'multipart/form-data' }
+        http.post('/user/upload-avatar', data, {
+            headers: { 'Content-type': 'multipart/form-data' },
         }).then(async response => {
             const avatar = response.data.content;
+            setUrlImage(response.data.content)
             onChange(avatar);
             const result = await http.post('/user/avatar', { profile, avatar })
             if (result.status === 200) {
@@ -29,7 +31,6 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
                     draggable: true,
                     progress: undefined,
                     theme: "colored",
-                    onClose: () => window.location.href = "/profile"
                 });
             }
         })
@@ -45,7 +46,7 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
     return (
         <>
             <div className="mb-3 d-flex flex-column">
-                {!url
+                {!urlImage
                     ?
                     <div className='col-12'>
                         <img className='rounded-circle border border-4 p-1'
@@ -55,13 +56,13 @@ export default function AvatarUpload({ addPhoto, onChange, profile, url }: any) 
                     :
                     <>
                         <div className='col-12'>
-                            <img className='rounded-circle border border-4 p-1' src={url}
+                            <img className='rounded-circle border border-4 p-1' src={urlImage}
                                 alt="" style={{ width: "190px", height: "180px" }} />
                         </div>
                     </>
                 }
             </div >
-            < label className='p-2 mt-3 rounded-3 btn btn-secondary' style={{ cursor: "pointer" }}>
+            < label className='p-2 mb-3 rounded-3 btn btn-secondary' style={{ cursor: "pointer" }}>
                 {loading ? (
                     <LoadingPage className={`loading-spinner bg-transparent`} />
                 ) : (

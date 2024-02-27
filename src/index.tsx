@@ -55,7 +55,7 @@ root.render(
             <Route path='detail' element={<ResponsiveItem component={Detail} mobileComponent={Detail_Mobile} />}>
               <Route path=':id' element={<Detail />}></Route>
             </Route>
-            <Route path='list' element={<ResponsiveItem component={List} mobileComponent={List_Mobile} />}>
+            <Route path='list' element={<List />}>
               <Route path=':dest' element={<List />}></Route>
             </Route>
             <Route path='profile' element={<Profile />}>

@@ -1,4 +1,4 @@
-import  { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { getOwnerRoomApi } from '../../redux/reducers/bookingReducer'
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../redux/configStore';
@@ -58,12 +58,29 @@ export default function ListRent() {
                         border-opacity-25" key={index}>
                             <div className="col-12 col-md-3 position-relative">
                                 <img src={item.photos[0]} alt="" className='object-fit-cover rounded w-100 h-100' />
-                                <NavLink className="d-block d-md-none m-2 position-absolute text-light btn btn-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0" 
-                                to={`/place/update-room/${item._id}`}>
+                                <NavLink className="d-block d-md-none m-2 position-absolute text-light btn btn-warning rounded-circle p-2 border-3 border-warning border pt-2 top-0 end-0"
+                                    to={`/place/update-room/${item._id}`}>
                                     ✏️
                                 </NavLink>
                             </div>
                             <div className="col-12 col-md-9 detail p-3 position-relative">
+                                <p className='text-truncate fw-bold mb-1'>
+                                    {item.available
+                                        ?
+                                        <span className='text-success'>Availability</span>
+                                        :
+                                        <>
+                                            <a className="text-danger text-decoration-none" data-bs-toggle="collapse" href={`#collapse${index}`}>
+                                                Fully - Booked By <i className="bi bi-caret-down-fill"></i>
+                                            </a>
+                                            <div className="collapse " id={`collapse${index}`}>
+                                                <button className='btn btn-outline-danger fw-bold'>
+                                                    {item.bookingId.name} - {item.bookingId.phone}
+                                                </button>
+                                            </div>
+                                        </>
+                                    }
+                                </p>
                                 <h5 className='fw-bold text-truncate'>
                                     {item.address}
                                 </h5>

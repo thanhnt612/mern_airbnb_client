@@ -17,6 +17,7 @@ export interface PlaceModel {
     maxGuest: string;
     price: string
     available: boolean
+    bookingId: object,
 }
 export interface HistoryBookingModel {
     placeId: object,
@@ -195,7 +196,6 @@ export const getBookingProfileApi = (guestId: string) => {
 export const getBookingLocationApi = (destination: string) => {
     return async (dispatch: DispatchType) => {
         const result: any = await http.get('/place/dest/' + destination);
-        console.log(result);
         let arrBookingLocation: PlaceModel[] = result.data.content;
         const action: PayloadAction<PlaceModel[]> = setLocationAction(arrBookingLocation);
         dispatch(action)

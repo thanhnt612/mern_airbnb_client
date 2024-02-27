@@ -1,4 +1,6 @@
+import { format } from 'date-fns';
 export default function FooterHome() {
+  const currentYear = format(new Date(), "yyyy");
   return (
     <div className='footer border-top'>
       <div className="container">
@@ -26,7 +28,7 @@ export default function FooterHome() {
               <li>
                 <a href="mailto:traveldnd@gmail.com" className="text-decoration-none">
                   <span><i className="bi bi-envelope-fill"></i></span>&nbsp;
-                  traveldnd@gmail.com
+                  travelworddnd@gmail.com
                 </a>
               </li>
             </ul>
@@ -44,32 +46,32 @@ export default function FooterHome() {
                   style={{ padding: "10px" }}
                 >Submit</button>
               </form>
-              <br/>
+              <br />
               <span>Subscribe newsletter to get updates</span>
             </ul>
           </div>
         </div>
         <div className='license border-top py-3 d-flex justify-content-between align-items-center'>
-          <p className='col-6'>© 2023 TravelDnD, Inc.</p>
+          <p className='col-6'>© {currentYear} TravelDnD, Inc.</p>
           <ul className='col-6 d-flex justify-content-end'>
             <li>
               <a href='https://www.facebook.com/' target='blank' className="px-2 facebook">
-              <i className="bi bi-facebook"></i>
+                <i className="bi bi-facebook"></i>
               </a>
             </li>
             <li>
               <a href='https://www.instagram.com/' target='blank' className="px-2 instagram">
-              <i className="bi bi-instagram"></i>
+                <i className="bi bi-instagram"></i>
               </a>
             </li>
             <li>
-              <a href='https://twitter.com/' target='blank' className="px-2 twitter"> 
-              <i className="bi bi-twitter"></i>
+              <a href='https://twitter.com/' target='blank' className="px-2 twitter">
+                <i className="bi bi-twitter"></i>
               </a>
             </li>
             <li>
               <a href='http://youtube.com/' target='blank' className="px-2 youtube">
-              <i className="bi bi-youtube"></i>
+                <i className="bi bi-youtube"></i>
               </a>
             </li>
           </ul>
