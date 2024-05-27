@@ -3,7 +3,7 @@ import { history } from '../index';
 
 //Config Axios 
 export const http = axios.create({
-    baseURL: 'https://traveldndserver.cyclic.app',
+    baseURL: 'https://api-server-uh7a.onrender.com',
 });
 http.defaults.withCredentials = true
 
